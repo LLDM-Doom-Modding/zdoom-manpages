@@ -1,0 +1,237 @@
+//
+
+class ManpageRecord {
+	String nm;
+	String header;
+	String desc;
+
+	void Beautify( void ) {
+		// Dummy beautifying.
+		int argsstartpos = header.IndexOf( " " );
+
+		if ( argsstartpos != -1 )
+			header = "\c[White]" .. header.Left( argsstartpos ) .. "\c[Red]" .. header.Mid( argsstartpos ) .. "\c-";
+
+		header = "| " .. header;
+
+		desc.Replace( "{{", "\c[LightBlue]" );
+		desc.Replace( "}}", "\c-" );
+		desc = "\n|" .. desc.Mid( 1 );
+		desc.DeleteLastCharacter(); // Excess backspace.
+	}
+
+	static ManpageRecord Create( String initnm, String initheader, String initdesc ) {
+		ManpageRecord newrec = new( 'ManpageRecord' );
+		newrec.nm = initnm;
+		newrec.header = initheader;
+		newrec.desc = initdesc;
+
+		newrec.Beautify();
+
+		return newrec;
+	}
+} // of class ManpageRecord {}
+
+
+class ManpagesEventHandler: StaticEventHandler {
+	/// A queue of file handles. All new handles are stored at the end of the queue.
+	Array<int> configIncludeFileHandles;
+
+	/// Guardian counter to prevent recursions and infinite loops.
+	int configParsedFilesAmount;
+	const const_MaxConfigFilesAmount = 32;
+
+	/// Main storage.
+	Array<ManpageRecord> pages;
+
+
+
+	/// Internal method just to beautify the output.
+	private String MessageFilePos( int filehandle, int filelinenum ) {
+		return String.Format( "in file '%s' pos '%i'", WADs.GetLumpFullName( filehandle ), filelinenum + 1 );
+	}
+
+
+	/// Seaches for a given file name in a global namespace.
+	/// If `starthandle` is "-1", searches for full path instead of the root.
+	/// Returns -1 if file cannot be found or a valid file handle otherwise.
+	int SearchConfigFile( String filename, int starthandle = 0 ) {
+		int handle;
+
+		if ( starthandle < 0 )
+			handle = WADs.CheckNumForFullName( filename );
+		else
+			handle = WADs.FindLump( filename, starthandle );
+
+		if ( handle != -1 ) {
+			configIncludeFileHandles.Push( handle );
+			configParsedFilesAmount++;
+		}
+
+		if ( configParsedFilesAmount > const_MaxConfigFilesAmount + 1 )
+			ThrowAbortException( "SearchConfigFile( filename='%s', starthandle=%i ). configParsedFilesAmount is extreme (%i).", filename, starthandle, configParsedFilesAmount );
+
+		return handle;
+	} // of int SearchConfigFile( String filename, int starthandle = 0 ) {}
+
+	/// Returns NULL if file "filename" cannot be found or a valid pointer otherwise.
+	ManpageRecord AddManpageFile( String pagename, String filename ) {
+		int handle = WADs.CheckNumForFullName( filename );
+		ManpageRecord manpage = NULL;
+
+		if ( handle != -1 ) {
+			String filetext = WADs.ReadLump( handle );
+			String manheader = "";
+			String mandesc = "";
+
+			// Split file into header (1st line) and description (all next lines).
+			int descriptionpos = filetext.IndexOf( "\n" );
+
+			if ( descriptionpos == -1 ) {
+				console.printf( "Manpage '%s' header without newline %s.", pagename, MessageFilePos( handle, 0 ) );
+				manheader = filetext;
+			} else {
+				manheader = filetext.Left( descriptionpos );
+				mandesc = filetext.Mid( descriptionpos );
+			}
+
+			// Add new manpage record and add it to the global storage:
+			manpage = ManpageRecord.Create( pagename, manheader, mandesc );
+			pages.Push( manpage );
+		}
+
+		return manpage;
+	} // of int AddManpageFile( String filename ) {}
+
+
+	/// Main config files parsing method.
+	/// Returns nothing, extensively works with many internal variables.
+	void ParseConfigFile( int filehandle ) {
+		Array<String> lines;
+		String cfgtext = WADs.ReadLump( filehandle );
+		cfgtext.Replace( "\t", " " );
+		cfgtext.Split( lines, "\n" );
+
+		// Iterate over all lines:
+		for ( int i = 0; i < lines.Size(); i++ ) {
+			String ln = lines[ i ];
+
+			// Remove comments:
+			int commentpos = ln.IndexOf( "#" );
+
+			if ( commentpos != -1 )
+				ln = ln.Left( commentpos );
+
+			if ( ln == "" )
+				continue; // Skip empty lines.
+
+			// Take apart all args in string:
+			Array<String> lnargv;
+			ln.Split( lnargv, " ", TOK_SKIPEMPTY );
+
+			String lncommand = lnargv[ 0 ];
+			int lnargc = lnargv.Size();
+			lncommand.ToLower();
+
+
+			// Commands processing.
+
+			// Add new file to the parsing stack:
+			if ( lncommand == "include" && lnargc == 2 ) {
+				if ( -1 == SearchConfigFile( lnargv[ 1 ], -1 ) )
+					console.printf( "Unknown include path '%s' %s.", lnargv[ 1 ], MessageFilePos( filehandle, i ) );
+
+				if ( configIncludeFileHandles.Size() > const_MaxConfigFilesAmount ) {
+					console.printf( "Added too many config files (%i) when processing include path '%s' %s.",
+									const_MaxConfigFilesAmount, lnargv[ 1 ], MessageFilePos( filehandle, i ) );
+					break; // Too many files opened, the guardian blocks execution.
+				}
+
+			// Add new page to the main manpages storage:
+			} else if ( lncommand == "page" && lnargc == 3 ) {
+				if ( NULL == AddManpageFile( lnargv[ 1 ], lnargv[ 2 ] ) )
+					console.printf( "Wrong manpage '%s' path '%s' %s.", lnargv[ 1 ], lnargv[ 2 ], MessageFilePos( filehandle, i ) );
+
+			// Alias from one command to another.
+			} else if ( lncommand == "alias" ) {
+				console.printf( "Not implemented: alias '%s' -> '%s' %s.", lnargv[ 1 ], lnargv[ 2 ], MessageFilePos( filehandle, i ) );
+
+			} else {
+				console.printf( "Unknown command '%s' with argc %i %s.", lncommand, lnargc, MessageFilePos( filehandle, i ) );
+
+			}
+		}
+
+		configIncludeFileHandles.Delete( 0 );
+	} // of void ParseConfigFile( int filehandle ) {}
+
+
+	override void OnRegister() {
+
+		// Config files parsing.
+
+		int lastconfigfd = 0;
+		int curconfigfd = 0;
+
+		// Add all high-level files from all *.pk3:
+		do {
+			curconfigfd = SearchConfigFile( "manpages/manpages.cfg", lastconfigfd );
+			lastconfigfd = curconfigfd + 1;
+		} while ( curconfigfd != -1 && configParsedFilesAmount < const_MaxConfigFilesAmount );
+
+		// Parse all files, also from directive "include PATH":
+		while ( configIncludeFileHandles.Size() != 0 ) {
+			ParseConfigFile( configIncludeFileHandles[ 0 ] );
+		}
+
+		// 
+		if ( configParsedFilesAmount == 0 )
+			console.printf( "No manpage config files found." );
+
+		Super.OnRegister();
+	}
+
+	void ManpageProcess( String cmd ) {
+		// Dummy processing for now.
+		if ( cmd ~== "list" ) {
+			int pagessize = pages.Size();
+
+			String liststr = "[";
+
+			for ( int i = 0; i < pagessize - 1; i++ ) {
+				liststr.AppendFormat( "%s, ", pages[ i ].nm );
+			}
+
+			if ( pagessize > 0 )
+				liststr.AppendFormat( "%s]", pages[ pagessize - 1 ].nm );
+			else
+				liststr = "[]";
+
+			console.printf( liststr );
+			return;
+		}
+
+
+		bool manpagefound = false;
+
+		for ( int i = 0; i < pages.Size(); i++ ) {
+			if ( pages[ i ].nm == cmd ) {
+				console.printf( "%s %s", pages[ i ].header, pages[ i ].desc );
+				manpagefound = true;
+				break;
+			}
+		}
+
+		if ( !manpagefound )
+			console.printf( "No manpage named '%s' found.", cmd );
+	} // of void ManpageProcess( String cmd ) {}
+
+	override void NetworkProcess( ConsoleEvent e ) {
+		if ( e.Name.Left( 9 ) == "manpages`" ) {
+			ManpageProcess( e.Name.Mid( 9 ) );
+		}
+
+		Super.NetworkProcess( e );
+	} // of override void NetworkProcess( ConsoleEvent e ) {}
+
+} // of class ManpagesEventHandler: StaticEventHandler {}

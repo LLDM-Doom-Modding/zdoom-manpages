@@ -1,0 +1,5 @@
+soundlist
+
+Lists all the sounds defined and the lumps that they alias to. Unlike regular {{Doom}}, ZDoom refers to sounds using a long name and uses a {{SNDINFO}} lump to map those to the lumps in a WAD file that contain the actual sounds. Logical sounds that refer to the same sound data will have links generated as necessary to avoid actually loading multiple copies of the same sound into memory.
+
+

@@ -1,0 +1,5 @@
+pings
+
+This lists a very rough estimate of the speed of the connection between your machine and any others in the game. In reality, the values printed by this command aren't even pings; they're just the number of milliseconds that have passed since the last time you received a network packet from the other machines.
+
+

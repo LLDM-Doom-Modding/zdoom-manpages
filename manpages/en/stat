@@ -1,0 +1,5 @@
+stat [page]
+
+Displays profiling information. When used alone, displays a list of available displays. Use one of those as the page parameter to toggle the display on and off.
+
+

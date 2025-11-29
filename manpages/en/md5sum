@@ -1,0 +1,5 @@
+md5sum <file>
+
+Prints the MD5 checksum of the given file
+
+

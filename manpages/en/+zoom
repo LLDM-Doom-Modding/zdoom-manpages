@@ -1,0 +1,8 @@
++zoom
+
+Go to the {{weapon}}'s "zoom" {{state}}, provided that the weapon explicitly allows it with {{A_WeaponReady}}(WRF_ALLOWZOOM).
+
+ Automap controls
+
+ These controls are only active while in full {{automap}} mode.
+

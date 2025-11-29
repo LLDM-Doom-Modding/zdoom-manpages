@@ -1,0 +1,5 @@
+thickfogdistance [<float>]
+
+(New from {{5}}.0) Sets the thickfogdistance parameter for the level. Displays current value of run without an argument. Make negative to disable thick fog. Regular {{Fog}} density (either for the sector or the whole level) has to be non-zero and thickfogmultiplier has to be other than 1.0 for the effect to show.
+
+

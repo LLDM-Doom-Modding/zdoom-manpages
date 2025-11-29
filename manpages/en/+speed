@@ -1,0 +1,5 @@
++speed
+
+Normally, this causes your player to move faster (run) while held. If the {{cl_run}} CVAR is set, then this reverses roles and causes your player to move more slowly (walk) instead.
+
+

@@ -1,0 +1,5 @@
+clean
+
+Prints the clean factors for {{menu}} scaling allowed by the current resolution.
+
+

@@ -1,0 +1,5 @@
+doublebind [key] [command]
+
+This command works just like bind, except it controls the action that occurs when a key is double-clicked. If a key does not have a doublebinding, then double-clicking it has the same result as pressing it twice. Otherwise, the first press will execute the normal command set with bind, and the second press of the double-click will execute the command set with doublebind.
+
+

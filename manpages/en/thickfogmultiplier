@@ -1,0 +1,6 @@
+thickfogmultiplier [<float>]
+
+(New from {{5}}.0) Sets the thickfogmultiplier parameter for the level. Displays current value of run without an argument. Regular {{Fog}} density (either for the sector or the whole level) has to be non-zero and thickfogdistance has to be positive for the effect to show.
+
+
+

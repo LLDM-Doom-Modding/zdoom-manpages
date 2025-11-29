@@ -1,0 +1,6 @@
+binddefaults
+
+Binds all keys to their default commands. This will not unbind any keys that do not have any default bindings, so if you want to properly restore the default controls, you need to use unbindall first.
+
+
+

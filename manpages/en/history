@@ -1,0 +1,5 @@
+history
+
+Prints the most recently executed {{console}} commands that you can cycle through by pressing the up and down arrow keys. Up to fifty commands might be stored in the console history.
+
+

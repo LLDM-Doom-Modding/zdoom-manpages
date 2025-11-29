@@ -1,0 +1,5 @@
+map <lumpname> [dm|coop]
+
+Immediately warps the player to the specified map, skipping the intermission screen. (e.g. "map e2m3" or "map map27") Also resets the player's inventory and health to their starting values, as if they had started a new game. Use changemap to change to a new map without starting the game over. Passing * instead of a map name warps the player to the current map. Optionally the dm or coop keyword can be added to set the game mode to emulated {{multiplayer}}. Without this keyword the game mode defaults to single-player.
+
+

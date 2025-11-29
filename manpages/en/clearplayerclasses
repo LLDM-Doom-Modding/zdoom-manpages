@@ -1,0 +1,6 @@
+clearplayerclasses
+
+Removes all {{player}} classes from the list of {{available}} player classes when starting a {{new}} game or changing the {{player}} setup. You should always follow with calls to {{addplayerclass}}.
+
+
+

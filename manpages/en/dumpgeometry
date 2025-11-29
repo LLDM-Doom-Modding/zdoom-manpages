@@ -1,0 +1,5 @@
+dumpgeometry
+
+Sends to the logfile a full disassembly of the map geometry, divided into sectors, subsectors, segs, and vertices.
+
+

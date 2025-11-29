@@ -1,0 +1,5 @@
+changesky <texture>
+
+Replaces the default sky texture. This corresponds to the texture defined as sky1 in a {{MAPINFO}} {{map}} definition.
+
+

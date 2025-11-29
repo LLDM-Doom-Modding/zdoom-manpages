@@ -1,0 +1,5 @@
+cmdlist [pattern]
+
+Lists all console commands supported by the current version of ZDoom. If you specify a pattern, then only those {{CCMDs}} that match the pattern will be listed. Patterns can contain the wildcards * (which substitutes for zero or more characters) and ? (which substitutes for exactly one character).
+
+

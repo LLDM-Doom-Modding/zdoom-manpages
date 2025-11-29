@@ -1,0 +1,5 @@
++crouch
+
+Makes the player {{crouch}} while the key is pressed. Not to be confused with {{crouch}}, which toggles crouching on and off.
+
+

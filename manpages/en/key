@@ -1,0 +1,5 @@
+key <value1> [value2]
+
+Translates all parameters to the command into their corresponding key values which are used internally for command and alias lookup. Probably not very useful for the average user.
+
+

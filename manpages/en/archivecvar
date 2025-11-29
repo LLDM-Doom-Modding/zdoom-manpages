@@ -1,0 +1,5 @@
+archivecvar <CVAR>
+
+When you create a custom CVAR with the set command, it will not normally be saved in the {{ini}}. You can use archivecvar after creating the CVAR to indicate that the custom CVAR's value should persist even after you quit. This command is ill advised for non-archived user cvars, as it may cause side effects such as scripts running improperly.
+
+

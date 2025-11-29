@@ -1,0 +1,5 @@
+skymisttoggle
+
+(New from {{5}}.0) Toggles between use of skymist overlay versus regular skyfog on the sky. A default skymist lump is loaded internally (from uzdoom.pk3). See also {{Fog}}.
+
+

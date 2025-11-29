@@ -1,0 +1,5 @@
+bind [key] [command]
+
+If no parameters are specified, the entire list of bound keys will be printed to the console. If only key is specified, the binding for that specific key will be printed. If both key and command are specified, command will be bound to key.
+
+

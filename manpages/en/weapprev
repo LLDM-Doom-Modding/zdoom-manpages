@@ -1,0 +1,6 @@
+weapprev
+
+Selects the previous {{weapon}} (in order) that you own and have {{ammo}} for. In addition, it plays the "misc/weaponchange" sound if defined. By default it is not.
+
+
+

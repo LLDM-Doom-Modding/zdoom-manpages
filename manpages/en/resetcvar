@@ -1,0 +1,5 @@
+resetcvar <{{cvar}}>
+
+Resets cvar to the default value.
+
+

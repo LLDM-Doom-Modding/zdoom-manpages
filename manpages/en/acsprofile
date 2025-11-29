@@ -1,0 +1,9 @@
+acsprofile [clear | [<sort-function>] [<limit>]]
+
+Provides {{ACS}} profiling information. Optional arguments can be passed to it:
+
+ + sort-function specifies which column to sort on (total, min, max, avg, or runs). The default is total.
+ + limit specifies how many rows to limit the output to. The default is 10. 0 or less will print every script or function that has at least one run.
+ + clear resets all profiling statistics to 0. It cannot be used with either of the other two optional arguments.
+
+

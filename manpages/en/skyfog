@@ -1,0 +1,5 @@
+skyfog <value>
+
+Changes the density of the fog that affects the {{sky}} plane. This allows to test sky fog sheets.
+
+

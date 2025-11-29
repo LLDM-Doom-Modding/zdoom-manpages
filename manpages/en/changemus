@@ -1,0 +1,6 @@
+changemus [<music> [track]]
+
+Changes the currently playing music. Music should be the name of a music lump, a file on disk (which need not have been specified with the -file {{command}} line parameter), or a website address for a specific music file. If a music lump contains several tracks ({{MIDI}} type 2, certain {{XMI}} song, and miscellaneous other {{music}} formats support this), then optionally a second parameter can be used to specify the track number.
+ If no parameters are given, the command will instead log the name of the currently-played lump or file to the {{console}}.
+
+

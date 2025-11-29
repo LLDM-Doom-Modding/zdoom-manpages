@@ -1,0 +1,5 @@
+currentpos
+
+Prints the player's current position: X, Y and Z coordinates, angle, floor height, sector number, and sector light level.
+
+

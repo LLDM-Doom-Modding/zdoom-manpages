@@ -1,0 +1,5 @@
+playdemo <demo>
+
+Plays a demo. The demo can be a file on disk or a lump in a wad.
+
+

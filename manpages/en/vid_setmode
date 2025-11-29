@@ -1,0 +1,5 @@
+vid_setmode <width> <height> [depth]
+
+Sets the screen mode to width x height with an optional color depth (if your video hardware supports it). Only a depth of 8 is supported. (Verification needed)
+
+

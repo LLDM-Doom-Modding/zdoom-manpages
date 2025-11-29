@@ -1,0 +1,5 @@
+am_toggletexture
+
+Toggles textured automap on and off. Note that textured automap requires {{GL}} nodes to have been built: if no GL nodes are available, the automap will remain untextured.
+
+

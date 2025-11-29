@@ -1,0 +1,5 @@
+addplayerclass <{{player}} class> [nomenu]
+
+Adds the given {{player}} class to the {{available}} player classes. If the "nomenu" keyword is added, the class will be available only in the {{player}} setup, and not shown as an option on the {{class}} selection menu.
+
+

@@ -1,0 +1,8 @@
+remove <class>
+
+Removes all entities of the type specified from the current map, except for live players.
+ WARNING: Removing voodoo dolls may break maps which rely upon triggering line specials, and should be avoided.
+ NOTE: This command does not have any categories, and only corresponds with actor names. I.e. 'remove monsters' will not remove all monsters, though expansion of this command is planned to include some categories.
+
+
+

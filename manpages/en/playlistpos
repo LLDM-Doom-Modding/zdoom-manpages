@@ -1,0 +1,5 @@
+playlistpos <position>
+
+Starts playing the song at the specified position in the playlist.
+
+

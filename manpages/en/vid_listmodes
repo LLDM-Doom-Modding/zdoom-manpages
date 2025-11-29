@@ -1,0 +1,5 @@
+vid_listmodes
+
+Lists all resolutions supported by the current display driver.
+
+

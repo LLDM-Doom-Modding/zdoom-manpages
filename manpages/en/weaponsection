@@ -1,0 +1,6 @@
+weaponsection <ini section>
+
+This command is similar to {{addkeysection}}. Upon execution, it loads all the weapon slot assignments from the corresponding section in {{zdoom}}.ini. When you quit the game, the weapon slots will also be stored in the specified section in zdoom.ini instead of their standard location so that they do not overwrite the player's normal weapon assignments.
+
+
+

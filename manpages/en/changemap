@@ -1,0 +1,9 @@
+changemap <lumpname>
+
+Shows the intermission screen and then warps the player to the specified map, (e.g. "changemap e2m3" or "changemap map27") retaining the player's inventory and health value in the process. The following can be used instead of a map's name:
+
+ + *: warps to the current map.
+ + +: warps to the next map as defined in {{MAPINFO}}.
+ + +$: warps to the next secret map as defined in MAPINFO.
+
+

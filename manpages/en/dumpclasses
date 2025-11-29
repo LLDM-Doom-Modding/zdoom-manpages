@@ -1,0 +1,5 @@
+dumpclasses [base class]
+
+Displays a list of all classes in the game. You can use base class to limit the list to only those classes that derive from base class. For example, dumpclasses actor will only show those classes that can be spawned in a level (including actors from all supported games). If you only want a list of weapons, you can use dumpclasses weapon. This list can be quite long and exceed the length of the console buffer, so it is a good idea to capture its output to a file using the logfile command.
+
+

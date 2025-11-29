@@ -1,0 +1,6 @@
+puke <script> [arg1 [arg2 [arg3]]]
+
+Executes an {{ACS}} script on the current map, optionally passing it up to three numerical arguments. If you try this on {{multiplayer}}, {{sv_cheats}} must normally be enabled. However, if the script has the "net" keyword, it can be activated by anyone in a multiplayer game.
+ If the "script" argument is a negative value, the script will be executed as if it had been called by {{ACS_ExecuteAlways}}; otherwise it will be executed as if called by {{ACS_Execute}}. Script 0 is reserved for {{Strife}} support and cannot be puked.
+
+

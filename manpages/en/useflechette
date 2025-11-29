@@ -1,0 +1,5 @@
+useflechette
+
+{{Hexen}}'s {{flechettes}} require special handling due to the actual item in the inventory being different depending on the player class picking them up. This command uses a flechette of the type corresponding to the player class, if present in the player's inventory. If the player has no flechettes in their inventory, nothing happens.
+
+

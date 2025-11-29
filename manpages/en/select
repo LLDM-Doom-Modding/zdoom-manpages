@@ -1,0 +1,5 @@
+select <item>
+
+Selects the given {{artifact}}, provided there is one in inventory.
+
+

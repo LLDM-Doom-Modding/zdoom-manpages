@@ -1,0 +1,7 @@
+removebots
+
+Removes any bots from the game. Bots will also be automatically removed from network games when the arbitrator quits.
+
+
+ Controllers are users other than the host who are granted access to change maps and control other game settings as if they were the host. Only the host can make use of these commands.
+

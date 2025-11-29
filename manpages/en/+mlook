@@ -1,0 +1,5 @@
++mlook
+
+Mouselook modifier. If the {{freelook}} CVAR is false, you must use the key bound to this while moving your mouse forward or backwards to look up and down. Otherwise, this does nothing.
+
+

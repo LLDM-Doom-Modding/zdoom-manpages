@@ -1,0 +1,5 @@
+logfile [file]
+
+If file is not specified, console logging will be stopped (if active). Otherwise, a file named file will be created on disk, and all console output will be recorded in it as well as on the screen.
+
+

@@ -1,0 +1,5 @@
+clearscancycles
+
+Resets the count of minimum wall scanning cycles. Used for profiling the wallscan function.
+
+

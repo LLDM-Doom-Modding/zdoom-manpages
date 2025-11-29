@@ -1,0 +1,5 @@
+menu_quit
+
+Activates the {{quit}} menu which asks the user if they want to quit, and quits if they do.
+
+

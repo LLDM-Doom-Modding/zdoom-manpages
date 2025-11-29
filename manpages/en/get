@@ -1,0 +1,6 @@
+get <CVAR>
+
+Displays the value of CVAR. This is redundant because typing the name of the CVAR alone at the console will accomplish the same thing.
+
+
+

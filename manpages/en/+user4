@@ -1,0 +1,5 @@
++user4
+
+Go to the {{weapon}}'s "user#" {{state}}, provided that the weapon explicitly allows it with {{A_WeaponReady}}(WRF_ALLOWUSER#).
+
+

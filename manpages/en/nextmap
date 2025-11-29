@@ -1,0 +1,5 @@
+nextmap
+
+Warps the player to the next map as specified by {{MAPINFO}}. Also resets the player's inventory and health as if a new game had been started.
+
+

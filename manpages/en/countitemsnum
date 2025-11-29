@@ -1,0 +1,5 @@
+countitemsnum [class or TID]
+
+Prints the total count of all countable items present in the map. Passing a countable item's class name to the command, prints the total count of that class only. Passing a TID instead of a class name, prints the total count of countable items with the matching TID.
+
+

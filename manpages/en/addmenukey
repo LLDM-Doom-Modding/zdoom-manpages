@@ -1,0 +1,5 @@
+addmenukey <description> <command>
+
+Adds a new control to the controls menu. description is the name of this control in the menu, and command is a console command or alias to be executed when the control is pressed. New controls are added to the last section specified with addkeysection.
+
+

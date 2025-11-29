@@ -1,0 +1,6 @@
+openmenu <menu_name>
+
+Opens the given {{menu}}, using its {{MENUDEF}} name.
+
+
+

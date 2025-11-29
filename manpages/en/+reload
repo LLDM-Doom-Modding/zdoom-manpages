@@ -1,0 +1,5 @@
++reload
+
+Go to the {{weapon}}'s "reload" {{state}}, provided that the weapon explicitly allows it with {{A_WeaponReady}}(WRF_ALLOWRELOAD).
+
+

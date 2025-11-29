@@ -1,0 +1,5 @@
+mapinfo [map name]
+
+Prints select pieces of information about the map specified by map name (e.g. E1M8 or MAP07). If no map name is specified, the information pertains to the current map.
+
+

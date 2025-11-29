@@ -1,0 +1,5 @@
+unbindall
+
+Removes all bindings and doublebindings from every key. To restore the default bindings, you can use the binddefaults command. Caution: there is no way to restore any custom bindings after issuing this command except by retyping each bind command or using the controls setup menu.
+
+

@@ -1,0 +1,5 @@
+summonfriend <class> [angle [TID [special [args... ]]]]
+
+Same as summon, but causes monsters created using this command to attack non-friendly monsters instead of you.
+
+

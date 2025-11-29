@@ -1,0 +1,5 @@
+atexit [command]
+
+If you specify a command, it will be added to a list of console commands to execute when the user quits the game. Commands are executed in the reverse order that they were added in. If you do not specify any arguments to atexit, then it will list the current set of commands that will execute when you quit.
+
+

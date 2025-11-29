@@ -1,0 +1,5 @@
+messagemode2
+
+This is just like messagemode except that the message is only sent to other members of your team. If teamplay is false or you don't have a team, then this command will work just like messagemode and send the message to everyone.
+
+

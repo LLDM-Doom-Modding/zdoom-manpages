@@ -1,0 +1,5 @@
+bumpgamma
+
+Increases the current gamma level by 0.1. If the new gamma level would be greater than 3.0, it wraps the gamma around to 1.0.
+
+

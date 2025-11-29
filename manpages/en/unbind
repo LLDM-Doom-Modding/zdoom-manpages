@@ -1,0 +1,5 @@
+unbind <key>
+
+Removes a binding from the specified key.
+
+

@@ -1,0 +1,6 @@
+say_team <message>
+
+This is just like say except it only sends a message to your teammates. If teamplay is inactive, then this command will act exactly like say and send the message to everyone.
+
+
+

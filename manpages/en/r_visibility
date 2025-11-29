@@ -1,0 +1,5 @@
+r_visibility [amount]
+
+Without any parameters, displays the current visibility. With a parameter, the visibility is set. Standard visibility for the Doom engine is 8. Visibility determines how quickly light drops off with distance from the viewer. At 0 visibility, there is no change in lighting with depth.
+
+

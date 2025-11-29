@@ -1,0 +1,5 @@
+testcolor <color>
+
+Sets the {{light}} color of any sectors using the default light to color. color can be either a color defined in the {{X11R6RGB}} lump or a color string.
+
+

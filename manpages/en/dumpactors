@@ -1,0 +1,5 @@
+dumpactors
+
+Outputs a list of all object classes, along with their {{editor}} number, {{SpawnID}}, {{game}} filter and the file and lump in which they were declared. This command is useful to help resolve conflicts in large scale collaborative projects. Because of the mass of information ({{ZDoom}} alone contains more than 1300 actors), this should be used along with the logfile command to capture the output and then copy and paste it into a program such as a spreadsheet. The command may take a few seconds to process all the data.
+
+

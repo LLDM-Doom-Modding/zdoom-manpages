@@ -1,0 +1,5 @@
+mapbind [key] [command]
+
+This command works just like bind, except it controls the action that occurs when the automap is displayed. (Panning controls are ineffective on the overlay map.) A list of automap-specific controls may be found {{here}}.
+
+

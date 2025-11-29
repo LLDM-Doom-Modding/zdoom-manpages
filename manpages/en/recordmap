@@ -1,0 +1,5 @@
+recordmap <filename> <map name> [dm|coop]
+
+Starts a new game on the specified map, recording a demo to the specified filename. Passing * instead of a map name records a demo of the current map. Optionally the dm or coop keyword can be added to set the game mode to emulated {{multiplayer}}. Without this keyword the game mode defaults to single-player.
+
+

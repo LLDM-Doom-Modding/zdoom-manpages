@@ -1,0 +1,5 @@
++showscores
+
+While held, displays the {{scoreboard}}, which displays player names and frag count during a {{multiplayer}} game.
+
+

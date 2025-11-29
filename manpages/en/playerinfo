@@ -1,0 +1,5 @@
+playerinfo [player]
+
+Without parameters, lists the numbers for each player in the game. If you specify a player, then details about that player's user info will be listed.
+
+

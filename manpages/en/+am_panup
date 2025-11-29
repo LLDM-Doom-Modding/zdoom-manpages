@@ -1,0 +1,5 @@
++am_panup
+
+If the {{am_followplayer}} CVAR is false, the view of the map moves upward (to the North).
+
+

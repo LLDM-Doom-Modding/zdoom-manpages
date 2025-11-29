@@ -1,0 +1,5 @@
+idclev <slotnumber>
+
+Changes to the level specified by slotnumber. This emulates the idclev {{cheat}}.
+
+

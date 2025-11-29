@@ -1,0 +1,5 @@
+hxvisit <warptrans>
+
+Changes to the level specified by warptrans. Unlike {{idclev}}, hxvisit determines the map to go to by finding a map defined in {{MAPINFO}} with a matching warptrans. Hence, it emulates the {{Hexen}} visit {{cheat}}.
+
+

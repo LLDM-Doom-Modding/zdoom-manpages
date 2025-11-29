@@ -1,0 +1,8 @@
+pullin <wadfile>
+
+Loads a wadfile at startup. This command is only valid inside .cfg files that have been executed at startup.
+
+{{CVAR}} control
+
+ User CVARS from {{CVARINFO}} can be manipulated by these commands.
+

@@ -1,0 +1,5 @@
+playsound <sound>
+
+Plays a sound on the local machine. Like all other sounds in the game, sound must be properly defined in a {{SNDINFO}} lump before you can use it.
+
+

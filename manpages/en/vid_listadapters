@@ -1,0 +1,6 @@
+vid_listadapters
+
+Prints a list of all video adapters available. This command only works with either the {{ZDoom}} {{Direct3D}} renderer or the {{Zandronum}} {{OpenGL}} renderer. Choosing which adapter to use can be done by setting the value of the {{vid_adapter}} {{console}} variable.
+
+
+

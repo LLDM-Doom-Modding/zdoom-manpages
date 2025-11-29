@@ -1,0 +1,5 @@
+crashout
+
+Debugging routine for testing the crash logger. This deliberately triggers a crash by MiniWikipediaLogoIcon.png {{attempting}} to write at MiniWikipediaLogoIcon.png {{address}} 0.
+
+

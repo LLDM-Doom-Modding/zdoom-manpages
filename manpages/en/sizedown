@@ -1,0 +1,5 @@
+sizedown
+
+Decrements {{screenblocks}} by 1, shrinking the view window.
+
+

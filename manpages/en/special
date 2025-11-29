@@ -1,0 +1,5 @@
+special <special> [arg1 [arg2 [arg3 [arg4 [arg5]]]]]
+
+Executes an {{action}} special on the current map, optionally passing it up to five numerical arguments.
+
+

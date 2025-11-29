@@ -1,0 +1,6 @@
+listmaps
+
+Dumps a list of all maps defined in {{MAPINFO}} to the console, along with their lump names. This can make locating a map that uses a non-standard lump name easier.
+ Also lists which file contains the map.
+
+

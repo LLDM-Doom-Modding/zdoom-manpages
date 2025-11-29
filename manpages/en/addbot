@@ -1,0 +1,5 @@
+addbot [name]
+
+Spawns a bot. If name is given, the corresponding bot in bots.cfg will be spawned. Otherwise, a bot will be picked at random from bots.cfg.
+
+

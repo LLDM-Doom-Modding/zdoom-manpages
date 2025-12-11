@@ -1,4 +1,4 @@
 version "3.3.0"
 
-#include "ZScript/manpages.zsc"
+#include "manpages/manpages.zsc"
 

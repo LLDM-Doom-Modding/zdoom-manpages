@@ -31,7 +31,7 @@ Identifier,Remark,Identifier,default,ru
 If no parameters are given, the command will instead log the name of the currently-played lump or file to the {{console}}.",
 ,,MANPAGES_CCMD_CHANGEMUS_EXMP,,
 ,,MANPAGES_CCMD_CHANGESKY_NAME,changesky <texture>,changesky <название текстуры>
-,,MANPAGES_CCMD_CHANGESKY_DESC,Replaces the default sky texture. This corresponds to the texture defined as sky1 in a {{MAPINFO}} {{map definition}}.,"Заменяет текущую текстуру неба, которая объявлена как 'sky1' в {{MAPINFO}} {{map definition}}.."
+,,MANPAGES_CCMD_CHANGESKY_DESC,Replaces the default sky texture. This corresponds to the texture defined as sky1 in a {{MAPINFO}} {{map definition}}.,"Заменяет текущую текстуру неба, которая объявлена как 'sky1' в {{MAPINFO}} {{map definition}}."
 ,,MANPAGES_CCMD_CHANGESKY_EXMP,"changesky rsky1\tIn Doom 2 or Doom 2-based WADs, changes the sky texture to 'RSKY1' defined in the TEXTURE1 lump.","changesky rsky1\tВ Doom 2 (или WAD, основанных на Doom 2) изменяет текстуру неба на 'RSKY1', которая объявлена в lump TEXTURE1."
 ,,MANPAGES_CCMD_CHASE_NAME,chase,
 ,,MANPAGES_CCMD_CHASE_DESC,Toggles the {{chasecam}} on and off. This is considered a {{cheat}}.,

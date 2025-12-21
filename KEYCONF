@@ -1,1 +1,3 @@
+// Type "man PAGE" in in-game console (e. g. "man summon").
+
 alias man "netevent manpages`%1"

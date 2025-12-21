@@ -1,4 +1,3 @@
 version "3.3.0"
 
 #include "manpages/manpages.zsc"
-

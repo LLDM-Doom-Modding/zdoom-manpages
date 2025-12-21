@@ -1,7 +1,0 @@
-summon <class> [angle [TID [special [args... ]]]]
-
-Spawns a new actor in front of you. A complete list of actors can be obtained with the dumpclasses actor command. For a list of actors limited to those you can place in an editor, use the dumpmapthings command. It is possible to spawn actors from another game with this command, but they will not be visible unless you provide the missing graphics for them.
- By default, the actor spawns facing East. If the optional angle parameter is provided, the actor is spawned at an angle relative to the player's current facing instead. (0 faces away from the player, while 180 faces towards him).
- Additional optional parameters can be used to set the summoned actor's {{TID}}, {{special}}, and arguments.
-
-

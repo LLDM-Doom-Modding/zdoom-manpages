@@ -1,5 +1,0 @@
-use <item>
-
-Uses an item of class type <item>, if present in the player's inventory. If the item is not present, nothing happens. For correct activation of {{Hexen}}'s {{flechettes}} from the console, see useflechette below.
-
-

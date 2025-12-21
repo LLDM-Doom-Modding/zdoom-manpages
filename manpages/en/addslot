@@ -1,5 +1,0 @@
-addslot <slot> <weapon>
-
-Adds a single weapon to the list of weapons in a weapon slot. This allows a user to select a custom weapon from a PWAD using their normal weapon selection keys.
-
-

@@ -1,5 +1,0 @@
-unset <CVAR>
-
-Undefines a user-created CVAR.
-
-

@@ -1,6 +1,0 @@
-timedemo
-
-Plays a demo as fast as the refresh rate will allow and displays the average framerate attained during playback. Due to limitations in the current demo system, this command will also exit the game when the demo finishes.
-
-
-

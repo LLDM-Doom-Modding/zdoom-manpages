@@ -1,9 +1,0 @@
-showpop <number>
-
-Display a {{Strife-style}} pop-up. The number can be:
-
- 1. Log / mission objectives
- 2. Key list
- 3. Status / weapons, ammo, and statistics
-
-

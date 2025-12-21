@@ -1,35 +1,79 @@
 //
 
-class ManpageRecord {
-	String nm;
-	String header;
-	String desc;
+class ManpageUtil abstract {
+	/// Localization of the string described by 1st argument.
+	/// Returns localized string or second arg if string cannot be found.
+	static String Locz( String langid, String empty = "" ) {
+		String localized = StringTable.Localize(
+				String.Format( "%s%s", ( langid.CharAt( 0 ) == "$"? "" : "$" ), langid )
+			);
 
-	void Beautify( void ) {
-		// Dummy beautifying.
-		int argsstartpos = header.IndexOf( " " );
+		if ( localized == langid )
+			return empty;
 
-		if ( argsstartpos != -1 )
-			header = "\c[White]" .. header.Left( argsstartpos ) .. "\c[Red]" .. header.Mid( argsstartpos ) .. "\c-";
-
-		header = "| " .. header;
-
-		desc.Replace( "{{", "\c[LightBlue]" );
-		desc.Replace( "}}", "\c-" );
-		desc = "\n|" .. desc.Mid( 1 );
-		desc.DeleteLastCharacter(); // Excess backspace.
+		return localized;
 	}
+} // of class ManpageUtil abstract {}
 
-	static ManpageRecord Create( String initnm, String initheader, String initdesc ) {
+
+class ManpageRecord {
+	String id; // LANGUAGE lump identifier, like "SUMMON".
+	//String nameid; // Pre-parsed LANGUAGE lump name identifier, like "$MANPAGES_CCMD_SUMMON_NAME".
+	//String descid; // Pre-parsed LANGUAGE lump description identifier, like "$MANPAGES_CCMD_SUMMON_DESC".
+	//String exmpid; // Pre-parsed LANGUAGE lump examples identifier, like "$MANPAGES_CCMD_SUMMON_EXMP".
+
+	String nm;
+
+	static ManpageRecord Create( String initname, String initid ) {
 		ManpageRecord newrec = new( 'ManpageRecord' );
-		newrec.nm = initnm;
-		newrec.header = initheader;
-		newrec.desc = initdesc;
-
-		newrec.Beautify();
+		newrec.nm = initname;
+		newrec.id = initid;
 
 		return newrec;
 	}
+
+
+	virtual String Get( void ) {
+		String outstr = "";
+
+		String manheader = ManpageUtil.Locz( String.Format( "MANPAGES_%s_NAME", id ) );
+		String mandesc = ManpageUtil.Locz( String.Format( "MANPAGES_%s_DESC", id ) );
+		String manexamples = ManpageUtil.Locz( String.Format( "MANPAGES_%s_EXMP", id ) );
+
+		// Dummy beautifying.
+
+		// Header (cmdname + args):
+		int argsstartpos = manheader.IndexOf( " " );
+		String mancmdname;
+
+		if ( argsstartpos != -1 ) {
+			mancmdname = manheader.Left( argsstartpos );
+			manheader = "\cj" .. mancmdname .. "\cg" .. manheader.Mid( argsstartpos ) .. "\c-";
+		} else {
+			mancmdname = manheader;
+		}
+
+		outstr = "| " .. manheader;
+
+		// Description (if exists):
+		if ( mandesc != "" ) {
+			mandesc.Replace( "{{", "\cn" );
+			mandesc.Replace( "}}", "\c-" );
+			outstr.AppendFormat( "\n|\n%s\n", mandesc );
+		} else {
+			outstr.AppendFormat( "\cu%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_NO_DESCRIPTION_MARK" ) );
+		}
+
+		// Examples (if any):
+		if ( manexamples != "" ) {
+			manexamples.Replace( "\t", "  -- " );
+			manexamples.Replace( mancmdname, "\cj" .. mancmdname .. "\c-" );
+
+			outstr.AppendFormat( "\n%s\n%s", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ), manexamples );
+		}
+	
+		return outstr;
+	} // of virtual String Get( void ) {}
 } // of class ManpageRecord {}
 
 
@@ -38,7 +82,7 @@ class ManpagesEventHandler: StaticEventHandler {
 	Array<int> configIncludeFileHandles;
 
 	/// Guardian counter to prevent recursions and infinite loops.
-	int configParsedFilesAmount;
+	private int configParsedFilesAmount;
 	const const_MaxConfigFilesAmount = 32;
 
 	/// Main storage.
@@ -48,7 +92,7 @@ class ManpagesEventHandler: StaticEventHandler {
 
 	/// Internal method just to beautify the output.
 	private String MessageFilePos( int filehandle, int filelinenum ) {
-		return String.Format( "in file '%s' pos '%i'", WADs.GetLumpFullName( filehandle ), filelinenum + 1 );
+		return String.Format( "in file '%s' line %i", WADs.GetLumpFullName( filehandle ), filelinenum + 1 );
 	}
 
 
@@ -69,39 +113,23 @@ class ManpagesEventHandler: StaticEventHandler {
 		}
 
 		if ( configParsedFilesAmount > const_MaxConfigFilesAmount + 1 )
-			ThrowAbortException( "SearchConfigFile( filename='%s', starthandle=%i ). configParsedFilesAmount is extreme (%i).", filename, starthandle, configParsedFilesAmount );
+			ThrowAbortException( "SearchConfigFile( filename='%s', starthandle=%i ). configParsedFilesAmount exceeds the limit (now %i).", filename, starthandle, configParsedFilesAmount );
 
 		return handle;
 	} // of int SearchConfigFile( String filename, int starthandle = 0 ) {}
 
-	/// Returns NULL if file "filename" cannot be found or a valid pointer otherwise.
-	ManpageRecord AddManpageFile( String pagename, String filename ) {
-		int handle = WADs.CheckNumForFullName( filename );
+
+	/// Returns NULL if LANGUAGE identifier cannot be found, or a valid pointer otherwise.
+	ManpageRecord AddManpageFile( String pagename, String langid ) {
 		ManpageRecord manpage = NULL;
 
-		if ( handle != -1 ) {
-			String filetext = WADs.ReadLump( handle );
-			String manheader = "";
-			String mandesc = "";
-
-			// Split file into header (1st line) and description (all next lines).
-			int descriptionpos = filetext.IndexOf( "\n" );
-
-			if ( descriptionpos == -1 ) {
-				console.printf( "Manpage '%s' header without newline %s.", pagename, MessageFilePos( handle, 0 ) );
-				manheader = filetext;
-			} else {
-				manheader = filetext.Left( descriptionpos );
-				mandesc = filetext.Mid( descriptionpos );
-			}
-
-			// Add new manpage record and add it to the global storage:
-			manpage = ManpageRecord.Create( pagename, manheader, mandesc );
+		if ( ManpageUtil.Locz( "$MANPAGE_" .. langid .. "_NAME" ) != "" ) {
+			manpage = ManpageRecord.Create( pagename, langid );
 			pages.Push( manpage );
 		}
 
 		return manpage;
-	} // of int AddManpageFile( String filename ) {}
+	} // of ManpageRecord AddManpageFile( String pagename, String langid ) {}
 
 
 	/// Main config files parsing method.
@@ -150,9 +178,9 @@ class ManpagesEventHandler: StaticEventHandler {
 			// Add new page to the main manpages storage:
 			} else if ( lncommand == "page" && lnargc == 3 ) {
 				if ( NULL == AddManpageFile( lnargv[ 1 ], lnargv[ 2 ] ) )
-					console.printf( "Wrong manpage '%s' path '%s' %s.", lnargv[ 1 ], lnargv[ 2 ], MessageFilePos( filehandle, i ) );
+					console.printf( "Wrong manpage '%s' with ID '%s' %s.", lnargv[ 1 ], lnargv[ 2 ], MessageFilePos( filehandle, i ) );
 
-			// Alias from one command to another.
+			// Alias from one command to another:
 			} else if ( lncommand == "alias" ) {
 				console.printf( "Not implemented: alias '%s' -> '%s' %s.", lnargv[ 1 ], lnargv[ 2 ], MessageFilePos( filehandle, i ) );
 
@@ -184,12 +212,12 @@ class ManpagesEventHandler: StaticEventHandler {
 			ParseConfigFile( configIncludeFileHandles[ 0 ] );
 		}
 
-		// 
+		// As said, no manpage configuration files was found.
 		if ( configParsedFilesAmount == 0 )
 			console.printf( "No manpage config files found." );
 
 		Super.OnRegister();
-	}
+	} // of override void OnRegister() {}
 
 	void ManpageProcess( String cmd ) {
 		// Dummy processing for now.
@@ -216,19 +244,20 @@ class ManpagesEventHandler: StaticEventHandler {
 
 		for ( int i = 0; i < pages.Size(); i++ ) {
 			if ( pages[ i ].nm == cmd ) {
-				console.printf( "%s %s", pages[ i ].header, pages[ i ].desc );
+				console.printf( "%s", pages[ i ].Get() );
 				manpagefound = true;
 				break;
 			}
 		}
 
 		if ( !manpagefound )
-			console.printf( "No manpage named '%s' found.", cmd );
+			console.printf( ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), cmd );
 	} // of void ManpageProcess( String cmd ) {}
 
 	override void NetworkProcess( ConsoleEvent e ) {
 		if ( e.Name.Left( 9 ) == "manpages`" ) {
 			ManpageProcess( e.Name.Mid( 9 ) );
+
 		}
 
 		Super.NetworkProcess( e );

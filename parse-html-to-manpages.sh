@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for checkprog in lynx; do
+for checkprog in lynx sponge; do
 	if ! command -v "$checkprog" 2>&1 > /dev/null; then
 		echo "No '$checkprog' command found required by the script."
 		exit 1
@@ -24,10 +24,11 @@ MANPAGES_OUTPUT_DIR="manpages/en/"
 
 cat "$HTMLFILE" \
 	| grep -F '<span class="mw-headline"' -A 999999 \
-	| awk 'match($0, "<div class=\"printfooter\" data-nosnippet=\"\">"){ exit; } 1' \
-	| head -n -1 \
+	| awk 'match($0, "<div class=\"printfooter\" data-nosnippet=\"\">"){ exit; } match($0, "<h2><span class=\"mw-headline\" id=\"See_Also\">See Also</span></h2>") { exit; } 1' \
 	| awk 'BEGIN {print "<html><body>"} END {print "</body></html>"} 1' \
 	> "$TRIMMEDFILE"
+
+exit 24
 
 
 # Dump file:
@@ -35,61 +36,14 @@ cat "$HTMLFILE" \
 lynx -dump "$TRIMMEDFILE" -width 99999 -list_inline > "$LINKSDUMPFILE"
 
 
-# Parse dumped HTML and split into several files:
 
 cat "$LINKSDUMPFILE" \
 	| grep -vE "^\w{2,}" \
 	| sed -E "s=\[(https?|file)://[^ ]+\]([0-9A-Za-z_\-]+)={{\2}}=g" \
-	| awk '
-	BEGIN {
-		CMD=""; HEADER=""; DESCR=""; DESCRBREAK="";
-		system( "mkdir -p '"$MANPAGES_OUTPUT_DIR"'" )
-	}
+	| sponge "$LINKSDUMPFILE"
 
-	function file_exists(file) {
-		if ( (getline _ < file) >= 0 ) {
-			return 1;
-		}
-	}
-
-	# Headers:
-	/^\s{,5}\*/ {
-		#print "\nHEADER \"" $0 "\", CMD \"" $2 "\"\n"
-
-		if ( DESCR != "" && CMD != "" ) {
-			if ( file_exists( "'"$MANPAGES_OUTPUT_DIR"'" CMD ) ) {
-				print "Overwriting file \"'"$MANPAGES_OUTPUT_DIR"'" CMD "\"."
-			} else {
-				print "New file \"'"$MANPAGES_OUTPUT_DIR"'" CMD "\"."
-			}
-
-			sub( /^\s+/, "", DESCR )
-			print HEADER "\n\n" DESCR > "'"$MANPAGES_OUTPUT_DIR"'" CMD
-		}
-
-		DESCR=""
-		DESCRBREAK=""
-		HEADER=$0
-		CMD=$2
-		sub( /^\s*\*\s*/, "", HEADER )
-	}
-
-	# Descriptions:
-	! /^\s{,5}\*/ {
-		sub( /\s+/, " " )
-		DESCR=DESCR $0 "\n"
-
-		#print "DESCR: " DESCR
-	}
-
-#	CMD && DESCR && ! /./ {
-#		if ( DESCRBREAK ) {
-#			print "EMPTY. DESCR: " DESCR
-#		} else {
-#			DESCRBREAK="1"
-#		}
-#	}
-'
+exit 23
+python3 parse-html-to-manpages.py "$LINKSDUMPFILE"
 
 
 # Cleaning:

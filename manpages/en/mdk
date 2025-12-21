@@ -1,6 +1,0 @@
-mdk [damagetype]
-
-This cheat will deal 1000000 damage to whatever is in the center of the screen, using a {{hitscan}} attack. Use a crosshair to get the exact point of what to kill. Optionally, a {{damage}} type for the attack can be specified. This is not available in {{deathmatch}} mode, even if {{sv_cheats}} is true.
- NOTE: Similar to the kill command above, this command cannot destroy actors which have {{NODAMAGE}} flag, or {{LAXTELEFRAGDMG}} with a reduced enough damagefactor property.
-
-

@@ -1,5 +1,0 @@
-countitems [class or {{TID}}]
-
-Prints a list of all countable {{items}} present in the map, each on a line of the form ClassName at (X, Y, Z). Passing a countable item's class name to the command, filters the list, listing only those with the matching class name. At the end of the list, the total count of found countable items is printed. Passing a TID instead of a class name, filters the list by TID.
-
-

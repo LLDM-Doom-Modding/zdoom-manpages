@@ -1,5 +1,0 @@
-morphme [class]
-
-Transforms you into a chicken in Heretic and a pig in Hexen and Doom (The latter only happens if you have the relevant graphics present). Additionally, if "class" is specified, it will attempt to morph you into the supplied class. This will only work if the target class is inherited from PlayerPawn, and you are not in a state that cannot otherwise morph (i.e. death).
-
-

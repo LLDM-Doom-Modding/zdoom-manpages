@@ -1,5 +1,0 @@
-invnext
-
-Selects the next {{inventory}} item you possess. In addition, it plays the "misc/invchange" sound if defined. By default it is not.
-
-

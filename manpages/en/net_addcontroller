@@ -1,5 +1,0 @@
-net_addcontroller <player>
-
-Adds a player to the list of controllers who are able to change game settings.
-
-

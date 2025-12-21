@@ -1,5 +1,0 @@
-closemenu
-
-Closes the current {{menu}}. This is mainly useful to be called from {{custom}} menus as a means to close the menu and return to the game.
-
-

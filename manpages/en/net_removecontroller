@@ -1,5 +1,0 @@
-net_removecontroller <player>
-
-Removes a player from the list of controllers.
-
-

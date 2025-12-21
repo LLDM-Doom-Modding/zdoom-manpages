@@ -1,5 +1,0 @@
-menu_endgame
-
-Asks the user if they want to end the current game, and returns to the title screen if they do.
-
-

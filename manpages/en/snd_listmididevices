@@ -1,5 +1,0 @@
-snd_listmididevices
-
-This command lists the {{MIDI}} devices available in the system. Devices in this list can be used in the {{snd_mididevice}} cvar to select which device plays music. Devices with negative numbers are provided by {{ZDoom}} itself.
-
-

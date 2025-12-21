@@ -1,5 +1,0 @@
-set <CVAR> <value>
-
-Sets CVAR to value. If CVAR does not exist, it will be created.
-
-

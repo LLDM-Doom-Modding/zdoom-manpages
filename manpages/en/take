@@ -1,5 +1,0 @@
-take <item> <amount>
-
-Takes an item away from the player. Amount specifies how many to take away (if applicable). Can be used to damage the player by using "take health X", where X is the amount of damage to do. If the player reaches 0 health this way, he will die. Use the command printinv for a full list of what is in the player's inventory.
-
-

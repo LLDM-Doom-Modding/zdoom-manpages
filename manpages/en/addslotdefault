@@ -1,5 +1,0 @@
-addslotdefault <slot> <weapon>
-
-Adds a single weapon to the list of weapons in a weapon slot, but only if that weapon is not already in a slot. If the weapon is already present in a slot (either the slot specified to addslotdefault or some other slot), then this command does nothing. When used inside a {{KEYCONF}} lump, this command must be preceded by a {{weaponsection}} command.
-
-

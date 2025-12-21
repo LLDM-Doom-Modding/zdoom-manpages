@@ -1,7 +1,0 @@
-open <path & filename> [dm|coop]
-
-Opens the given file and loads the first map found in it. The rest of the loaded file is ignored — custom graphics and sounds, {{MAPINFO}} and actor definitions, maps beyond the first, etc., all that are ignored. The map name and slot will be the provided file name, rather than the map's actual slot within the file. Inventory and health are reset as if starting a new game. This command cannot be used in {{multiplayer}} mode. Like with map, the dm or coop keyword can be added to set the game mode to emulated {{multiplayer}}. Without this keyword the game mode defaults to single-player.
-
-
- These commands can be used to test various {{ZDoom}} features directly.
-

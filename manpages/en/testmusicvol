@@ -1,7 +1,0 @@
-testmusicvol [<volume>]
-
-Allows to change the relative music volume of the current song without changing {{snd_musicvolume}}. The baseline is 1.0. This can be used to test the effect that a [file://localhost/wiki/SNDINFO#musicvolume]$musicvolume entry for the current song in {{SNDINFO}} would have.
-
-
- These commands can be used to alter or test various aspects of the game's renderer or game display.
-

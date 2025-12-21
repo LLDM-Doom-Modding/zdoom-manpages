@@ -1,5 +1,0 @@
-itemsnum [class or TID]
-
-Prints the total count of all items present in the map. Passing an item's class name to the command, prints the total count of that class only. Passing a TID instead of a class name, prints the total count of items with the matching TID.
-
-

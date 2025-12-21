@@ -1,5 +1,0 @@
-summonfoe <class> [angle [TID [special [args... ]]]]
-
-Same as summon, but forces monsters created using this command to be hostile to the player, regardless of the actor's {{FRIENDLY}}.
-
-

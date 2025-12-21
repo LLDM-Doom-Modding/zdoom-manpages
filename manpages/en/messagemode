@@ -1,5 +1,0 @@
-messagemode
-
-Enters message entry mode. Anything typed while in this mode will be sent to everyone else as if you had used the say command once you press enter.
-
-

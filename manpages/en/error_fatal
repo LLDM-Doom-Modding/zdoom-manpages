@@ -1,5 +1,0 @@
-error_fatal <message>
-
-Simulates a fatal error by exiting the game completely and showing the error-message.
-
-

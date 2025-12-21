@@ -1,5 +1,0 @@
-gl_resetmap
-
-Resets various internal variables used by the OpenGL renderer to the values from their associated {{CVARs}}. Concerned variables are: {{gl_lightmode}}, {{gl_nocoloredspritelighting}}, {{gl_notexturefill}}, and {{gl_brightfog}}.
-
-

@@ -1,5 +1,0 @@
-playlist <playlist.m3u> [shuffle|position]
-
-Loads a WinAmp .m3u playlist. Any music that would normally be played will be ignored, and the songs in the playlist will be played instead. If you add the word shuffle after the name of the .m3u file, the playlist will be replayed in a random order. In place of shuffle, you can also specify position, a number corresponding to the song number in the playlist you want to play first.
-
-

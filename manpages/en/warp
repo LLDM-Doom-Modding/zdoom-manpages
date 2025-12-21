@@ -1,6 +1,0 @@
-warp <x-coord> <y-coord> [z-coord]
-
-Sends you to the specified coordinates immediately. This can be used with {{idmypos}} to debug problems in a specific area of a map.
-
-
-

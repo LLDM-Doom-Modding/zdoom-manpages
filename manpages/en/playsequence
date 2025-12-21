@@ -1,5 +1,0 @@
-playsequence <sequence> [<number>]
-
-Plays a {{sound}} sequence on the local machine. If a number is not given, 0 is used. The sequence must be defined in {{SNDSEQ}}.
-
-

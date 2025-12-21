@@ -1,6 +1,0 @@
-toggle <{{cvar}}>
-
-Toggles the value of cvar between false and true (zero and non-zero).
-
-
-

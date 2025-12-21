@@ -1,5 +1,0 @@
-utid [start [limit]]
-
-Prints an unused {{TID}}. If start is 0 or omitted, then a random TID will be chosen. Otherwise, it will perform a linear search starting from start_tid. If limit is given and non-0, then it will not check more than <limit> number of TIDs. Prints 0 if no suitable TID was found.
-
-

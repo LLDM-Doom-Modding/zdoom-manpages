@@ -1,5 +1,0 @@
-dir [path/][pattern]
-
-This command lists the contents of a directory. It supports wildcards (but will not recurse into multiple directories). If path is not specified, it will display the contents of the directory the game was run from.
-
-

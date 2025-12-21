@@ -1,5 +1,0 @@
-testblend <color> <amount>
-
-Sets the {{palette}} blend to a specified color and amount. color can be either a color name defined in the {{X11R6RGB}} lump or a color string.amount can be a number between 0.0 and 1.0 inclusive and specifies how much of <color> should be mixed with the palette, with 0.0 being no mixing and 1.0 being full mixing.
-
-

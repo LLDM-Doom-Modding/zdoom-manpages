@@ -2,8 +2,23 @@
 
 set -ex
 
-cd en
+# Pipe through tempfile because "set -x" in "echo $VAR" is too verbose.
+TEMPFILE="$(mktemp)"
+cat "raw_data/all_ccmds.txt" | sort > "$TEMPFILE"
 
-ls | sed -E "s=.+$=page & en/&=1" | column -t --output-separator " " > ../manpages-wiki-autosync.cfg
 
-ls +* | sed -E "s=\+(.+)$=alias \1 +\1=1" | column -t --output-separator " " >> ../manpages-wiki-autosync.cfg
+# Main pages, "page CMDNAME LANGUAGE_IDENTIFIER":
+cat "$TEMPFILE" \
+	| awk '/^[^-+]/ { print "page " $0 " CCMD_" toupper( $0 ) }' \
+	| column -t --output-separator " " \
+	> manpages-wiki-autosync.cfg
+
+
+# Aliases, "alias ALTNAME CMDNAME":
+cat "$TEMPFILE" \
+	| awk '/^[-+]/ { NM = $0; sub( /^./, "", NM ); print "alias " $0 " " NM }' \
+	| column -t --output-separator " " \
+	>> manpages-wiki-autosync.cfg
+
+
+rm "$TEMPFILE"

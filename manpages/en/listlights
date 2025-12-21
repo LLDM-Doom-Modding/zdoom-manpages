@@ -1,5 +1,0 @@
-listlights
-
-Prints a list of all {{dynamic}} lights, either attached or stand-alone, as well as their position, color, and radius, and the number of walls and subsectors that are affected by them.
-
-

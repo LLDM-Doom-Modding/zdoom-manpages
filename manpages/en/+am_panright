@@ -1,5 +1,0 @@
-+am_panright
-
-If the {{am_followplayer}} CVAR is false, the view of the map moves rightward (to the East).
-
-

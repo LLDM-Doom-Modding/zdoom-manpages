@@ -1,5 +1,0 @@
-+am_pandown
-
-If the {{am_followplayer}} CVAR is false, the view of the map moves downward (to the South).
-
-

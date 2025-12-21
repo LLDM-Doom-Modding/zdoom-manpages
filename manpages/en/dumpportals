@@ -1,5 +1,0 @@
-dumpportals
-
-Sends to the logfile a complete report on all {{portals}} used in the map, listing for each which subsectors are covered by which others.
-
-

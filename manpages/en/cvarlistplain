@@ -1,5 +1,0 @@
-cvarlistplain
-
-This command works similarly to {{cvarlist}}, except it does not include flag information or list user-created {{CVARs}}. Its primary purpose is to provide a simple list of cvars that can be exported and checked against this file to ensure it is complete.
-
-

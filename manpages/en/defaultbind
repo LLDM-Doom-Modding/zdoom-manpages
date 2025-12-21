@@ -1,5 +1,0 @@
-defaultbind <key> <command>
-
-Binds command to the key if and only if key is not already bound and there are no keys already bound to command. This can be useful in {{KEYCONF}} lumps to create a default binding for a command without overwriting the user's preference.
-
-

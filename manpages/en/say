@@ -1,5 +1,0 @@
-say <message>
-
-Sends a message to everyone playing. If your message begins with "/me" then "/me" will be replaced by your name ala IRC.
-
-

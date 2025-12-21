@@ -1,7 +1,0 @@
-rebind <command>
-
-Changes the binding for the key that caused the rebind command to execute. For obvious reasons, this command cannot be used directly from the console.
- For example, this command will cause the first press of b to echo "setting 1" to the console. All future presses of b will echo "setting 2" instead.:
-
-
-

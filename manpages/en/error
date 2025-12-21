@@ -1,5 +1,0 @@
-error <message>
-
-Simulates an error by killing the current game and falling back to the fullscreen {{console}} with the specified message.
-
-

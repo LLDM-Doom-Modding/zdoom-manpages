@@ -1,5 +1,0 @@
-gl_flush
-
-Flushes out all textures from video memory.
-
-

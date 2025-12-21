@@ -1,5 +1,0 @@
-countdecalsreal
-
-Iterates through every automatically generated decal in the level and returns how many are present. Compare this value with what countdecals returns to ensure that the internal count is accurate.
-
-

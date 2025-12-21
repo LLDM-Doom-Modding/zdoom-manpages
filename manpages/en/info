@@ -1,5 +1,0 @@
-info [verbose]
-
-Prints a lot of information about the actor the player is looking at. It is however unable to detect actors which have a radius or height of 0, or actors with the NOBLOCKMAP flag. If verbose is 0, only the actor name, health, and starting health are displayed.
-
-

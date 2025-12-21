@@ -1,5 +1,0 @@
-initpolymosttest [<value>]
-
-Used to proceed to tests in the uncompleted {{Polymost}} renderer. An optional value between 1 and 5 can be given (1: shorter top edge; 2: shorter bottom edge; 3: shorter left edge; 4: shorter right edge; 5: predefined values). In any case, the command has no obvious effect.
-
-

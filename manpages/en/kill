@@ -1,7 +1,0 @@
-kill [class]
-
-Used by itself, this kills the player. Alternatively, you can specify "kill monsters" to kill every monster in the level or "kill baddies" to kill every unfriendly monster in the level. Note that this command also prevents actors which normally spawn other actors on death (e.g. the Pain Elemental) from doing so.
- If a class is specified, this kills all actors of that type in the map.
- NOTE: This command cannot destroy actors which have {{NODAMAGE}} flag. However, this can be worked around by giving it {{PainChance}} "Massacre", 256. Simply have the monster perform {{A_ChangeFlag}} to remove the flag, and call {{A_Die}}("Extreme") after a one tic delay passes.
-
-

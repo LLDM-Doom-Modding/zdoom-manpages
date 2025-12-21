@@ -1,5 +1,0 @@
-togglemessages
-
-Toggles display of game messages on/off. The only difference between doing this and "{{toggle}} {{show_messages}}" is that this command always displays a message describing the current state of messages.
-
-

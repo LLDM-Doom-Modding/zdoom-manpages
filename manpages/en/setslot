@@ -1,5 +1,0 @@
-setslot <slot> [<weapon1> [<weapon2> [...]]] ({{deprecated}})
-
-Clears the given weapon slot entirely, then fill it with the given weapons. If no slot is specified and no slots are given, the command prints to the console how the slots are currently filled. As of ZDoom 2.3.0, this has been deprecated and new ways of adding weapon slots are available, such as the {{Player}}.WeaponSlot or {{Weapon}}.SlotNumber property.
-
-

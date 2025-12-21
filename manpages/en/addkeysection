@@ -1,5 +1,0 @@
-addkeysection <menu heading> <ini section>
-
-This command does two things. First, it adds a new heading to the controls menu using the menu heading parameter. You can use the addmenukey command to add your own custom keys beneath this heading. Second, it loads all the bindings from the corresponding ini section in the user's ini file. You can use this command multiple times to create different sections in the menu and ini for different sets of commands. If you use a menu heading that was already added to the menu, new controls added with addmenukey will appear at the end of that section, but the bindings will not be reloaded from the ini.
-
-

@@ -1,5 +1,0 @@
-hiddencompatflags
-
-Prints the hex values of three compatibility flags fields. This allows to check whether any {{MAPINFO}} settings or {{automatic}} compatibility are enforcing certain {{compatibility}} options.
-
-

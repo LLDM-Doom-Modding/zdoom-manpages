@@ -1,5 +1,0 @@
-drop <item> [amount]
-
-Drops the given item, if there is at least that much in the player's inventory. Items with the {{INVENTORY}}.UNDROPPABLE or {{INVENTORY}}.UNTOSSABLE flags cannot be dropped. amount specifies the number of samples the dropped item contains. The command cannot drop more than what is available in the inventory.
-
-

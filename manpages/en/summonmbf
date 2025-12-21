@@ -1,5 +1,0 @@
-summonmbf <class> [angle]
-
-Same as summonfriend, but also gives the summoned actor the {{NOBLOCKMONST}} flag, allowing them to cross monster-blocking lines like MBF friendly monsters do.
-
-

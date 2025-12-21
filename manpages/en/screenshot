@@ -1,5 +1,0 @@
-screenshot [file]
-
-Dumps {{a}} copy of the screen to disk as a PNG or PCX file. If file is not specified, the screenshot filename will be in a set format which include the name of the IWAD being used and the time the shot was taken.
-
-

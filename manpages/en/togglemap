@@ -1,5 +1,0 @@
-togglemap
-
-Press to active the {{automap}}. Press again to return to the game. If {{am_overlay}} is true, this is also used toggle the overlay map.
-
-

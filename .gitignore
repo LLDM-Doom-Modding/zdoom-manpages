@@ -1,3 +1,5 @@
 _launch.sh
 _lastrun*.*
 _temp*.txt
+
+__pycache__

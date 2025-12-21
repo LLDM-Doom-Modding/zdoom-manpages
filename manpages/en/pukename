@@ -1,6 +1,0 @@
-pukename <script> [always] [arg1 [arg2 [arg3]]]
-
-Executes a {{named}} script on the current map, optionally passing it up to three numerical arguments. If you try this on {{multiplayer}}, {{sv_cheats}} must normally be enabled. However, if the script has the "net" keyword, it can be activated by anyone in a multiplayer game.
- If the always keyword is placed after the script name (and before any optional argument), the script will be executed as if it had been called by {{ACS_NamedExecuteAlways}}; otherwise it will be executed as if called by {{ACS_NamedExecute}}.
-
-

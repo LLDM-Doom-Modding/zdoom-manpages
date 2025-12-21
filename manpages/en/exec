@@ -1,5 +1,0 @@
-exec <file>
-
-Executes a series of commands stored in the script-file as if they had been typed in at the console directly.
-
-

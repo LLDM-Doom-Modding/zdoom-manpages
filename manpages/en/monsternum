@@ -1,5 +1,0 @@
-monsternum [class or TID]
-
-Prints the total count of all living, unfriendly monsters present in the map. Passing a monster's class name to the command, prints the total count of that class only. Passing a TID instead of a class name, prints the total count of monsters with the matching TID.
-
-

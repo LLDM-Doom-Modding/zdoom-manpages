@@ -1,5 +1,0 @@
-linetarget [verbose]
-
-Will make the game display the actor name, health, and starting health of the monster the player is looking directly at. If verbose is non-zero, additional information is displayed, similar to that printed by {{info}}.
-
-

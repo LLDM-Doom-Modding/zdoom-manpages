@@ -1,5 +1,0 @@
-testfade <color>
-
-Temporarily sets the {{fade}} color of the current level to color. Most levels fade to black by default, but this can be changed with the MAPINFO lump. color can be either a color defined in the {{X11R6RGB}} lump or a color string.
-
-

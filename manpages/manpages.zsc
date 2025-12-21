@@ -107,13 +107,14 @@ class ManpagesEventHandler: StaticEventHandler {
 		else
 			handle = WADs.FindLump( filename, starthandle );
 
-		if ( handle != -1 ) {
+		if ( configParsedFilesAmount > const_MaxConfigFilesAmount ) {
+			console.printf( "Tried to add too many config files (%i) when processing include path '%s'.", const_MaxConfigFilesAmount, filename );
+			handle = -1;
+
+		} else if ( handle != -1 ) {
 			configIncludeFileHandles.Push( handle );
 			configParsedFilesAmount++;
 		}
-
-		if ( configParsedFilesAmount > const_MaxConfigFilesAmount + 1 )
-			ThrowAbortException( "SearchConfigFile( filename='%s', starthandle=%i ). configParsedFilesAmount exceeds the limit (now %i).", filename, starthandle, configParsedFilesAmount );
 
 		return handle;
 	} // of int SearchConfigFile( String filename, int starthandle = 0 ) {}
@@ -167,13 +168,7 @@ class ManpagesEventHandler: StaticEventHandler {
 			// Add new file to the parsing stack:
 			if ( lncommand == "include" && lnargc == 2 ) {
 				if ( -1 == SearchConfigFile( lnargv[ 1 ], -1 ) )
-					console.printf( "Unknown include path '%s' %s.", lnargv[ 1 ], MessageFilePos( filehandle, i ) );
-
-				if ( configIncludeFileHandles.Size() > const_MaxConfigFilesAmount ) {
-					console.printf( "Added too many config files (%i) when processing include path '%s' %s.",
-									const_MaxConfigFilesAmount, lnargv[ 1 ], MessageFilePos( filehandle, i ) );
-					break; // Too many files opened, the guardian blocks execution.
-				}
+					console.printf( "Wrong include path '%s' %s.", lnargv[ 1 ], MessageFilePos( filehandle, i ) );
 
 			// Add new page to the main manpages storage:
 			} else if ( lncommand == "page" && lnargc == 3 ) {

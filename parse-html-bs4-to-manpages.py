@@ -1,6 +1,7 @@
 import os
 import csv
 import re
+import sys
 from bs4 import BeautifulSoup, NavigableString
 
 # General file info:
@@ -62,16 +63,20 @@ def parse_config(file_path, mapping):
 					# Map HTML_ID -> BASE_IDENTIFIER
 					mapping[parts[1]] = parts[2]
 			elif cmd == 'alias':
-				# Ignore aliases as per instructions
+				# Ignore aliases.
 				continue
 			else:
 				print(f"Warning: Unknown keyword '{cmd}' in config.")
 
 def main():
-	html_file = 'ccmd-Debug_trimmed_4test.html'
+	if len( sys.argv ) == 2:
+		html_file = sys.argv[ 1 ]
+	else:
+		html_file = 'United_CCMDs_for_parse.html'
+
 	config_file = 'manpages/manpages-wiki-autosync.cfg'
 	csv_file = 'LANGUAGE.autosync.csv'
-	
+
 	# 1. Load Configuration
 	# html_id -> base_id (e.g., 'error_fatal' -> 'ERRORFATAL')
 	id_map = {}

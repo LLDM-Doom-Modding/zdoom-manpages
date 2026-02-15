@@ -234,6 +234,9 @@ class ManpagesEventHandler: StaticEventHandler {
 			return;
 		}
 
+		// Empty string results in help about `man` itself.
+		if ( cmd == "" )
+			cmd = "man";
 
 		bool manpagefound = false;
 

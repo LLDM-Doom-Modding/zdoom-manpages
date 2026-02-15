@@ -7,3 +7,13 @@ Identifier,Remark,Identifier,default,ru
 ,,MANPAGES_GENERAL_NO_DESCRIPTION,"(No description provided.)","(Описания нет.)"
 ,,MANPAGES_GENERAL_EXAMPLES,"Examples: ","Примеры: "
 ,,,,
+,,MANPAGES_CCMD_MAN_NAME,man <list|COMMAND>,man <list|КОМАНДА>
+,,MANPAGES_CCMD_MAN_DESC,"Main manpages utility command. Prints a help for the specified COMMAND and its usage examples, if available.
+ - ""{{man list}}"" lists all known commands.
+ - ""{{man COMMAND}}"" (e. g. ""man summon"" or ""man linetarget"") prints a help for this command.","Основная команда manpages. Выводит справку по указанной КОМАНДЕ, а также примеры использования, если таковые есть.
+ - ""{{man list}}"" выведет список всех известных команд.
+ - ""{{man COMMAND}}"" (например, ""man summon"" или ""man linetarget"") покажет справку по заданной команде."
+,,MANPAGES_CCMD_MAN_EXMP,,
+,,MANPAGES_CCMD_MANSEARCH_NAME,man-search <PATTERN>  OR  mas <PATTERN>,man-search <ШАБЛОН ПОИСКА>  ИЛИ  mas <ШАБЛОН ПОИСКА>
+,,MANPAGES_CCMD_MANSEARCH_DESC,"[Work-in-progress] Search for PATTERN across all the manpages. The PATTERN can consist of several words.","[В разработке] Ищет ШАБЛОН по всем командам manpages. ШАБЛОН может состоять из нескольких слов."
+,,MANPAGES_CCMD_MANSEARCH_EXMP,,

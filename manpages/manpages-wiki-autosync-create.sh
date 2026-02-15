@@ -16,8 +16,8 @@ cat "$TEMPFILE" \
 
 # Aliases, "alias ALTNAME CMDNAME":
 cat "$TEMPFILE" \
-	| awk '/^[-+]/ { NM = $0; sub( /^./, "", NM ); print "alias " $0 " " NM }' \
-	| column -t --output-separator " " \
+	| awk '/^[-+]/ { NM = substr($0, 2); if ( $0 ~ "^+" ) { print "page \t " NM "\tCCMD_" toupper( NM ); } print "alias\t" $0 "\t" NM }' \
+	| column -t --separator "	" --output-separator " " \
 	>> manpages-wiki-autosync.cfg
 
 

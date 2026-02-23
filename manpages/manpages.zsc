@@ -58,7 +58,7 @@ class ManpageRecord {
 
 		// Aliases (if any):
 		if ( aliases.Size() != 0 ) {
-			outstr.AppendFormat( "\n|  \cu%s \cj%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), nm );
+			outstr.AppendFormat( " \cu%s \cj%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), nm );
 
 			for ( int i = 0; i < aliases.Size(); i++ )
 				outstr.AppendFormat( "\n|  \cu%s \cj%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), aliases[ i ] );
@@ -70,7 +70,7 @@ class ManpageRecord {
 			mandesc.Replace( "}}", TEXTCOLOR_NORMAL );
 			outstr.AppendFormat( "\n|\n%s\n", mandesc );
 		} else {
-			outstr.AppendFormat( "\cu%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_NO_DESCRIPTION" ) );
+			outstr.AppendFormat( "\n\cu%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_NO_DESCRIPTION" ) );
 		}
 
 		// Examples (if any):
@@ -297,16 +297,17 @@ class ManpagesEventHandler: StaticEventHandler {
 		if ( cmd ~== "list" ) {
 			int pagessize = pages.Size();
 
-			String liststr = "[";
+			String liststr = "";
 
-			for ( int i = 0; i < pagessize - 1; i++ ) {
-				liststr.AppendFormat( "%s, ", pages[ i ].nm );
+			for ( int i = 0; i < pagessize; i++ ) {
+				if ( pages[ i ].aliases.Size() > 0 )
+					liststr.AppendFormat( "%s %s+ %i alias(es)%s, ", pages[ i ].nm, TEXTCOLOR_DARKGRAY, pages[ i ].aliases.Size(), TEXTCOLOR_NORMAL );
+				else
+					liststr.AppendFormat( "%s, ", pages[ i ].nm );
 			}
 
-			if ( pagessize > 0 )
-				liststr.AppendFormat( "%s]", pages[ pagessize - 1 ].nm );
-			else
-				liststr = "[]";
+			liststr = "[" .. liststr.Left( liststr.Length() - 2 ) .. "]";
+
 
 			console.printf( liststr );
 			return;

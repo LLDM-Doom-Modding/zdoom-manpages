@@ -49,7 +49,7 @@ class ManpageRecord {
 
 		if ( argsstartpos != -1 ) {
 			mancmdname = manheader.Left( argsstartpos );
-			manheader = TEXTCOLOR_WHITE .. mancmdname .. TEXTCOLOR_RED .. manheader.Mid( argsstartpos ) .. TEXTCOLOR_NORMAL;
+			manheader = TEXTCOLOR_BRICK .. mancmdname .. TEXTCOLOR_RED .. manheader.Mid( argsstartpos ) .. TEXTCOLOR_NORMAL;
 		} else {
 			mancmdname = manheader;
 		}
@@ -75,11 +75,56 @@ class ManpageRecord {
 
 		// Examples (if any):
 		if ( manexamples != "" ) {
-			manexamples.Replace( mancmdname, "\cj" .. mancmdname .. "\cg" );
-			manexamples.Replace( "\t", "  \cu-- \c-" );
+			Array<String> examples, eheaders, edescs;
+			int maxheaderlength = 0;
 
-			outstr.AppendFormat( "\n%s\n%s", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ), manexamples );
-		}
+			manexamples.Split( examples, "\n", TOK_KEEPEMPTY );
+
+			// Split by header/desc, find max header length and apply special colors.
+			for ( int i = 0; i < examples.Size(); i++ ) {
+				int tabindex = examples[ i ].IndexOf( "\t" );
+
+				if ( tabindex != -1 ) {
+					String eheader = examples[ i ].Left( tabindex );
+					String edesc = examples[ i ].Mid( tabindex + 1 );
+
+					edesc.Replace( "{{", TEXTCOLOR_LIGHTBLUE );
+					edesc.Replace( "}}", TEXTCOLOR_NORMAL );
+
+		            eheader.Replace( mancmdname, TEXTCOLOR_BRICK .. mancmdname .. TEXTCOLOR_RED );
+					eheader.Replace( "{{", TEXTCOLOR_LIGHTBLUE );
+					eheader.Replace( "}}", TEXTCOLOR_RED );
+
+					int eheaderlength = eheader.Length();
+
+					eheaders.Push( eheader );
+					edescs.Push( edesc );
+
+					if ( eheaderlength > maxheaderlength )
+						maxheaderlength = eheaderlength;
+
+					//examples[ i ] = "";
+				} else {
+					examples[ i ].Replace( "{{", TEXTCOLOR_LIGHTBLUE );
+					examples[ i ].Replace( "}}", TEXTCOLOR_NORMAL );
+
+					eheaders.Push( "" );
+					edescs.Push( "" );
+				}
+			}
+
+			outstr.AppendFormat( "\n%s\n", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ) );
+
+			String headerformat = String.Format( "%%-%is", ( maxheaderlength > 22? 22 : maxheaderlength ) );
+
+			// Print all examples in proper format.
+			for ( int i = 0; i < examples.Size(); i++ ) {
+				if ( eheaders[ i ] != "" )
+					outstr.AppendFormat( headerformat .. " \cu- \c-%s\n", eheaders[ i ], edescs[ i ] );
+				else
+					outstr.AppendFormat( "%s\n", examples[ i ] );
+			}
+		} // of if ( manexamples != "" ) {}
 
 		return outstr;
 	} // of virtual String Get( void ) {}

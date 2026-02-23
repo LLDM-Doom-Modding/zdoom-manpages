@@ -3,17 +3,27 @@ Identifier,Remark,Identifier,default,ru
 ,,,,
 ,,MANPAGES_GENERAL_ABOUT,"ZDoom manpages project version 0.2","Проект ZDoom manpages версии 0.2"
 ,,,,
-,,MANPAGES_GENERAL_NO_PAGE,"No manpage named '%s' found. ","Не найдено man-страницы с названием '%s'."
+,,MANPAGES_GENERAL_NO_PAGE,"No manpage named '%s' found.","Не найдено man-страницы с названием '%s'."
 ,,MANPAGES_GENERAL_NO_DESCRIPTION,"(No description provided.)","(Описания нет.)"
 ,,MANPAGES_GENERAL_EXAMPLES,"Examples: ","Примеры: "
+,,MANPAGES_GENERAL_ALIAS_PREFIX,"Alias:","Или:"
 ,,,,
-,,MANPAGES_CCMD_MAN_NAME,man <list|COMMAND>,man <list|КОМАНДА>
+,,MANPAGES_CCMD_MAN_NAME,man <COMMAND|list|help>,man <КОМАНДА|list|help>
 ,,MANPAGES_CCMD_MAN_DESC,"Main manpages utility command. Prints a help for the specified COMMAND and its usage examples, if available.
+ - ""{{man COMMAND}}"" (e. g. ""man summon"" or ""man linetarget"") prints a help for this command.
  - ""{{man list}}"" lists all known commands.
- - ""{{man COMMAND}}"" (e. g. ""man summon"" or ""man linetarget"") prints a help for this command.","Основная команда manpages. Выводит справку по указанной КОМАНДЕ, а также примеры использования, если таковые есть.
+ - ""{{man help}}"" prints this help.","Основная команда manpages. Выводит справку по указанной КОМАНДЕ, а также примеры использования, если таковые есть.
+ - ""{{man COMMAND}}"" (например, ""man summon"" или ""man linetarget"") покажет справку по заданной команде.
  - ""{{man list}}"" выведет список всех известных команд.
- - ""{{man COMMAND}}"" (например, ""man summon"" или ""man linetarget"") покажет справку по заданной команде."
-,,MANPAGES_CCMD_MAN_EXMP,,
-,,MANPAGES_CCMD_MANSEARCH_NAME,man-search <PATTERN>  OR  mas <PATTERN>,man-search <ШАБЛОН ПОИСКА>  ИЛИ  mas <ШАБЛОН ПОИСКА>
+ - ""{{man help}}"" выведет эту справку."
+,,MANPAGES_CCMD_MAN_EXMP,"man dumpclasses\tPrints help for command {{dumpclasses}}.
+man menu_quit\tPrints help for the command {{menu_quit}}.
+man +zoom\tPrints help for hold/unhold commands {{+zoom}}/{{-zoom}}.
+man list\tLists (dumps) all available manpages.
+man help\tPrints this help.
+man -h\tSame as above for the convenience of Linux/MacOS terminal users (also recognizes {{man --help}}).
+man /?\tSame as above for the convenience of Windows cmd.exe users (also recognizes just {{man ?}}).
+",
+,,MANPAGES_CCMD_MANSEARCH_NAME,man-search <PATTERN>,man-search <ШАБЛОН ПОИСКА>
 ,,MANPAGES_CCMD_MANSEARCH_DESC,"[Work-in-progress] Search for PATTERN across all the manpages. The PATTERN can consist of several words.","[В разработке] Ищет ШАБЛОН по всем командам manpages. ШАБЛОН может состоять из нескольких слов."
 ,,MANPAGES_CCMD_MANSEARCH_EXMP,,

@@ -23,6 +23,7 @@ class ManpageRecord {
 	//String exmpid; // Pre-parsed LANGUAGE lump examples identifier, like "$MANPAGES_CCMD_SUMMON_EXMP".
 
 	String nm;
+	Array<String> aliases;
 
 	static ManpageRecord Create( String initname, String initid ) {
 		ManpageRecord newrec = new( 'ManpageRecord' );
@@ -48,17 +49,25 @@ class ManpageRecord {
 
 		if ( argsstartpos != -1 ) {
 			mancmdname = manheader.Left( argsstartpos );
-			manheader = "\cj" .. mancmdname .. "\cg" .. manheader.Mid( argsstartpos ) .. "\c-";
+			manheader = TEXTCOLOR_WHITE .. mancmdname .. TEXTCOLOR_RED .. manheader.Mid( argsstartpos ) .. TEXTCOLOR_NORMAL;
 		} else {
 			mancmdname = manheader;
 		}
 
 		outstr = "| " .. manheader;
 
+		// Aliases (if any):
+		if ( aliases.Size() != 0 ) {
+			outstr.AppendFormat( "\n|  \cu%s \cj%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), nm );
+
+			for ( int i = 0; i < aliases.Size(); i++ )
+				outstr.AppendFormat( "\n|  \cu%s \cj%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), aliases[ i ] );
+		}
+
 		// Description (if exists):
 		if ( mandesc != "" ) {
-			mandesc.Replace( "{{", "\cn" );
-			mandesc.Replace( "}}", "\c-" );
+			mandesc.Replace( "{{", TEXTCOLOR_LIGHTBLUE );
+			mandesc.Replace( "}}", TEXTCOLOR_NORMAL );
 			outstr.AppendFormat( "\n|\n%s\n", mandesc );
 		} else {
 			outstr.AppendFormat( "\cu%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_NO_DESCRIPTION" ) );
@@ -94,6 +103,17 @@ class ManpagesEventHandler: StaticEventHandler {
 	private String MessageFilePos( int filehandle, int filelinenum ) {
 		return String.Format( "in file '%s' line %i", WADs.GetLumpFullName( filehandle ), filelinenum + 1 );
 	}
+
+	/// Searches for a manpage by page name.
+	/// Returns `ManpageRecord` or NULL if manpage not found.
+	protected ManpageRecord FindPageByName( String pagename ) {
+		for ( int i = 0; i < pages.Size(); i++ ) {
+			if ( pages[ i ].nm == pagename )
+				return pages[ i ];
+		}
+
+		return NULL;
+	} // of protected ManpageRecord FindPageByName( String pagename ) {}
 
 
 	/// Seaches for a given file name in a global namespace.
@@ -131,6 +151,16 @@ class ManpagesEventHandler: StaticEventHandler {
 
 		return manpage;
 	} // of ManpageRecord AddManpageFile( String pagename, String langid ) {}
+
+	ManpageRecord AddManpageAlias( String pagename, String pagealias ) {
+		ManpageRecord page = FindPageByName( pagename );
+
+		if ( !page )
+			return NULL; // Manpage for alias not found.
+
+		page.aliases.Push( pagealias );
+		return page;
+	}
 
 
 	/// Main config files parsing method.
@@ -177,7 +207,10 @@ class ManpagesEventHandler: StaticEventHandler {
 
 			// Alias from one command to another:
 			} else if ( lncommand == "alias" ) {
-				console.printf( "Not implemented: alias '%s' -> '%s' %s.", lnargv[ 1 ], lnargv[ 2 ], MessageFilePos( filehandle, i ) );
+				if ( NULL == AddManpageAlias( lnargv[ 2 ], lnargv[ 1 ] ) )
+					console.printf( "Wrong manpage '%s' to link with alias '%s' %s.", lnargv[ 2 ], lnargv[ 1 ], MessageFilePos( filehandle, i ) );
+
+				//console.printf( "Not implemented: alias '%s' -> '%s' %s.", lnargv[ 1 ], lnargv[ 2 ], MessageFilePos( filehandle, i ) );
 
 			} else {
 				console.printf( "Unknown command '%s' with argc %i %s.", lncommand, lnargc, MessageFilePos( filehandle, i ) );
@@ -234,21 +267,37 @@ class ManpagesEventHandler: StaticEventHandler {
 			return;
 		}
 
-		// Empty string results in help about `man` itself.
-		if ( cmd == "" )
+		// Empty string and some other "keywords" results in help about `man` itself.
+		if ( cmd == "" || cmd == "help" || cmd == "-h" || cmd == "--help" || cmd == "/?" || cmd == "?" )
 			cmd = "man";
 
-		bool manpagefound = false;
+		ManpageRecord foundpage = NULL;
 
 		for ( int i = 0; i < pages.Size(); i++ ) {
-			if ( pages[ i ].nm == cmd ) {
-				console.printf( "%s", pages[ i ].Get() );
-				manpagefound = true;
-				break;
-			}
-		}
+			ManpageRecord page = pages[ i ];
 
-		if ( !manpagefound )
+			if ( page.nm == cmd ) {
+				// Compare command name.
+				foundpage = page;
+				break;
+
+			} else if ( page.aliases.Size() != 0 ) {
+				// Compare command aliases (if any).
+				for ( int j = 0; j < page.aliases.Size(); j++ ) {
+					if ( page.aliases[ j ] == cmd ) {
+						foundpage = page;
+						break; // For aliases/`j` cycle.
+					}
+				}
+
+				if ( foundpage )
+					break; // For pages/`i` cycle.
+			}
+		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
+
+		if ( foundpage )
+			console.printf( "%s", foundpage.Get() );
+		else
 			console.printf( "\cu" .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), cmd );
 	} // of void ManpageProcess( String cmd ) {}
 

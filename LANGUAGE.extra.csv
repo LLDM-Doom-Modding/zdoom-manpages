@@ -1,0 +1,379 @@
+Identifier,Remark,Identifier,default,ru
+,,MANPAGES_CCMD_ANGLECONVTEST_NAME,angleconvtest,angleconvtest
+,,MANPAGES_CCMD_ANGLECONVTEST_DESC,,"Внутренняя проверка конвертации углов в разные типы данных.
+- Оригинальный угол: (double) ang;
+- Получение DAngle::fromDeg(ang).BAMs();
+- Приведение к unsigned через (unsigned)(ang * (0x40000000 / 90.));
+- Приведение к signed через (unsigned)(int)(ang * (0x40000000 / 90.))."
+,,MANPAGES_CCMD_ANGLECONVTEST_EXMP,,
+,,MANPAGES_CCMD_BENCH_NAME,bench,bench
+,,MANPAGES_CCMD_BENCH_DESC,,"Запустить бенчмарк hardware-рендеринга на пять секунд. По завершению в директории запуска игры появится (или обновится) файл ""benchmarks.txt"" со срезом информации, полученной за эти пять секунд."
+,,MANPAGES_CCMD_BENCH_EXMP,,
+,,MANPAGES_CCMD_CACHESOUND_NAME,cachesound <sound> ...,cachesound <звук> ...
+,,MANPAGES_CCMD_CACHESOUND_DESC,,"Принудительно кэширует указанный звук (звуки). Поиск звука производится по логическому имени."
+,,MANPAGES_CCMD_CACHESOUND_EXMP,,"cachesound menu/activate menu/dismiss menu/clear\tКэшировать указанные звуки."
+,,MANPAGES_CCMD_CHANGESKILL_NAME,changeskill <skill>,changeskill <уровень>
+,,MANPAGES_CCMD_CHANGESKILL_DESC,,"Изменяет {{уровень сложности}}, и, в отличие от переменной ""{{skill}}"", применяет его уже со следующего уровня, а не с новой игры. Нумерация начинается с нуля, и ""0"" обычно соответствует самому простому уровню сложности. В оригинальном Doom уровень ""4"" соответствует сложности ""Nightmare!""."
+,,MANPAGES_CCMD_CHANGESKILL_EXMP,,"Для Doom и Doom 2:
+changeskill 0\t""I'm too young to die.""
+changeskill 1\t""Hey, not too rough.""
+changeskill 2\t""Hurt me plenty.""
+changeskill 3\t""Ultra-Violence.""
+changeskill 4\t""Nightmare!"" "
+,,MANPAGES_CCMD_CLEAR_NAME,clear,clear
+,,MANPAGES_CCMD_CLEAR_DESC,,"Очищает буфер внутриигровой консоли. Никак не влияет на вывод через команду {{logfile}} или через перенаправление stdout."
+,,MANPAGES_CCMD_CLEAR_EXMP,,
+,,MANPAGES_CCMD_CLEARNODECACHE_NAME,clearnodecache,clearnodecache
+,,MANPAGES_CCMD_CLEARNODECACHE_DESC,,
+,,MANPAGES_CCMD_CLEARNODECACHE_EXMP,,
+,,MANPAGES_CCMD_CONTROLPRESET_NAME,controlpreset <keybard_layout>,controlpreset <раскладка_клавиатуры>
+,,MANPAGES_CCMD_CONTROLPRESET_DESC,,"Устанавливает одну из предопределённых {{раскладок клавиатуры}} для игры. Значения и их порядок могут отличаться от версии к версии, посмотреть действительные названия можно по пути ""Настройки"" -> ""Управление"" -> ""Раскладка клавиатуры""."
+,,MANPAGES_CCMD_CONTROLPRESET_EXMP,,"controlpreset 0\tРаскладка классического ZDoom."
+,,MANPAGES_CCMD_CREATEENVIRONMENT_NAME,createenvironment,createenvironment
+,,MANPAGES_CCMD_CREATEENVIRONMENT_DESC,,"Внутренняя команда создания нового reverb-окружения, в первую очередь нужна в меню {{reverbedit}}. Вручную, из-под консоли, использовать её нет смысла, она зависит от переменных reverbedit_name, reverbedit_id1 и reverbedit_id2, которые защищены от прямой записи."
+,,MANPAGES_CCMD_CREATEENVIRONMENT_EXMP,,
+,,MANPAGES_CCMD_CURRENTMUSIC_NAME,currentmusic,currentmusic
+,,MANPAGES_CCMD_CURRENTMUSIC_DESC,,"Отображение названия текущей композиции. Альтернатива команде {{changemus}} без параметров."
+,,MANPAGES_CCMD_CURRENTMUSIC_EXMP,,
+,,MANPAGES_CCMD_CVARSEARCH_NAME,cvarsearch <glob>,cvarsearch <маска>
+,,MANPAGES_CCMD_CVARSEARCH_DESC,,"То же, что и {{cvarlist}}, но отображает результаты поиска всех CVar по маске. Поддерживаются подстановочные знаки ""*"" и ""?""."
+,,MANPAGES_CCMD_CVARSEARCH_EXMP,,"cvarsearch coop\tВыведет все CVar, которые включают в себя слово ""coop"".
+cvarsearch coop*ammo\tВсе CVar, которые включают в себя слово ""coop"", за которой где-то далее будет слово ""ammo"".
+cvarsearch vid_\tВсе CVar, в которых есть подстрока ""vid_"".
+cvarsearch vid_*scale*\tВсе CVar, в которых есть подстрока ""vid_"", за которой где-то далее следует подстрока ""scale"".
+cvarsearch gl_??????map\tВсе CVar, в которых есть подстрока ""gl_"", за которой следут 6 любых символов, а затем подстрока ""map""."
+,,MANPAGES_CCMD_DEBUG_RESTART_NAME,debug_restart,debug_restart
+,,MANPAGES_CCMD_DEBUG_RESTART_DESC,,"Перезапуск движка, используется для его отладки. При использовании этой команды удаляются многие основные аргументы, влияющие на игру, в том числе загружаемые файлы (""-file""), выбранный IWAD (""-iwad""), режим игры (как ""-deathmatch""), уровень сложности (""-skill"") и так далее. Однако раздел автозагрузки из *.ini-файла всё равно исполняется."
+,,MANPAGES_CCMD_DEBUG_RESTART_EXMP,,
+,,MANPAGES_CCMD_DUMP3DF_NAME,dump3df <sector>,dump3df <сектор>
+,,MANPAGES_CCMD_DUMP3DF_DESC,,"Выводит техническую информацию о 3D-полах, связанных с указанным сектором. Информация включает в себя высоту и модель нижней/верхней части, флаги, прозрачность. Если сектор не имеет 3D-полов, команда не выведет ничего."
+,,MANPAGES_CCMD_DUMP3DF_EXMP,,
+,,MANPAGES_CCMD_DUMPLINKTABLE_NAME,dumplinktable,dumplinktable
+,,MANPAGES_CCMD_DUMPLINKTABLE_DESC,,
+,,MANPAGES_CCMD_DUMPLINKTABLE_EXMP,,"Отображение смещений порталов (""portal displacements""), что бы это ни значило. Возможно, связано с хабовой системой?"
+,,MANPAGES_CCMD_DUMPTAGS_NAME,dumptags,dumptags
+,,MANPAGES_CCMD_DUMPTAGS_DESC,,"Вывод полного списка тегов для секторов и линий. Может быть довольно громоздким для крупных уровней."
+,,MANPAGES_CCMD_DUMPTAGS_EXMP,,
+,,MANPAGES_CCMD_EVAL_NAME,eval,eval
+,,MANPAGES_CCMD_EVAL_DESC,,
+,,MANPAGES_CCMD_EVAL_EXMP,,
+,,MANPAGES_CCMD_EVENT_NAME,event <name> [arg1] [arg2] [arg3],event <название> [арг1] [арг2] [арг3]
+,,MANPAGES_CCMD_EVENT_DESC,,"Отправить Console Event с указанным {{названием}} и, если требуется, числовыми {{аргументами 1-3}}. Родственна командам {{netevent}} и {{interfaceevent}}."
+,,MANPAGES_CCMD_EVENT_EXMP,,"event myevent 44\tОтправить консольное событие ""myevent"" с одним аргументом ""44"".
+event ""Data with spaces""\tОтправить консольное событие ""Data with spaces"" без аргументов."
+,,MANPAGES_CCMD_EXIT_NAME,exit,exit
+,,MANPAGES_CCMD_EXIT_DESC,,"Выход из игры. То же, что и команда {{quit}}."
+,,MANPAGES_CCMD_EXIT_EXMP,,
+,,MANPAGES_CCMD_FFCF_NAME,ffcf,ffcf
+,,MANPAGES_CCMD_FFCF_DESC,,"Отображение технической информации о секторах, с которыми сейчас связан игрок, и пересекаемых им линиях."
+,,MANPAGES_CCMD_FFCF_EXMP,,
+,,MANPAGES_CCMD_FLUSHTEXTURES_NAME,flushtextures,flushtextures
+,,MANPAGES_CCMD_FLUSHTEXTURES_DESC,,"Сброс всех текстур, зависимых от типа рендеринга. Может использоваться, например, для очистки лишней информации при переходе с Software-рендерера на GPU."
+,,MANPAGES_CCMD_FLUSHTEXTURES_EXMP,,
+,,MANPAGES_CCMD_FS_DIR_NAME,fs_dir,fs_dir
+,,MANPAGES_CCMD_FS_DIR_DESC,,"Полный дамп всех загруженных файлов. Список колонок: полный путь до файла, краткое название файла, ID ресурса, размер в байтах, контейнер (архив/путь/*.wad-файл). Красным цветом с припиской ""(h)"" в конце обозначаются скрытые файлы, а также файлы внутри *.wad."
+,,MANPAGES_CCMD_FS_DIR_EXMP,,
+,,MANPAGES_CCMD_GC_NAME,gc <stop|now|full|count|pause [size]|stepmul [size]>,gc <stop|now|full|count|pause [размер]|stepmul [размер]>
+,,MANPAGES_CCMD_GC_DESC,,"Базовое управление сборщиком мусора памяти (garbage collector). Также см. ""{{stat gc}}""."
+,,MANPAGES_CCMD_GC_EXMP,,"gc stop\tПриостанавливает работу сборщика.
+gc now\tПринудительно заставляет GC удалить из памяти все ненужные объекты.
+gc count\tВыводит количество отслеживаемых объектов."
+,,MANPAGES_CCMD_GETDATE_NAME,getdate,getdate
+,,MANPAGES_CCMD_GETDATE_DESC,,"Получить текущую дату. Если ранее не была использована команда {{setdate}}, будет выведена действительная дата компьютера, на котором запущена игра."
+,,MANPAGES_CCMD_GETDATE_EXMP,,
+,,MANPAGES_CCMD_INTERFACEEVENT_NAME,interfaceevent <name> [arg1] [arg2] [arg3],interfaceevent <название> [арг1] [арг2] [арг3]
+,,MANPAGES_CCMD_INTERFACEEVENT_DESC,,"Отправить Interface Event с указанным {{названием}} и, если требуется, числовыми {{аргументами 1-3}}. Родственна командам {{netevent}} и {{event}}."
+,,MANPAGES_CCMD_INTERFACEEVENT_EXMP,,"interfaceevent myevent 44\tОтправить событие интерфейса ""myevent"" с одним аргументом ""44"".
+interfaceevent ""Data with spaces""\tОтправить событие интерфейса ""Data with spaces"" без аргументов."
+,,MANPAGES_CCMD_LISTCVARSWITHOUTDESCRIPTION_NAME,listcvarswithoutdescription,listcvarswithoutdescription
+,,MANPAGES_CCMD_LISTCVARSWITHOUTDESCRIPTION_DESC,,"Выводит список только названий всех CVar, по одному на строчку."
+,,MANPAGES_CCMD_LISTCVARSWITHOUTDESCRIPTION_EXMP,,
+,,MANPAGES_CCMD_LISTSHADERS_NAME,listshaders,listshaders
+,,MANPAGES_CCMD_LISTSHADERS_DESC,,"Выводит список всех шейдеров постобработки."
+,,MANPAGES_CCMD_LISTSHADERS_EXMP,,
+,,MANPAGES_CCMD_LISTTEXTUREALIASES_NAME,listtexturealiases,listtexturealiases
+,,MANPAGES_CCMD_LISTTEXTUREALIASES_DESC,,"Выводит список всех алиасов на текстуры."
+,,MANPAGES_CCMD_LISTTEXTUREALIASES_EXMP,,
+,,MANPAGES_CCMD_LISTUNIFORMS_NAME,listuniforms <shader>,listuniforms <шейдер>
+,,MANPAGES_CCMD_LISTUNIFORMS_DESC,,"Выводит список всех uniform-переменных указанного {{шейдера}}."
+,,MANPAGES_CCMD_LISTUNIFORMS_EXMP,,
+,,MANPAGES_CCMD_LOAD_NAME,load <filename>,load <имя_файла>
+,,MANPAGES_CCMD_LOAD_DESC,,"Загружает игру с указанного файла (расширение "".zds"" указывать необязательно). Директория файлов с сохранениями берётся с переменной {{save_dir}} или, если она пуста, то по пути по умолчанию. Текущий путь для сохранений можно проверить через команду {{opensaves}}. Загрузка по абсолютному пути запрещена."
+,,MANPAGES_CCMD_LOAD_EXMP,,"load auto02\tЗагружает игру с файла {{auto02.zds}}.
+load ../../save.zds\tСпособ загрузки файла с другого места по относительному пути."
+,,MANPAGES_CCMD_MEASUREINTERMISSIONS_NAME,measureintermissions,measureintermissions
+,,MANPAGES_CCMD_MEASUREINTERMISSIONS_DESC,,"Вывести размеры текстов межмиссионных экранов, например, таких, как ""E1TEXT"", ""HE2TEXT"", ""T3TEXT"" и ""TXT_HEXEN_CLUS4MSG"". Поиск производится по всем известным языкам."
+,,MANPAGES_CCMD_MEASUREINTERMISSIONS_EXMP,,
+,,MANPAGES_CCMD_MENUCONSOLE_NAME,menuconsole,menuconsole
+,,MANPAGES_CCMD_MENUCONSOLE_DESC,,Убрать все меню и переключить состояние консоли. При вводе из-под консоли аналогично вызову {{toggleconsole}}.
+,,MANPAGES_CCMD_MENUCONSOLE_EXMP,,
+,,MANPAGES_CCMD_MENU_RESOLUTION_COMMIT_CHANGES_NAME,menu_resolution_commit_changes,menu_resolution_commit_changes
+,,MANPAGES_CCMD_MENU_RESOLUTION_COMMIT_CHANGES_DESC,,"Применить значения, указанные через {{menu_resolution_set_custom}}, как ширину и высоту экрана. Эта команда не предназначена для ручного вызова."
+,,MANPAGES_CCMD_MENU_RESOLUTION_COMMIT_CHANGES_EXMP,,
+,,MANPAGES_CCMD_MENU_RESOLUTION_SET_CUSTOM_NAME,menu_resolution_set_custom <x> <y>,menu_resolution_set_custom <x> <y>
+,,MANPAGES_CCMD_MENU_RESOLUTION_SET_CUSTOM_DESC,,"Установить значения {{menu_resolution_custom_width}} и {{menu_resolution_custom_height}} (ширину и высоту экрана, {{x}} и {{y}}, соответственно). Для применения необходимо вызвать команду {{menu_resolution_commit_changes}}. Эта команда не предназначена для ручного вызова."
+,,MANPAGES_CCMD_MENU_RESOLUTION_SET_CUSTOM_EXMP,,"menu_resolution_set_custom 1920 1080\tУстановить эмулируемое разрешение экрана в FullHD."
+,,MANPAGES_CCMD_MESSAGEMODE2_NAME,messagemode2,messagemode2
+,,MANPAGES_CCMD_MESSAGEMODE2_DESC,,"Перейти в режим набора сообщения своей команде игроков при командной игре (переменная {{teamplay}}). Из-под консоли может быть удобнее использовать {{say_team}}."
+,,MANPAGES_CCMD_MESSAGEMODE2_EXMP,,
+,,MANPAGES_CCMD_NETEVENT_NAME,netevent <name> [arg1] [arg2] [arg3],netevent <название> [арг1] [арг2] [арг3]
+,,MANPAGES_CCMD_NETEVENT_DESC,,"Отправить Network Event с указанным {{названием}} и, если требуется, числовыми {{аргументами 1-3}}. Родственна командам {{event}} и {{interfaceevent}}."
+,,MANPAGES_CCMD_NETEVENT_EXMP,,"netevent myevent 44\tОтправить сетевое событие ""myevent"" с одним аргументом ""44"".
+netevent ""Data with spaces""\tОтправить сетевое событие ""Data with spaces"" без аргументов."
+,,MANPAGES_CCMD_OPENCONFIG_NAME,openconfig,openconfig
+,,MANPAGES_CCMD_OPENCONFIG_DESC,,"Открыть каталог с конфигурацией игры."
+,,MANPAGES_CCMD_OPENCONFIG_EXMP,,
+,,MANPAGES_CCMD_OPENSAVES_NAME,opensaves,opensaves
+,,MANPAGES_CCMD_OPENSAVES_DESC,,"Открыть каталог с сохранениями игры."
+,,MANPAGES_CCMD_OPENSAVES_EXMP,,
+,,MANPAGES_CCMD_OPENSCREENSHOTS_NAME,openscreenshots,openscreenshots
+,,MANPAGES_CCMD_OPENSCREENSHOTS_DESC,,"Открыть каталог со скриншотами с игры"
+,,MANPAGES_CCMD_OPENSCREENSHOTS_EXMP,,
+,,MANPAGES_CCMD_PREVMENU_NAME,prevmenu,prevmenu
+,,MANPAGES_CCMD_PREVMENU_DESC,,"Перейти на меню уровнем выше. Команда неприменима для ручного ввода в консоли."
+,,MANPAGES_CCMD_PREVMENU_EXMP,,
+,,MANPAGES_CCMD_PRINTLOCALIZED_NAME,printlocalized <str> [lang],printlocalized <строка> [язык]
+,,MANPAGES_CCMD_PRINTLOCALIZED_DESC,,"Вывести {{строку}} на указанном {{языке}} согласно таблице локализации. Символ ""$"" в начале слова подразумевается автоматически. {{Язык}} может состоять из двух или трёх символов, а если он не указан, используется текущая локаль."
+,,MANPAGES_CCMD_PRINTLOCALIZED_EXMP,,"printlocalized c2text\tВывести {{$C2TEXT}} (экран с текстом по окончанию второго эпизода Doom 2) на текущей локали.
+printlocalized c2text es\tВывести {{$C2TEXT}} на испанском языке.
+printlocalized gotarmor eng\tВывести {{$GOTARMOR}} на британском диалекте английского."
+,,MANPAGES_CCMD_PRINTSECTIONS_NAME,printsections,printsections
+,,MANPAGES_CCMD_PRINTSECTIONS_DESC,,
+,,MANPAGES_CCMD_PRINTSECTIONS_EXMP,,
+,,MANPAGES_CCMD_PROFILETHINKERS_NAME,profilethinkers <sort> [limit],profilethinkers <сортировка> [limit]
+,,MANPAGES_CCMD_PROFILETHINKERS_DESC,,"Профилирование объектов класса Thinker — сбор информации о скорости обработки объектов мира — используется для определения наиболее медленных мест в коде. Профилирование запускается для всех объектов мира на следующий игровой такт (т. е. надо закрыть консоль). В результате выводится список в порядке {{сортировки}}, количеством не более чем {{лимит}} строк, если лимит указан. {{Сортировка}} может проводиться восемью способами:
+ {{class}}, {{+c}} или {{1}} — по названию класса, прямой порядок, вверху ""A"".
+{{-class}}, {{-c}} или {{2}} — по названию класса, обратный порядок, вверху ""Z"".
+ {{#}}, {{+#}} или {{3}}     — по числу объектов, прямой порядок, вверху минимум.
+{{-#}} или {{4}}         — по числу объектов, обратный порядок.
+ {{avg}}, {{+a}} или {{5}}   — по среднему времени, прямой порядок, вверху минимум.
+{{-avg}}, {{-a}} или {{6}}   — по среднему времени, обратный порядок.
+ {{total}}, {{+t}} или {{7}} — по общему времени, прямой порядок, вверху минимум. Этот вариант используется чаще всего.
+{{-total}}, {{-t}} или {{8}} — по общему времени, обратный порядок.
+
+Всё время указывается в миллисекундах. Среднее время равно общему времени, делённому на число объектов."
+,,MANPAGES_CCMD_PROFILETHINKERS_EXMP,,"profilethinkers 7\tЗапустить профилирование с сортировкой по общему времени. Позволяет быстро прикинуть, проблема в сложном коде или в большом числе объектов.
+profilethinkers -# 15\tПосле профилирования оставить только 15 строк наиболее часто встречающихся объектов.
+profilethinkers avg\tПрофилирование с сортировкой по среднему времени на один объект."
+,,MANPAGES_CCMD_QUICKLOAD_NAME,quickload,quickload
+,,MANPAGES_CCMD_QUICKLOAD_DESC,,"Вызвать диалог быстрой загрузки, аналогично нажатию {{F9}} при стандарных настройках клавиатуры."
+,,MANPAGES_CCMD_QUICKLOAD_EXMP,,
+,,MANPAGES_CCMD_QUICKSAVE_NAME,quicksave,quicksave
+,,MANPAGES_CCMD_QUICKSAVE_DESC,,"Вызвать диалог быстрого сохранения, аналогично нажатию {{F6}} при стандарных настройках клавиатуры."
+,,MANPAGES_CCMD_QUICKSAVE_EXMP,,
+,,MANPAGES_CCMD_QUIT_NAME,quit,quit
+,,MANPAGES_CCMD_QUIT_DESC,,"Выход из игры. То же, что и команда {{exit}}."
+,,MANPAGES_CCMD_QUIT_EXMP,,
+,,MANPAGES_CCMD_RESETB2DEFAULTS_NAME,resetb2defaults,resetb2defaults
+,,MANPAGES_CCMD_RESETB2DEFAULTS_DESC,,"Сброс привязок клавиш к действиям до стандартных. Команда {{reset2defaults}} включает в себя это действие."
+,,MANPAGES_CCMD_RESETB2DEFAULTS_EXMP,,
+,,MANPAGES_CCMD_REVERBEDIT_NAME,reverbedit,reverbedit
+,,MANPAGES_CCMD_REVERBEDIT_DESC,,Открыть меню настройки reverb-окружения.
+,,MANPAGES_CCMD_REVERBEDIT_EXMP,,
+,,MANPAGES_CCMD_REVERTENVIRONMENT_NAME,revertenvironment,revertenvironment
+,,MANPAGES_CCMD_REVERTENVIRONMENT_DESC,,"Внутренняя команда отмены изменений в reverb-окружении, в первую очередь нужна в меню {{reverbedit}}. Вручную, из-под консоли, использовать её нет смысла, она зависит от переменных reverbedit_name, reverbedit_id1 и reverbedit_id2, которые защищены от прямой записи."
+,,MANPAGES_CCMD_REVERTENVIRONMENT_EXMP,,
+,,MANPAGES_CCMD_RNGSEED_NAME,rngseed (get|clear|set <value>),rngseed (get|clear|set <значение>)
+,,MANPAGES_CCMD_RNGSEED_DESC,,"Управление начальным значением (ключом) генератора случайных чисел. Ключевое слово {{get}} выводит текущее значение ключа генерации в консоль; {{set}} устанавливает новое статическое значение ключа генерации; {{clear}} его сбрасывает. Важно заметить, что установка или сброс значения будет применяться только с новой игры."
+,,MANPAGES_CCMD_RNGSEED_EXMP,,"rngseed set 1234\tУстановить ключ генератора случайных чисел в {{1234}}.
+rngseed clear\tУбрать установленный ключ. Следующая игра начнётся уже с другим начальным значением."
+,,MANPAGES_CCMD_R_SHOWCAPS_NAME,r_showcaps,r_showcaps
+,,MANPAGES_CCMD_R_SHOWCAPS_DESC,,"Показать список возможностей текущего рендерера."
+,,MANPAGES_CCMD_R_SHOWCAPS_EXMP,,
+,,MANPAGES_CCMD_SAVE_NAME,save <filename> [description],save <имя_файла> [описание]
+,,MANPAGES_CCMD_SAVE_DESC,,"Сохранить игру в файл {{имя_файла}} (расширение "".zds"" указывать необязательно) с заголовком {{описание}}. Директория файлов с сохранениями берётся с переменной {{save_dir}} или, если она пуста, то по пути по умолчанию. Текущий путь для сохранений можно проверить через команду {{opensaves}}. Сохранение по абсолютному пути запрещено."
+,,MANPAGES_CCMD_SAVE_EXMP,,"save extra1\tСохраняет игру в файл {{extra1.zds}}.
+save doom2map16.zds ""Doom 2, Suburbs""\tСохраняет игру в файл {{doom2map16.zds}} под заголовком ""Doom 2, Suburbs"".
+save ../../save.zds\tСпособ сохранения файла в другое места по относительному пути."
+,,MANPAGES_CCMD_SAVEREVERBS_NAME,savereverbs,savereverbs
+,,MANPAGES_CCMD_SAVEREVERBS_DESC,,"Внутренняя команда записи всех изменений reverb-редактора в файл конфигурации. В первую очередь нужна в меню {{reverbedit}}."
+,,MANPAGES_CCMD_SAVEREVERBS_EXMP,,
+,,MANPAGES_CCMD_SELECTENVIRONMENT_NAME,selectenvironment,selectenvironment
+,,MANPAGES_CCMD_SELECTENVIRONMENT_DESC,,"Внутренняя команда выбора существующего reverb-окружения, в первую очередь нужна в меню {{reverbedit}}. Вручную, из-под консоли, использовать её нет смысла, она зависит от переменных reverbedit_name, reverbedit_id1 и reverbedit_id2, которые защищены от прямой записи."
+,,MANPAGES_CCMD_SELECTENVIRONMENT_EXMP,,
+,,MANPAGES_CCMD_SETDATE_NAME,setdate <HH:MM:SS DD-MM-YYYY>,setdate <ЧЧ:ММ:СС ДД-ММ-ГГГГ>
+,,MANPAGES_CCMD_SETDATE_DESC,,"Установка внутри движка эмуляции даты-времени на указанное значение в формате ""ЧАСЫ:МИНУТЫ:СЕКУНДЫ ДЕНЬ-МЕСЯЦ-ГОД"" (синтаксис обязателен: два двоеточия, пробел и два дефиса). Получить его можно через команду {{getdate}}. Не затрагивает реальное время операционной системы."
+,,MANPAGES_CCMD_SETDATE_EXMP,,"setdate 21:33:07 31-12-2000\tБез пары часов Новый год нового тысячелетия!"
+,,MANPAGES_CCMD_SETINV_NAME,setinv <inventory> <amount> [overlimit],setinv <предмет> <количество> [сверх_предела]
+,,MANPAGES_CCMD_SETINV_DESC,,"Установить число {{предметов}} инвентаря ровно в указанное {{количество}}. Если параметр {{сверх_предела}} указан как ""1"", установка будет игнорировать максимум предметов инвентаря. На месте слова {{предмет}} также можно использовать ключевое слово ""health"", которое устанавливает количество здоровья игрока.
+
+Имейте в виду, в части версий эта команда сломана и может привести к вылету игры! Родственные команды — {{give}} и {{take}}."
+,,MANPAGES_CCMD_SETINV_EXMP,,"setinv clip 100\tУстановить количество {{clip}} ровно в 100 предметов.
+setinv health 999 1\tУстановить здоровье игрока в 999 пунктов (вне зависимости от того, есть ли предел в 100/200 единиц)."
+,,MANPAGES_CCMD_SETREPLAYGAIN_NAME,setreplaygain <dB>,setreplaygain <дБ>
+,,MANPAGES_CCMD_SETREPLAYGAIN_DESC,,"Усиление музыки, в дБ (допустимы значения от 0.0 до 10.0). Без параметра выводит текущее усиление. Требует запущенного плейлиста?"
+,,MANPAGES_CCMD_SETREPLAYGAIN_EXMP,,
+,,MANPAGES_CCMD_SHADERENABLE_NAME,shaderenable <name> <1|0|-1>,shaderenable <название> <1|0|-1>
+,,MANPAGES_CCMD_SHADERENABLE_DESC,,"Включение или отключение шейдера {{название}}. Значение ""1"" включает шейдер, ""0"" отключает, ""-1"" переключает его."
+,,MANPAGES_CCMD_SHADERENABLE_EXMP,,"shaderenable myshader 1\tВключить шейдер {{myshader}}."
+,,MANPAGES_CCMD_SHADERUNIFORM_NAME,shaderuniform <shader> <uniform> [val1 [val2 [val3]]],shaderuniform <шейдер> <переменная> [знач1 [знач2 [знач3]]]
+,,MANPAGES_CCMD_SHADERUNIFORM_DESC,,"Чтение или установка uniform-{{переменной}} указанного {{шейдера}}. Если нет {{значений 1-3}}, выводятся текущие значения переменной. Все неуказанные значения превращаются в ""0.0""."
+,,MANPAGES_CCMD_SHADERUNIFORM_EXMP,,"shaderuniform myshader somevec\tВывести значение uniform-переменной {{somevec}} в шейдере {{myshader}}.
+shaderuniform myshader e 2.71\tУстановить значение uniform-переменной {{myshader.e}} в ""2.71"".
+shaderuniform myshader vec3 2.71\tУстановить значение uniform-переменной {{myshader.vec3}} в ""(2.71, 0.0, 0.0)"".
+shaderuniform myshader vec3 1 2 3\tУстановить значение uniform-переменной {{myshader.vec3}} в ""(1.0, 2.0, 3.0)""."
+,,MANPAGES_CCMD_SND_RESET_NAME,snd_reset,snd_reset
+,,MANPAGES_CCMD_SND_RESET_DESC,,"Перезапуск звуковой подсистемы движка."
+,,MANPAGES_CCMD_SND_RESET_EXMP,,
+,,MANPAGES_CCMD_SPYCANCEL_NAME,spycancel,spycancel
+,,MANPAGES_CCMD_SPYCANCEL_DESC,,"Вернуться к своему телу при просмотре в мультиплеере экрана от лица другого игрока."
+,,MANPAGES_CCMD_SPYCANCEL_EXMP,,
+,,MANPAGES_CCMD_TEST_NAME,test,test
+,,MANPAGES_CCMD_TEST_DESC,,
+,,MANPAGES_CCMD_TEST_EXMP,,
+,,MANPAGES_CCMD_TESTCUTSCENE_NAME,testcutscene <buildfunction>,testcutscene <функция>
+,,MANPAGES_CCMD_TESTCUTSCENE_DESC,,"Запускает указанную катсцену."
+,,MANPAGES_CCMD_TESTCUTSCENE_EXMP,,
+,,MANPAGES_CCMD_TESTFINALE_NAME,testfinale <str> [lang],testfinale <строка> [язык]
+,,MANPAGES_CCMD_TESTFINALE_DESC,,"Запустить текстовую заставку между эпизодами, со {{строкой}} на указанном {{языке}} согласно таблице локализации. Символ ""$"" в начале строки подразумевается автоматически. {{Язык}} может состоять из двух или трёх символов, а если он не указан, используется текущая локаль.
+
+Для вывода локализованного текста в консоль можно использовать команду {{printlocalized}}."
+,,MANPAGES_CCMD_TESTFINALE_EXMP,,"testfinale c2text\tЗапустить текстовый экран со строкой {{$C2TEXT}} (окончание второго эпизода Doom 2) на текущей локали.
+testfinale c2text es\tЗапустить текстовый экран со строкой {{$C2TEXT}} на испанском языке."
+,,MANPAGES_CCMD_TOGGLEHUD_NAME,togglehud,togglehud
+,,MANPAGES_CCMD_TOGGLEHUD_DESC,,"Временно отключает отображение HUD и рук с оружием, часто используется для создания скриншотов на картах. Для того, чтобы вернуть исходный вид, на многих версиях движка достаточно открыть и закрыть главное меню через {{Escape}}."
+,,MANPAGES_CCMD_TOGGLEHUD_EXMP,,
+,,MANPAGES_CCMD_TOGGLEMESSAGES_NAME,togglemessages,togglemessages
+,,MANPAGES_CCMD_TOGGLEMESSAGES_DESC,,
+,,MANPAGES_CCMD_TOGGLEMESSAGES_EXMP,,
+,,MANPAGES_CCMD_TYPE_NAME,type,type
+,,MANPAGES_CCMD_TYPE_DESC,,
+,,MANPAGES_CCMD_TYPE_EXMP,,
+,,MANPAGES_CCMD_TYPETABLE_NAME,typetable,typetable
+,,MANPAGES_CCMD_TYPETABLE_DESC,,
+,,MANPAGES_CCMD_TYPETABLE_EXMP,,
+,,MANPAGES_CCMD_UNDOCOLORPIC_NAME,undocolorpic,undocolorpic
+,,MANPAGES_CCMD_UNDOCOLORPIC_DESC,,
+,,MANPAGES_CCMD_UNDOCOLORPIC_EXMP,,
+,,MANPAGES_CCMD_VID_LIST_SDL_RENDER_DRIVERS_NAME,vid_list_sdl_render_drivers,vid_list_sdl_render_drivers
+,,MANPAGES_CCMD_VID_LIST_SDL_RENDER_DRIVERS_DESC,,
+,,MANPAGES_CCMD_VID_LIST_SDL_RENDER_DRIVERS_EXMP,,
+,,MANPAGES_CCMD_VID_SCALETOHEIGHT_NAME,vid_scaletoheight,vid_scaletoheight
+,,MANPAGES_CCMD_VID_SCALETOHEIGHT_DESC,,
+,,MANPAGES_CCMD_VID_SCALETOHEIGHT_EXMP,,
+,,MANPAGES_CCMD_VID_SCALETOLOWEST_NAME,vid_scaletolowest,vid_scaletolowest
+,,MANPAGES_CCMD_VID_SCALETOLOWEST_DESC,,
+,,MANPAGES_CCMD_VID_SCALETOLOWEST_EXMP,,
+,,MANPAGES_CCMD_VID_SCALETOWIDTH_NAME,vid_scaletowidth,vid_scaletowidth
+,,MANPAGES_CCMD_VID_SCALETOWIDTH_DESC,,
+,,MANPAGES_CCMD_VID_SCALETOWIDTH_EXMP,,
+,,MANPAGES_CCMD_VID_SETSCALE_NAME,vid_setscale,vid_setscale
+,,MANPAGES_CCMD_VID_SETSCALE_DESC,,
+,,MANPAGES_CCMD_VID_SETSCALE_EXMP,,
+,,MANPAGES_CCMD_VID_SETSIZE_NAME,vid_setsize,vid_setsize
+,,MANPAGES_CCMD_VID_SETSIZE_DESC,,
+,,MANPAGES_CCMD_VID_SETSIZE_EXMP,,
+,,MANPAGES_CCMD_VID_SHOWCURRENTSCALING_NAME,vid_showcurrentscaling,vid_showcurrentscaling
+,,MANPAGES_CCMD_VID_SHOWCURRENTSCALING_DESC,,
+,,MANPAGES_CCMD_VID_SHOWCURRENTSCALING_EXMP,,
+,,MANPAGES_CCMD_VK_LISTDEVICES_NAME,vk_listdevices,vk_listdevices
+,,MANPAGES_CCMD_VK_LISTDEVICES_DESC,,
+,,MANPAGES_CCMD_VK_LISTDEVICES_EXMP,,
+,,MANPAGES_CCMD_VMENGINE_NAME,vmengine,vmengine
+,,MANPAGES_CCMD_VMENGINE_DESC,,
+,,MANPAGES_CCMD_VMENGINE_EXMP,,
+,,MANPAGES_CCMD_WRITEINI_NAME,writeini,writeini
+,,MANPAGES_CCMD_WRITEINI_DESC,,
+,,MANPAGES_CCMD_WRITEINI_EXMP,,
+,,MANPAGES_CCMD_WRITEMIDI_NAME,writemidi,writemidi
+,,MANPAGES_CCMD_WRITEMIDI_DESC,,
+,,MANPAGES_CCMD_WRITEMIDI_EXMP,,
+,,MANPAGES_CCMD_WRITEWAVE_NAME,writewave,writewave
+,,MANPAGES_CCMD_WRITEWAVE_DESC,,
+,,MANPAGES_CCMD_WRITEWAVE_EXMP,,
+,,MANPAGES_CCMDHOLD_ALTATTACK_NAME,+altattack,+altattack
+,,MANPAGES_CCMDHOLD_ALTATTACK_DESC,,
+,,MANPAGES_CCMDHOLD_ALTATTACK_EXMP,,
+,,MANPAGES_CCMDHOLD_AM_PANDOWN_NAME,+am_pandown,+am_pandown
+,,MANPAGES_CCMDHOLD_AM_PANDOWN_DESC,,
+,,MANPAGES_CCMDHOLD_AM_PANDOWN_EXMP,,
+,,MANPAGES_CCMDHOLD_AM_PANLEFT_NAME,+am_panleft,+am_panleft
+,,MANPAGES_CCMDHOLD_AM_PANLEFT_DESC,,
+,,MANPAGES_CCMDHOLD_AM_PANLEFT_EXMP,,
+,,MANPAGES_CCMDHOLD_AM_PANRIGHT_NAME,+am_panright,+am_panright
+,,MANPAGES_CCMDHOLD_AM_PANRIGHT_DESC,,
+,,MANPAGES_CCMDHOLD_AM_PANRIGHT_EXMP,,
+,,MANPAGES_CCMDHOLD_AM_PANUP_NAME,+am_panup,+am_panup
+,,MANPAGES_CCMDHOLD_AM_PANUP_DESC,,
+,,MANPAGES_CCMDHOLD_AM_PANUP_EXMP,,
+,,MANPAGES_CCMDHOLD_AM_ZOOMIN_NAME,+am_zoomin,+am_zoomin
+,,MANPAGES_CCMDHOLD_AM_ZOOMIN_DESC,,
+,,MANPAGES_CCMDHOLD_AM_ZOOMIN_EXMP,,
+,,MANPAGES_CCMDHOLD_AM_ZOOMOUT_NAME,+am_zoomout,+am_zoomout
+,,MANPAGES_CCMDHOLD_AM_ZOOMOUT_DESC,,
+,,MANPAGES_CCMDHOLD_AM_ZOOMOUT_EXMP,,
+,,MANPAGES_CCMDHOLD_ATTACK_NAME,+attack,+attack
+,,MANPAGES_CCMDHOLD_ATTACK_DESC,,
+,,MANPAGES_CCMDHOLD_ATTACK_EXMP,,
+,,MANPAGES_CCMDHOLD_BACK_NAME,+back,+back
+,,MANPAGES_CCMDHOLD_BACK_DESC,,
+,,MANPAGES_CCMDHOLD_BACK_EXMP,,
+,,MANPAGES_CCMDHOLD_CROUCH_NAME,+crouch,+crouch
+,,MANPAGES_CCMDHOLD_CROUCH_DESC,,
+,,MANPAGES_CCMDHOLD_CROUCH_EXMP,,
+,,MANPAGES_CCMDHOLD_FORWARD_NAME,+forward,+forward
+,,MANPAGES_CCMDHOLD_FORWARD_DESC,,
+,,MANPAGES_CCMDHOLD_FORWARD_EXMP,,
+,,MANPAGES_CCMDHOLD_JUMP_NAME,+jump,+jump
+,,MANPAGES_CCMDHOLD_JUMP_DESC,,
+,,MANPAGES_CCMDHOLD_JUMP_EXMP,,
+,,MANPAGES_CCMDHOLD_KLOOK_NAME,+klook,+klook
+,,MANPAGES_CCMDHOLD_KLOOK_DESC,,
+,,MANPAGES_CCMDHOLD_KLOOK_EXMP,,
+,,MANPAGES_CCMDHOLD_LEFT_NAME,+left,+left
+,,MANPAGES_CCMDHOLD_LEFT_DESC,,
+,,MANPAGES_CCMDHOLD_LEFT_EXMP,,
+,,MANPAGES_CCMDHOLD_LOOKDOWN_NAME,+lookdown,+lookdown
+,,MANPAGES_CCMDHOLD_LOOKDOWN_DESC,,
+,,MANPAGES_CCMDHOLD_LOOKDOWN_EXMP,,
+,,MANPAGES_CCMDHOLD_LOOKUP_NAME,+lookup,+lookup
+,,MANPAGES_CCMDHOLD_LOOKUP_DESC,,
+,,MANPAGES_CCMDHOLD_LOOKUP_EXMP,,
+,,MANPAGES_CCMDHOLD_MLOOK_NAME,+mlook,+mlook
+,,MANPAGES_CCMDHOLD_MLOOK_DESC,,
+,,MANPAGES_CCMDHOLD_MLOOK_EXMP,,
+,,MANPAGES_CCMDHOLD_MOVEDOWN_NAME,+movedown,+movedown
+,,MANPAGES_CCMDHOLD_MOVEDOWN_DESC,,
+,,MANPAGES_CCMDHOLD_MOVEDOWN_EXMP,,
+,,MANPAGES_CCMDHOLD_MOVELEFT_NAME,+moveleft,+moveleft
+,,MANPAGES_CCMDHOLD_MOVELEFT_DESC,,
+,,MANPAGES_CCMDHOLD_MOVELEFT_EXMP,,
+,,MANPAGES_CCMDHOLD_MOVERIGHT_NAME,+moveright,+moveright
+,,MANPAGES_CCMDHOLD_MOVERIGHT_DESC,,
+,,MANPAGES_CCMDHOLD_MOVERIGHT_EXMP,,
+,,MANPAGES_CCMDHOLD_MOVEUP_NAME,+moveup,+moveup
+,,MANPAGES_CCMDHOLD_MOVEUP_DESC,,
+,,MANPAGES_CCMDHOLD_MOVEUP_EXMP,,
+,,MANPAGES_CCMDHOLD_RELOAD_NAME,+reload,+reload
+,,MANPAGES_CCMDHOLD_RELOAD_DESC,,
+,,MANPAGES_CCMDHOLD_RELOAD_EXMP,,
+,,MANPAGES_CCMDHOLD_RIGHT_NAME,+right,+right
+,,MANPAGES_CCMDHOLD_RIGHT_DESC,,
+,,MANPAGES_CCMDHOLD_RIGHT_EXMP,,
+,,MANPAGES_CCMDHOLD_SHOWSCORES_NAME,+showscores,+showscores
+,,MANPAGES_CCMDHOLD_SHOWSCORES_DESC,,
+,,MANPAGES_CCMDHOLD_SHOWSCORES_EXMP,,
+,,MANPAGES_CCMDHOLD_SPEED_NAME,+speed,+speed
+,,MANPAGES_CCMDHOLD_SPEED_DESC,,
+,,MANPAGES_CCMDHOLD_SPEED_EXMP,,
+,,MANPAGES_CCMDHOLD_STRAFE_NAME,+strafe,+strafe
+,,MANPAGES_CCMDHOLD_STRAFE_DESC,,
+,,MANPAGES_CCMDHOLD_STRAFE_EXMP,,
+,,MANPAGES_CCMDHOLD_USE_NAME,+use,+use
+,,MANPAGES_CCMDHOLD_USE_DESC,,
+,,MANPAGES_CCMDHOLD_USE_EXMP,,
+,,MANPAGES_CCMDHOLD_USER1_NAME,+user1,+user1
+,,MANPAGES_CCMDHOLD_USER1_DESC,,
+,,MANPAGES_CCMDHOLD_USER1_EXMP,,
+,,MANPAGES_CCMDHOLD_USER2_NAME,+user2,+user2
+,,MANPAGES_CCMDHOLD_USER2_DESC,,
+,,MANPAGES_CCMDHOLD_USER2_EXMP,,
+,,MANPAGES_CCMDHOLD_USER3_NAME,+user3,+user3
+,,MANPAGES_CCMDHOLD_USER3_DESC,,
+,,MANPAGES_CCMDHOLD_USER3_EXMP,,
+,,MANPAGES_CCMDHOLD_USER4_NAME,+user4,+user4
+,,MANPAGES_CCMDHOLD_USER4_DESC,,
+,,MANPAGES_CCMDHOLD_USER4_EXMP,,
+,,MANPAGES_CCMDHOLD_ZOOM_NAME,+zoom,+zoom
+,,MANPAGES_CCMDHOLD_ZOOM_DESC,,
+,,MANPAGES_CCMDHOLD_ZOOM_EXMP,,

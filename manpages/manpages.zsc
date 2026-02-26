@@ -3,13 +3,20 @@
 class ManpageUtil abstract {
 	/// Localization of the string described by 1st argument.
 	/// Returns localized string or second arg if string cannot be found.
-	static String Locz( String langid, String empty = "" ) {
-		String localized = StringTable.Localize(
-				String.Format( "%s%s", ( langid.CharAt( 0 ) == "$"? "" : "$" ), langid )
-			);
+	static String Locz( String loczid, String empty = "" ) {
+		String cellname;
+		String localized;
 
-		if ( localized == langid )
-			return empty;
+		if ( loczid.CharAt( 0 ) == "$" ) {
+			cellname = loczid.Mid( 1 );
+			localized = StringTable.Localize( loczid );
+		} else {
+			cellname = loczid;
+			localized = StringTable.Localize( "$" .. loczid );
+		}
+
+		if ( localized == cellname || localized == "" )
+			return empty; // Compatible comparison for all GZDoom versions.
 
 		return localized;
 	}
@@ -80,7 +87,7 @@ class ManpageRecord {
 
 			manexamples.Split( examples, "\n", TOK_KEEPEMPTY );
 
-			// Split by header/desc, find max header length and apply special colors.
+			// Split by header/desc, find max header length and apply special colors:
 			for ( int i = 0; i < examples.Size(); i++ ) {
 				int tabindex = examples[ i ].IndexOf( "\t" );
 
@@ -113,11 +120,12 @@ class ManpageRecord {
 				}
 			}
 
+			// Post-init:
 			outstr.AppendFormat( "\n%s\n", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ) );
 
 			String headerformat = String.Format( "%%-%is", ( maxheaderlength > 22? 22 : maxheaderlength ) );
 
-			// Print all examples in proper format.
+			// Print all examples in proper format:
 			for ( int i = 0; i < examples.Size(); i++ ) {
 				if ( eheaders[ i ] != "" )
 					outstr.AppendFormat( headerformat .. " \cu- \c-%s\n", eheaders[ i ], edescs[ i ] );
@@ -186,16 +194,19 @@ class ManpagesEventHandler: StaticEventHandler {
 
 
 	/// Returns NULL if LANGUAGE identifier cannot be found, or a valid pointer otherwise.
-	ManpageRecord AddManpageFile( String pagename, String langid ) {
+	ManpageRecord AddManpageFile( String pagename, String loczid ) {
 		ManpageRecord manpage = NULL;
 
-		if ( ManpageUtil.Locz( "$MANPAGE_" .. langid .. "_NAME" ) != "" ) {
-			manpage = ManpageRecord.Create( pagename, langid );
+		if ( ManpageUtil.Locz( "$MANPAGES_" .. loczid .. "_NAME" ) != "" ) {
+			manpage = ManpageRecord.Create( pagename, loczid );
 			pages.Push( manpage );
+
+			if ( ManpageUtil.Locz( "$MANPAGES_" .. loczid .. "_DESC" ) == "" )
+				console.printf( "Empty description for manpage '%s'.", pagename );
 		}
 
 		return manpage;
-	} // of ManpageRecord AddManpageFile( String pagename, String langid ) {}
+	} // of ManpageRecord AddManpageFile( String pagename, String loczid ) {}
 
 	ManpageRecord AddManpageAlias( String pagename, String pagealias ) {
 		ManpageRecord page = FindPageByName( pagename );

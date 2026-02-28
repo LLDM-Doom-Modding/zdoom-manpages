@@ -32,6 +32,8 @@ class ManpageRecord {
 	String nm;
 	Array<String> aliases;
 
+	const const_MaxHeaderFieldWidth = 25;
+
 	static ManpageRecord Create( String initname, String initid ) {
 		ManpageRecord newrec = new( 'ManpageRecord' );
 		newrec.nm = initname;
@@ -56,26 +58,26 @@ class ManpageRecord {
 
 		if ( argsstartpos != -1 ) {
 			mancmdname = manheader.Left( argsstartpos );
-			manheader = TEXTCOLOR_BRICK .. mancmdname .. TEXTCOLOR_RED .. manheader.Mid( argsstartpos ) .. TEXTCOLOR_NORMAL;
+			manheader = mancmdname .. TEXTCOLOR_RED .. manheader.Mid( argsstartpos );
 		} else {
 			mancmdname = manheader;
 		}
 
-		outstr = "| " .. manheader;
+		outstr = "| " .. TEXTCOLOR_BRICK .. manheader .. TEXTCOLOR_NORMAL;
 
 		// Aliases (if any):
 		if ( aliases.Size() != 0 ) {
-			outstr.AppendFormat( " \cu%s \cj%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), nm );
+			String argsdots = ( mancmdname != manheader? "..." : "" );
 
 			for ( int i = 0; i < aliases.Size(); i++ )
-				outstr.AppendFormat( "\n|  \cu%s \cj%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), aliases[ i ] );
+				outstr.AppendFormat( "\n|  \cu%s \cj%s \cu%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_ALIAS_PREFIX" ), aliases[ i ], argsdots );
 		}
 
 		// Description (if exists):
 		if ( mandesc != "" ) {
 			mandesc.Replace( "{{", TEXTCOLOR_LIGHTBLUE );
 			mandesc.Replace( "}}", TEXTCOLOR_NORMAL );
-			outstr.AppendFormat( "\n|\n%s\n", mandesc );
+			outstr.AppendFormat( "\n\c-|\n%s\n", mandesc );
 		} else {
 			outstr.AppendFormat( "\n\cu%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_NO_DESCRIPTION" ) );
 		}
@@ -107,7 +109,7 @@ class ManpageRecord {
 					eheaders.Push( eheader );
 					edescs.Push( edesc );
 
-					if ( eheaderlength > maxheaderlength )
+					if ( eheaderlength > maxheaderlength && eheaderlength <= const_MaxHeaderFieldWidth )
 						maxheaderlength = eheaderlength;
 
 					//examples[ i ] = "";
@@ -123,7 +125,8 @@ class ManpageRecord {
 			// Post-init:
 			outstr.AppendFormat( "\n%s\n", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ) );
 
-			String headerformat = String.Format( "%%-%is", ( maxheaderlength > 22? 22 : maxheaderlength ) );
+			// Indirect evaluation of the field width (actually this is the same as "%*s" format specifier in C's `printf()`):
+			String headerformat = String.Format( "%%-%is", ( maxheaderlength > const_MaxHeaderFieldWidth ? const_MaxHeaderFieldWidth : maxheaderlength ) );
 
 			// Print all examples in proper format:
 			for ( int i = 0; i < examples.Size(); i++ ) {

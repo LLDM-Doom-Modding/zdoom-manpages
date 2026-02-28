@@ -282,7 +282,7 @@ shaderuniform myshader vec3 1 2 3\tУстановить значение uniform
 ,,MANPAGES_CCMD_SPYCANCEL_NAME,spycancel,spycancel
 ,,MANPAGES_CCMD_SPYCANCEL_DESC,Return to your own body when viewing from another player's perspective in multiplayer.,"Вернуться к своему телу при просмотре в мультиплеере экрана от лица другого игрока."
 ,,MANPAGES_CCMD_SPYCANCEL_EXMP,,
-,,MANPAGES_CCMD_TEST_NAME,<expression> <true-command> [<false-command>],test <выражение> <команда-при-успехе> [<команда-при-провале>]
+,,MANPAGES_CCMD_TEST_NAME,test <expression> <true-command> [<false-command>],test <выражение> <команда-при-успехе> [<команда-при-провале>]
 ,,MANPAGES_CCMD_TEST_DESC,"Evaluates {{expression}} and executes {{true-command}} if the result is non-zero. If the result is zero, then {{false-command}} will be executed instead (if you specified it).
 
 {{Expression}} syntax is similar to the {{eval}} command. Note that {{command}}s should be wrapped in {{""}}quotes{{""}} if they have any arguments. CCMD {{alias}} can be useful with long input in {{command}}s.","Вычисляет {{выражение}} и выполняет {{команду-при-успехе}}, если результат ненулевой. Если результат равен нулю, выполняется {{команда-при-провале}} (но её может не быть).

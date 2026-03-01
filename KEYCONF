@@ -1,3 +1,25 @@
 // Type "man PAGE" in in-game console (e. g. "man summon").
-
 alias man "event manpages`%1"
+
+// Type "man-search PATTERN" or "mas PATTERN" or "mans PATTERN" to search for the PATTERN.
+alias man-search "event manpages-unicode-warning`%1; set __manpages_language_previous $language; language en; event manpages-search`%1`%2`%3`%4`%5`%6`%7`%8`%9`%10`%11`%12`%13`%14`%15`%16`%17`%18`%19`%20`%21; set language $__manpages_language_previous; unset __manpages_language_previous"
+
+alias mans "man-search %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21"
+alias mas  "man-search %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21"
+
+// Explanation: ZDoom console don't work with Unicode.
+// Explanation 2: CVars found with "CVar.Find()" cannot be set under ZScript outside the menu code, so there's no easy way to signal back to the alias from ZScript.
+// Explanation 3: console command `alias` has controversal rules for quotes escaping, so, if arg `%1` is empty, `fn_call %1` breaks the `test` command, and `fn_call "%1"` results in passing just characters '%', '1'.
+// Explanation 4: seems like alias cannot be set under another alias, so something like "virtual call" (`test == "%1" "" "alias vcall realcall" "alias vcall emptycall"; vcall %1 %2 %3 ...`) cannot be performed, too.
+// Result: all lines below is a waste of time.
+
+//alias man-search "event manpages-search`%1`%2`%3`%4`%5`%6`%7`%8`%9`%10`%11`%12`%13`%14`%15`%16`%17`%18`%19`%20`%21"
+//alias man-search "set __manpages_language_previous $language; set __manpages_unicode_warning 0; language en; event manpages-search`%1`%2`%3`%4`%5`%6`%7`%8`%9`%10`%11`%12`%13`%14`%15`%16`%17`%18`%19`%20`%21 ; set language $__manpages_language_previous; test != $__manpages_unicode_warning 0 \"event manpages-unicode-warning\"; unset __manpages_language_previous; unset __manpages_unicode_warning"
+
+//alias __manpages_search_langcheck "echo '%1'; test && == \"%1\" \"\" && && != $language en != $language enu != $language eng \"echo 'err'; event manpages-unicode-warning; set __manpages_unicode_warning 1\" \"set __manpages_unicode_warning 0\""
+//alias __manpages_search_emptycall "echo 'EMPTY CALL'"
+//alias __manpages_search_realcall "echo 'REAL CALL, %1 %2 %3 ...'; set __manpages_language_previous $language; language en; event manpages-search`%1`%2`%3`%4`%5`%6`%7`%8`%9`%10`%11`%12`%13`%14`%15`%16`%17`%18`%19`%20`%21 ; set language $__manpages_language_previous; unset __manpages_language_previous"
+//alias man-search "__manpages_search_langcheck %1; echo $__manpages_unicode_warning; alias __manpages_search_virtual_call; test == 0 $__manpages_unicode_warning \"alias __manpages_search_virtual_call __manpages_search_realcall\" \"alias __manpages_search_virtual_call __manpages_search_emptycall\"; echo '%1 %2 %3 %4 ...'; __manpages_search_virtual_call %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21; echo 'END'; unset __manpages_unicode_warning"
+
+//alias __manpages_search_langcheck "echo '%1'; echo $__manpages_search_arg1; test && == \"$__manpages_search_arg1\" \"\" && && != $language en != $language enu != $language eng \"echo 'err'; event manpages-unicode-warning; set __manpages_unicode_warning 1\" \"set __manpages_unicode_warning 0\""
+//alias man-search "set __manpages_search_arg1 %1; set __manpages_search_arg2 %2; set __manpages_search_arg3 %3; set __manpages_search_arg4 %4; set __manpages_search_arg5 %5; set __manpages_search_arg6 %6; set __manpages_search_arg7 %7; set __manpages_search_arg8 %8; set __manpages_search_arg9 %9; set __manpages_search_arg10 %10; __manpages_search_langcheck; echo $__manpages_unicode_warning; alias __manpages_search_virtual_call; test == 0 $__manpages_unicode_warning \"alias __manpages_search_virtual_call __manpages_search_realcall\" \"alias __manpages_search_virtual_call __manpages_search_emptycall\"; echo '%1 %2 %3 %4 ...'; __manpages_search_virtual_call %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21; echo 'END'; unset __manpages_unicode_warning"

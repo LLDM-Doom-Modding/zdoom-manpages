@@ -6,6 +6,10 @@ Identifier,Remark,Identifier,default,ru
 ,,MANPAGES_GENERAL_NO_PAGE,"No manpage named '%s' found.","Не найдено man-страницы с названием '%s'."
 ,,MANPAGES_GENERAL_NO_DESCRIPTION,"(No description provided.)","(Описания нет.)"
 ,,MANPAGES_GENERAL_EXAMPLES,"Examples: ","Примеры: "
+,,MANPAGES_GENERAL_NO_SEARCH_PATTERN,"No search pattern provided.","Не задан шаблон поиска."
+,,MANPAGES_GENERAL_SEARCH_PROBABLY_UNICODE,"Warning: ZDoom's console doesn't support Unicode! The search cannot be performed correctly for current locale.","Внимание: консоль ZDoom не распознаёт Unicode! Поиск не может быть корректно осуществлён на текущей локали."
+,,MANPAGES_GENERAL_SEARCH_ARGS_LIMIT,"Search is limited to %i arguments; subsequent words will be ignored.","Число аргументов поиска превышает %i; все последующие слова будут проигнорированы."
+,,MANPAGES_GENERAL_SEARCH_NOT_MATCH,"Search pattern '%s' matches no manpages.","Шаблон поиска '%s' ни с чем не совпал."
 ,,MANPAGES_GENERAL_ALIAS_PREFIX,"Alias:","Или:"
 ,,,,
 ,,MANPAGES_CCMD_MAN_NAME,man <COMMAND|list|help>,man <КОМАНДА|list|help>

@@ -20,6 +20,47 @@ class ManpageUtil abstract {
 
 		return localized;
 	}
+
+	/// Compares the first characters of `str` with `startswith`.
+	/// Returns `true` if `str` begins with `startswith`, otherwise `false`.
+	static bool StrStartsWith( String str, String startswith ) {
+		int startswithlen = startswith.Length();
+
+		return !!( str.Left( startswithlen ) == startswith );
+	}
+
+	/// Returns new string equal to `str` without the leading `prefix`.
+	static String StrWithoutPrefix( String str, String prefix ) {
+		int prefixlen = prefix.Length();
+
+		return str.Mid( prefixlen );
+	}
+
+	/// . Note: this is not a compatible version, old versions will not run with them.
+	/// Returns new string with separator `joinsep` between every neighbour cells.
+	static String StrJoin( in Array<String> strarr, String joinsep = "," ) {
+		int strarrsize = strarr.Size();
+
+		if ( strarrsize < 2 )
+			return ( strarrsize == 0 ? "" : strarr[ 0 ] ); // Too small array to join.
+
+		// Main joining cycle.
+		String outstr = strarr[ 0 ];
+
+		for ( int i = 1; i < strarrsize; i++ )
+			outstr.AppendFormat( "%s%s", joinsep, strarr[ i ] );
+
+		return outstr;
+	}
+
+	/// Replaces "{{a highlighting syntax}}" with proper colors. For now no colors stack etc.
+	/// Returns a new string, original string isn't affected by highlighting.
+	static String StrHighlightCurlyBraces( in String input, String highlightcolor = TEXTCOLOR_LIGHTBLUE, String normalcolor = TEXTCOLOR_NORMAL ) {
+		input.Replace( "{{", highlightcolor );
+		input.Replace( "}}", normalcolor );
+
+		return input;
+	}
 } // of class ManpageUtil abstract {}
 
 
@@ -42,13 +83,24 @@ class ManpageRecord {
 		return newrec;
 	}
 
+	String GetHeaderLocalized( void ) {
+		return ManpageUtil.Locz( String.Format( "MANPAGES_%s_NAME", id ) );
+	}
+
+	String GetDescLocalized( void ) {
+		return ManpageUtil.Locz( String.Format( "MANPAGES_%s_DESC", id ) );
+	}
+
+	String GetExamplesLocalized( void ) {
+		return ManpageUtil.Locz( String.Format( "MANPAGES_%s_EXMP", id ) );
+	}
 
 	virtual String Get( void ) {
 		String outstr = "";
 
-		String manheader = ManpageUtil.Locz( String.Format( "MANPAGES_%s_NAME", id ) );
-		String mandesc = ManpageUtil.Locz( String.Format( "MANPAGES_%s_DESC", id ) );
-		String manexamples = ManpageUtil.Locz( String.Format( "MANPAGES_%s_EXMP", id ) );
+		String manheader = GetHeaderLocalized();
+		String mandesc = GetDescLocalized();
+		String manexamples = GetExamplesLocalized();
 
 		// Dummy beautifying.
 
@@ -75,9 +127,7 @@ class ManpageRecord {
 
 		// Description (if exists):
 		if ( mandesc != "" ) {
-			mandesc.Replace( "{{", TEXTCOLOR_LIGHTBLUE );
-			mandesc.Replace( "}}", TEXTCOLOR_NORMAL );
-			outstr.AppendFormat( "\n\c-|\n%s\n", mandesc );
+			outstr.AppendFormat( "\n\c-|\n%s\n", ManpageUtil.StrHighlightCurlyBraces( mandesc ) );
 		} else {
 			outstr.AppendFormat( "\n\cu%s\c-", ManpageUtil.Locz( "MANPAGES_GENERAL_NO_DESCRIPTION" ) );
 		}
@@ -97,12 +147,10 @@ class ManpageRecord {
 					String eheader = examples[ i ].Left( tabindex );
 					String edesc = examples[ i ].Mid( tabindex + 1 );
 
-					edesc.Replace( "{{", TEXTCOLOR_LIGHTBLUE );
-					edesc.Replace( "}}", TEXTCOLOR_NORMAL );
+					edesc = ManpageUtil.StrHighlightCurlyBraces( edesc );
 
 		            eheader.Replace( mancmdname, TEXTCOLOR_BRICK .. mancmdname .. TEXTCOLOR_RED );
-					eheader.Replace( "{{", TEXTCOLOR_LIGHTBLUE );
-					eheader.Replace( "}}", TEXTCOLOR_RED );
+					eheader = ManpageUtil.StrHighlightCurlyBraces( eheader, TEXTCOLOR_LIGHTBLUE, TEXTCOLOR_RED );
 
 					int eheaderlength = eheader.Length();
 
@@ -114,8 +162,7 @@ class ManpageRecord {
 
 					//examples[ i ] = "";
 				} else {
-					examples[ i ].Replace( "{{", TEXTCOLOR_LIGHTBLUE );
-					examples[ i ].Replace( "}}", TEXTCOLOR_NORMAL );
+					examples[ i ] = ManpageUtil.StrHighlightCurlyBraces( examples[ i ] );
 
 					eheaders.Push( "" );
 					edescs.Push( "" );
@@ -139,6 +186,37 @@ class ManpageRecord {
 
 		return outstr;
 	} // of virtual String Get( void ) {}
+
+	/// Returns `true` if current page name equals to `checknm`.
+	/// Case-sensitive check, but `checknm` should already be in lowercase.
+	bool CheckName( String checknm ) {
+		if ( nm == checknm ) {
+			return true;
+
+		} else if ( aliases.Size() != 0 ) {
+			// Compare command aliases (if any).
+			for ( int j = 0; j < aliases.Size(); j++ ) {
+				if ( aliases[ j ] == checknm )
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// Returns `true` if current page text has `origpattern`.
+	/// Full manpage text is converted to lowercase. `origpattern` should already be in lowercase.
+	bool CheckSearch( String origpattern ) {
+		String pattern = origpattern;
+
+		if ( CheckName( pattern ) )
+			return true;
+
+		String manfulltext = GetDescLocalized() .. GetExamplesLocalized();
+		manfulltext.ToLower();
+
+		return !!( manfulltext.IndexOf( pattern ) != -1 );
+	}
 } // of class ManpageRecord {}
 
 
@@ -149,10 +227,11 @@ class ManpagesEventHandler: StaticEventHandler {
 	/// Guardian counter to prevent recursions and infinite loops.
 	private int configParsedFilesAmount;
 	const const_MaxConfigFilesAmount = 32;
+	const const_MaxSearchArgsLimit = 10; // ZDoom's console commands number of arguments is limited to the number of substitutions defined in KEYCONF.
+	const const_MaxSearchOutputDescriptionLength = 128;
 
 	/// Main storage.
 	Array<ManpageRecord> pages;
-
 
 
 	/// Internal method just to beautify the output.
@@ -306,9 +385,11 @@ class ManpagesEventHandler: StaticEventHandler {
 		Super.OnRegister();
 	} // of override void OnRegister() {}
 
-	ui void ManpageProcess( String cmd ) {
+
+	/// Process the "man ..." command. `rawarg` is a command passed to "man" (manpage or keyword like "--help").
+	ui void ManpageProcess( String rawarg ) {
 		// Dummy processing for now.
-		if ( cmd ~== "list" ) {
+		if ( rawarg ~== "list" ) {
 			int pagessize = pages.Size();
 
 			String liststr = "";
@@ -328,42 +409,133 @@ class ManpagesEventHandler: StaticEventHandler {
 		}
 
 		// Empty string and some other "keywords" results in help about `man` itself.
-		if ( cmd == "" || cmd == "help" || cmd == "-h" || cmd == "--help" || cmd == "/?" || cmd == "?" )
-			cmd = "man";
+		if ( rawarg == "" || rawarg == "help" || rawarg == "-h" || rawarg == "--help" || rawarg == "/?" || rawarg == "?" )
+			rawarg = "man";
 
 		ManpageRecord foundpage = NULL;
 
 		for ( int i = 0; i < pages.Size(); i++ ) {
-			ManpageRecord page = pages[ i ];
-
-			if ( page.nm == cmd ) {
-				// Compare command name.
-				foundpage = page;
+			if ( pages[ i ].CheckName( rawarg ) ) {
+				foundpage = pages[ i ];
 				break;
-
-			} else if ( page.aliases.Size() != 0 ) {
-				// Compare command aliases (if any).
-				for ( int j = 0; j < page.aliases.Size(); j++ ) {
-					if ( page.aliases[ j ] == cmd ) {
-						foundpage = page;
-						break; // For aliases/`j` cycle.
-					}
-				}
-
-				if ( foundpage )
-					break; // For pages/`i` cycle.
 			}
 		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
 
 		if ( foundpage )
 			console.printf( "%s", foundpage.Get() );
 		else
-			console.printf( "\cu" .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), cmd );
-	} // of void ManpageProcess( String cmd ) {}
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), rawarg );
+	} // of void ManpageProcess( String rawarg ) {}
+
+	/// Process the "man-search ..." command.
+	/// `rawarg` is a pattern passed to "man-search".
+	ui void ManpageSearchProcess( String rawarg ) {
+		//Array<String> includes, excludes; // Pattern parts to search / to exclude from search.
+		Array<String> includes;
+		rawarg.Split( includes, "`", TOK_SKIPEMPTY );
+		int includessize = includes.Size();
+
+		if ( includessize == 0 ) {
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_SEARCH_PATTERN" ) );
+
+			/*CVar prevlangcvar = CVar.FindCVar( "__manpages_language_previous" );
+			CVar unicodewarningcvar = CVar.FindCVar( "__manpages_unicode_warning" );
+			console.printf( "prevlangcvar 0x" .. prevlangcvar .. ", unicodewarningcvar 0x" .. unicodewarningcvar );
+
+			if ( prevlangcvar && !ManpageUtil.StrStartsWith( prevlangcvar.GetString(), "en" ) )
+				unicodewarningcvar.SetInt( 1 );
+				//console.printf( TEXTCOLOR_YELLOW .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_PROBABLY_UNICODE" ) );
+			*/
+
+			return; // No search pattern provided, nothing to search for.
+		}
+
+		if ( includessize > const_MaxSearchArgsLimit ) {
+			// ZDoom's console commands number of arguments is limited to the number of substitutions defined in KEYCONF.
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_ARGS_LIMIT" ), const_MaxSearchArgsLimit );
+		}
+
+
+		// Search for included words:
+		Array<ManpageRecord> foundpages;
+		String incl0 = includes[ 0 ];
+
+		for ( int i = 0; i < pages.Size(); i++ ) {
+			ManpageRecord page = pages[ i ];
+
+			// Check for at least the first include word:
+			if ( !page.CheckSearch( incl0 ) )
+				continue; // Not match the first include word. Next pages[] iteration.
+
+			if ( includessize == 1 ) {
+				foundpages.Push( page );
+				continue; // Match the only include word. Next pages[] iteration.
+			}
+
+			// Check for all other includes[] (all other words to search):
+			bool allmatches = true;
+
+			for ( int j = 1; j < includessize; j++ ) {
+				if ( !page.CheckSearch( includes[ j ] ) ) {
+					allmatches = false;
+					break; // No match, page must be skipped. Break the includes[] cycle.
+				}
+			}
+
+			if ( allmatches )
+				foundpages.Push( page );
+		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
+
+
+		int foundpagessize = foundpages.Size();
+
+		if ( foundpagessize == 0 ) {
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_NOT_MATCH" ), ManpageUtil.StrJoin( includes, " " ) );
+			return; // Search found nothing with this pattern.
+		}
+
+		// Print the results:
+		for ( int i = 0; i < foundpagessize; i++ ) {
+			ManpageRecord page = foundpages[ i ];
+
+			String header = page.GetHeaderLocalized();
+			int headerargsstartpos = header.IndexOf( " " );
+			String headerccmd = ( headerargsstartpos == -1 ? header : header.Left( headerargsstartpos ) );
+
+			String desc = ManpageUtil.StrHighlightCurlyBraces( page.GetDescLocalized() );
+			int desccharindex;
+			int desctrunclen = const_MaxSearchOutputDescriptionLength - headerccmd.Length();
+
+			if ( -1 != ( desccharindex = desc.IndexOf( "\n" ) ) && desccharindex < desctrunclen )
+				desctrunclen = desccharindex;
+
+			if ( desc.Length() > desctrunclen )
+				desc = desc.Left( desctrunclen ) .. TEXTCOLOR_DARKGRAY .. "...";
+
+			console.printf( TEXTCOLOR_BRICK .. " %s" .. TEXTCOLOR_DARKGRAY .. " - " .. TEXTCOLOR_NORMAL .. "%s", headerccmd, desc );
+		}
+	} // of ui void ManpageSearchProcess( String rawarg ) {}
 
 	override void ConsoleProcess( ConsoleEvent e ) {
-		if ( e.Name.Left( 9 ) == "manpages`" ) {
-			ManpageProcess( e.Name.Mid( 9 ) );
+		String ccmdname = e.name;
+		ccmdname.ToLower(); // Make case-insensitive.
+
+		if ( ManpageUtil.StrStartsWith( ccmdname, "manpages`" ) ) {
+			// Command "man ...".
+			ManpageProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages`" ) );
+
+		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-search`" ) ) {
+			// Command "man-search ...".
+			//console.printf( "\cuccmdname == '%s'", ccmdname );
+			ManpageSearchProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-search`" ) );
+
+		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-unicode-warning`" ) ) {
+			// Unicode warning message on the current locale.
+
+			bool enlang = ManpageUtil.StrStartsWith( language, "en" );
+
+			if ( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-unicode-warning`" ) == "" && !enlang )
+				console.printf( TEXTCOLOR_YELLOW .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_PROBABLY_UNICODE" ) );
 		}
 
 		Super.ConsoleProcess( e );

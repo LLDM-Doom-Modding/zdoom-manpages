@@ -1,7 +1,7 @@
 Identifier,Remark,Identifier,default,ru
 (Column is unused),Tabs size for this file: 4.,,,
 ,,,,
-,,MANPAGES_GENERAL_ABOUT,"ZDoom manpages project version 0.2","Проект ZDoom manpages версии 0.2"
+,,MANPAGES_GENERAL_ABOUT,"ZDoom manpages project version 0.4","Проект ZDoom manpages версии 0.4"
 ,,,,
 ,,MANPAGES_GENERAL_NO_PAGE,"No manpage named '%s' found.","Не найдено man-страницы с названием '%s'."
 ,,MANPAGES_GENERAL_NO_DESCRIPTION,"(No description provided.)","(Описания нет.)"

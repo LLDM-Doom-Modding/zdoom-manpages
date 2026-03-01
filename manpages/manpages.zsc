@@ -306,7 +306,7 @@ class ManpagesEventHandler: StaticEventHandler {
 		Super.OnRegister();
 	} // of override void OnRegister() {}
 
-	void ManpageProcess( String cmd ) {
+	ui void ManpageProcess( String cmd ) {
 		// Dummy processing for now.
 		if ( cmd ~== "list" ) {
 			int pagessize = pages.Size();
@@ -361,12 +361,12 @@ class ManpagesEventHandler: StaticEventHandler {
 			console.printf( "\cu" .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), cmd );
 	} // of void ManpageProcess( String cmd ) {}
 
-	override void NetworkProcess( ConsoleEvent e ) {
+	override void ConsoleProcess( ConsoleEvent e ) {
 		if ( e.Name.Left( 9 ) == "manpages`" ) {
 			ManpageProcess( e.Name.Mid( 9 ) );
 		}
 
-		Super.NetworkProcess( e );
+		Super.ConsoleProcess( e );
 	} // of override void NetworkProcess( ConsoleEvent e ) {}
 
 } // of class ManpagesEventHandler: StaticEventHandler {}

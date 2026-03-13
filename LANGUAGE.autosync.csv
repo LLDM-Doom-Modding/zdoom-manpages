@@ -104,31 +104,40 @@ Identifier,Remark,Identifier,default,ru
 - {{clear}} resets all profiling statistics to 0. It cannot be used with either of the other two optional arguments.","Предоставляет информацию профилирования {{ACS}}. Можно передать следующие необязательные аргументы:
 - {{сортировать-по}} указывает, по какой колонке сортировать (total, min, max, avg или runs). По умолчанию — total.
 - {{лимит}} задаёт предел, сколько строк выводить. По умолчанию — 10. 0 или меньше выведет все скрипты или функции, у которых был хотя бы один запуск.
-- {{clear}} сбрасывает все статистики профилирования в 0. Не может использоваться совместно с другими двумя опциями."
-,,MANPAGES_CCMD_ACSPROFILE_EXMP,,
+- {{clear}} сбрасывает всю статистику профилирования в 0. Не может использоваться совместно с другими двумя опциями."
+,,MANPAGES_CCMD_ACSPROFILE_EXMP,,"acsprofile\tСписок с сортировкой по полю ""Total"" (общее время исполнения), десять верхних позиций.
+acsprofile avg\tДесять верхних позиций по среднему времени исполнения.
+acsprofile total 0\tПолный список скриптов с сортировкой по общему времени исполнения.
+acsprofile max 7\tСемь верхних позиций по максимальному времени исполнения.
+acsprofile clear\tСбросить счётчики всех скриптов. Полезно сразу после загрузки карты для избавления от типов скриптов OPEN и ENTER."
 ,,MANPAGES_CCMD_ACTORLIST_NAME,actorlist [class or TID],actorlist [класс или TID]
-,,MANPAGES_CCMD_ACTORLIST_DESC,"Prints a list of all actors present in the map, each on a line of the form ClassName at (X, Y, Z). At the end of the list, the total count of found actors is printed. Passing an actor class name to the command, filters the list, listing only those with the matching class name. Passing a TID instead of a class name, filters the list by TID.","Выводит список всех акторов на карте, по одному в строке вида ClassName at (X, Y, Z). В конце списка печатается общее количество найденных акторов. Если передать имя класса актора, список будет отфильтрован по этому классу. Если вместо имени класса передать {{TID}}, фильтрация будет выполнена по {{TID}}."
-,,MANPAGES_CCMD_ACTORLIST_EXMP,,
+,,MANPAGES_CCMD_ACTORLIST_DESC,"Prints a list of all actors present in the map, each on a line of the form ClassName at (X, Y, Z). At the end of the list, the total count of found actors is printed. Passing an actor class name to the command, filters the list, listing only those with the matching class name. Passing a TID instead of a class name, filters the list by TID.","Выводит список всех акторов на карте, по одному в строке вида ""ClassName at (X, Y, Z)"". В конце списка печатается общее количество найденных акторов. Если передать имя класса актора, список будет отфильтрован по этому классу. Если вместо имени класса передать {{TID}}, фильтрация будет выполнена по {{TID}}."
+,,MANPAGES_CCMD_ACTORLIST_EXMP,,"actorlist\tВывести список всех акторов, существующих на карте.
+actorlist clip\tВывести всех акторов {{Clip}} (магазин для пулемёта из Doom и Doom 2) на карте.
+actorlist medikit\tВывести всех акторов {{Medikit}} (большая аптечка из Doom и Doom 2) на карте.
+actorlist 100\tВывести всех акторов с TID {{100}}."
 ,,MANPAGES_CCMD_ACTORNUM_NAME,actornum [class or TID],actornum [класс или TID]
 ,,MANPAGES_CCMD_ACTORNUM_DESC,"Prints the total count of all actors present in the map. Passing an actor class name to the command, prints the total count of that class only. Passing a TID instead of a class name, prints the total count or actors with the matching TID.","Выводит общее количество всех акторов на карте. Если передать имя класса, будет выведено количество только этого класса. Если вместо имени класса указать {{TID}}, будет выведено количество акторов с этим {{TID}}."
-,,MANPAGES_CCMD_ACTORNUM_EXMP,,
+,,MANPAGES_CCMD_ACTORNUM_EXMP,,"actornum megasphere\tПокажет, сколько мегасфер осталось на карте.
+actornum doomplayer\tПокажет текущее число игроков и кукол вуду (если используются на карте) в Doom."
 ,,MANPAGES_CCMD_ADDBOT_NAME,addbot [name],addbot [имя]
 ,,MANPAGES_CCMD_ADDBOT_DESC,"Spawns a bot. If {{name}} is given, the corresponding bot in bots.cfg will be spawned. Otherwise, a bot will be picked at random from bots.cfg.","Создаёт бота. Если указано {{имя}}, появится соответствующий бот из bots.cfg. В противном случае из bots.cfg бот будет выбран случайным образом."
-,,MANPAGES_CCMD_ADDBOT_EXMP,,
+,,MANPAGES_CCMD_ADDBOT_EXMP,,"addbot\tДобавить случайного бота.
+addbot flare\tДобавить бота с именем {{Flare}}."
 ,,MANPAGES_CCMD_ADDKEYSECTION_NAME,addkeysection <menu heading> <ini section>,addkeysection <заголовок меню> <секция ini>
-,,MANPAGES_CCMD_ADDKEYSECTION_DESC,"This command does two things. First, it adds a new heading to the controls menu using the {{menu heading}} parameter. You can use the addmenukey command to add your own custom keys beneath this heading. Second, it loads all the bindings from the corresponding {{ini section}} in the user's ini file. You can use this command multiple times to create different sections in the menu and ini for different sets of commands. If you use a menu heading that was already added to the menu, new controls added with addmenukey will appear at the end of that section, but the bindings will not be reloaded from the ini.","Эта команда выполняет два действия. Во-первых, она добавляет новый заголовок в меню управления, используя параметр {{заголовок меню}}. Можно использовать команду addmenukey для добавления собственных клавиш под этим заголовком. Во-вторых, она загружает все привязки из соответствующей {{секции ini}} в ini-файле пользователя. Эту команду можно использовать несколько раз для создания различных разделов в меню и ini для разных наборов команд. Если использовать заголовок, который уже есть в меню, новые элементы управления, добавленные через addmenukey, появятся в конце этого раздела, но привязки из ini не будут загружены повторно."
+,,MANPAGES_CCMD_ADDKEYSECTION_DESC,"{{Primarily for KEYCONF lump and not for console}}. This command does two things. First, it adds a new heading to the controls menu using the {{menu heading}} parameter. You can use the addmenukey command to add your own custom keys beneath this heading. Second, it loads all the bindings from the corresponding {{ini section}} in the user's ini file. You can use this command multiple times to create different sections in the menu and ini for different sets of commands. If you use a menu heading that was already added to the menu, new controls added with addmenukey will appear at the end of that section, but the bindings will not be reloaded from the ini.","{{Команда предназначена в первую очередь для KEYCONF, не для консоли}}. Эта команда выполняет два действия. Во-первых, она добавляет новый заголовок в меню управления, используя параметр {{заголовок меню}}. Можно использовать команду {{addmenukey}} для добавления собственных клавиш под этим заголовком. Во-вторых, она загружает все привязки из соответствующей {{секции ini}} в ini-файле пользователя. Эту команду можно использовать несколько раз для создания различных разделов в меню и ini для разных наборов команд. Если использовать заголовок, который уже есть в меню, новые элементы управления, добавленные через {{addmenukey}}, появятся в конце этого раздела, но привязки из ini не будут загружены повторно."
 ,,MANPAGES_CCMD_ADDKEYSECTION_EXMP,,
 ,,MANPAGES_CCMD_ADDMENUKEY_NAME,addmenukey <description> <command>,addmenukey <описание> <команда>
-,,MANPAGES_CCMD_ADDMENUKEY_DESC,"Adds a new control to the controls menu. {{description}} is the name of this control in the menu, and {{command}} is a console command or alias to be executed when the control is pressed. New controls are added to the last section specified with addkeysection.","Добавляет новый элемент управления в меню настроек. {{описание}} — это название этого элемента в меню, а {{команда}} — консольная команда или псевдоним (alias), которые будут выполнены при активации этого элемента. Новые элементы добавляются в последний раздел, созданный с помощью addkeysection."
+,,MANPAGES_CCMD_ADDMENUKEY_DESC,"{{Primarily for KEYCONF lump and not for console}}. Adds a new control to the controls menu. {{description}} is the name of this control in the menu, and {{command}} is a console command or alias to be executed when the control is pressed. New controls are added to the last section specified with addkeysection.","{{Команда предназначена в первую очередь для KEYCONF, не для консоли}}. Добавляет новый элемент управления в меню настроек. {{описание}} — это название этого элемента в меню, а {{команда}} — консольная команда или псевдоним (alias), которые будут выполнены при активации этого элемента. Новые элементы добавляются в последний раздел, созданный с помощью addkeysection."
 ,,MANPAGES_CCMD_ADDMENUKEY_EXMP,,
 ,,MANPAGES_CCMD_ADDPLAYERCLASS_NAME,addplayerclass <player class> [nomenu],addplayerclass <класс игрока> [nomenu]
 ,,MANPAGES_CCMD_ADDPLAYERCLASS_DESC,"{{Primarily for KEYCONF lump and not for console}}. Adds the given {{player class}} to the {{available player classes}}. If the ""nomenu"" keyword is added, the class will be available only in the {{player setup}}, and not shown as an option on the {{class selection menu}}.","{{Команда предназначена в первую очередь для KEYCONF, не для консоли}}. Добавляет указанный {{класс игрока}} в список {{доступных классов}}. Если добавлено ключевое слово {{nomenu}}, класс будет доступен только в {{настройках игрока}} (player setup) и не будет отображаться в {{меню выбора класса}} при старте игры."
 ,,MANPAGES_CCMD_ADDPLAYERCLASS_EXMP,,
 ,,MANPAGES_CCMD_ADDSLOT_NAME,addslot <slot> <weapon>,addslot <слот> <оружие>
-,,MANPAGES_CCMD_ADDSLOT_DESC,Adds a single weapon to the list of weapons in a weapon slot.  This allows a user to select a custom weapon from a PWAD using their normal weapon selection keys.,"Добавляет оружие в список указанного оружейного слота. Это позволяет игроку выбирать кастомное оружие из PWAD, используя обычные клавиши выбора оружия."
+,,MANPAGES_CCMD_ADDSLOT_DESC,{{Primarily for KEYCONF lump and not for console}}. Adds a single weapon to the list of weapons in a weapon slot.  This allows a user to select a custom weapon from a PWAD using their normal weapon selection keys.,"{{Команда предназначена в первую очередь для KEYCONF, не для консоли}}. Добавляет оружие в список указанного оружейного слота. Это позволяет игроку выбирать кастомное оружие из PWAD, используя обычные клавиши выбора оружия."
 ,,MANPAGES_CCMD_ADDSLOT_EXMP,,
 ,,MANPAGES_CCMD_ADDSLOTDEFAULT_NAME,addslotdefault <slot> <weapon>,addslotdefault <слот> <оружие>
-,,MANPAGES_CCMD_ADDSLOTDEFAULT_DESC,"Adds a single weapon to the list of weapons in a weapon slot, but only if that weapon is not already in a slot. If the weapon is already present in a slot (either the slot specified to addslotdefault or some other slot), then this command does nothing. When used inside a {{KEYCONF}} lump, this command  must be preceded by a {{weaponsection}} command.","Добавляет оружие в список указанного оружейного слота, но только если это оружие еще не назначено ни в один другой слот. Если оружие уже присутствует в каком-либо слоте, команда ничего не сделает. При использовании внутри {{файла (lump) KEYCONF}} этой команде должна предшествовать команда {{weaponsection}}."
+,,MANPAGES_CCMD_ADDSLOTDEFAULT_DESC,"{{Primarily for KEYCONF lump and not for console}}. Adds a single weapon to the list of weapons in a weapon slot, but only if that weapon is not already in a slot. If the weapon is already present in a slot (either the slot specified to addslotdefault or some other slot), then this command does nothing. When used inside a {{KEYCONF}} lump, this command  must be preceded by a {{weaponsection}} command.","{{Команда предназначена в первую очередь для KEYCONF, не для консоли}}. Добавляет оружие в список указанного оружейного слота, но только если это оружие еще не назначено ни в один другой слот. Если оружие уже присутствует в каком-либо слоте, команда ничего не сделает. При использовании внутри {{файла (lump) KEYCONF}} этой команде должна предшествовать команда {{weaponsection}}."
 ,,MANPAGES_CCMD_ADDSLOTDEFAULT_EXMP,,
 ,,MANPAGES_CCMD_ALIAS_NAME,alias [name] [command string],alias [имя] [строка_команды]
 ,,MANPAGES_CCMD_ALIAS_DESC,"If specified with no parameters, alias will display a list of all currently defined aliases. If only {{command}} is specified, it will be removed from the list of aliases. If {{command string}} is also specified, it will be added to the list of aliases as a new command. For example, to create a new alias to kill the monsters on the level, you can use the command:
@@ -142,7 +151,7 @@ alias ""kill monsters; Give all; wait 10; Summon doomimp""
 
 Which would kill all the monsters, give all, wait 10 tics and then summon an imp. Also if you run out of space for the alias you can link to another alias. You can easily change your alias by editing your {{zdoom.ini}} file.
 
-For setting up an alias that both activates on press and release, use +/- before the alias name and bind the key to the + version:","Если вызвать без параметров, выведет список всех текущих псевдонимов (alias). Если указано только {{имя}}, псевдоним будет удален. Если указана и {{строка_команды}}, она будет сохранена под этим именем. Например, чтобы создать команду для уничтожения монстров:
+For setting up an alias that both activates on press and release, use +/- before the alias name and bind the key to the + version.","Если вызвать без параметров, выведет список всех текущих псевдонимов (alias). Если указано только {{имя}}, псевдоним будет удален. Если указана и {{строка_команды}}, она будет сохранена под этим именем. Например, чтобы создать команду для уничтожения монстров:
 alias massacre ""kill monsters""
 
 Теперь команда massacre будет убивать всех монстров. Можно использовать {{;}} для объединения команд:
@@ -153,7 +162,7 @@ alias ""kill monsters; Give all; wait 10; Summon doomimp""
 
 Если псевдоним стал слишком длинным, можно сослаться на другой alias. Псевдонимы можно редактировать напрямую в {{zdoom.ini}}.
 
-Для создания псевдонима, срабатывающего на нажатие и отпускание, используйте {{+/-}} перед именем и привязывайте клавишу к версии с {{+}}:"
+Для создания псевдонима, срабатывающего на нажатие и отпускание клавиши, используйте {{+/-}} перед именем и привязывайте клавишу к версии с {{+}}."
 ,,MANPAGES_CCMD_ALIAS_EXMP,,
 ,,MANPAGES_CCMD_AM_CLEARMARKS_NAME,am_clearmarks,am_clearmarks
 ,,MANPAGES_CCMD_AM_CLEARMARKS_DESC,Removes all user-placed automap marks.,"Удаляет все метки, поставленные пользователем на автокарте."
@@ -176,8 +185,8 @@ alias ""kill monsters; Give all; wait 10; Summon doomimp""
 ,,MANPAGES_CCMD_AM_TOGGLETEXTURE_NAME,am_toggletexture,am_toggletexture
 ,,MANPAGES_CCMD_AM_TOGGLETEXTURE_DESC,"Toggles textured automap on and off. Note that textured automap requires {{GL nodes}} to have been built: if no GL nodes are available, the automap will remain untextured.","Включает или выключает текстурированную автокарту. Примечание: для работы текстур требуются построенные {{GL-ноды}}. Если они отсутствуют, карта останется нетекстурированной."
 ,,MANPAGES_CCMD_AM_TOGGLETEXTURE_EXMP,,
-,,MANPAGES_CCMD_AM_ZOOM_NAME,am_zoom int value,am_zoom <значение>
-,,MANPAGES_CCMD_AM_ZOOM_DESC,Zoom to the given zoom level.,Устанавливает заданный уровень масштаба.
+,,MANPAGES_CCMD_AM_ZOOM_NAME,am_zoom <int value>,am_zoom <значение>
+,,MANPAGES_CCMD_AM_ZOOM_DESC,Zoom to the given zoom level.,Приближает или отдаляет масштаб автокарты в зависимости от заданного значения.
 ,,MANPAGES_CCMD_AM_ZOOM_EXMP,,
 ,,MANPAGES_CCMD_ANUBIS_NAME,anubis,anubis
 ,,MANPAGES_CCMD_ANUBIS_DESC,Toggles monster fear on and off. Scared monsters will run away from you and attack less frequently.,Включает или выключает режимы страха у монстров. Испуганные монстры будут убегать от игрока и атаковать гораздо реже.
@@ -186,11 +195,12 @@ alias ""kill monsters; Give all; wait 10; Summon doomimp""
 ,,MANPAGES_CCMD_ARCHIVECVAR_DESC,"When you create a custom CVAR with the set command, it will not normally be saved in the {{ini}}. You can use archivecvar after creating the CVAR to indicate that the custom CVAR's value should persist even after you quit. This command is ill advised for non-archived user cvars, as it may cause side effects such as scripts running improperly.","Когда вы создаёте пользовательскую переменную (CVAR) через команду set, она обычно не сохраняется в {{ini}}. Команда archivecvar позволяет пометить переменную как архивную, чтобы её значение сохранялось после выхода из игры. Не рекомендуется использовать это для неархивных системных переменных, так как это может привести к побочным эффектам в работе скриптов."
 ,,MANPAGES_CCMD_ARCHIVECVAR_EXMP,,
 ,,MANPAGES_CCMD_ATEXIT_NAME,atexit [command],atexit [команда]
-,,MANPAGES_CCMD_ATEXIT_DESC,"If you specify a command, it will be added to a list of console commands to execute when the user quits the game. Commands are executed in the reverse order that they were added in. If you do not specify any arguments to atexit, then it will list the current set of commands that will execute when you quit.","Если указать команду, она будет добавлена в список действий, выполняемых при выходе из игры. Команды выполняются в порядке, обратном их добавлению. Без аргументов atexit выведет список всех команд, назначенных на выполнение при выходе."
-,,MANPAGES_CCMD_ATEXIT_EXMP,,
+,,MANPAGES_CCMD_ATEXIT_DESC,"If you specify a command, it will be added to a list of console commands to execute when the user quits the game. Commands are executed in the reverse order that they were added in. If you do not specify any arguments to atexit, then it will list the current set of commands that will execute when you quit. Commands are not saved to the configuration file.","Если указать команду, она будет добавлена в список действий, выполняемых при выходе из игры. Команды выполняются в порядке, обратном их добавлению. Без аргументов atexit выведет список всех команд, назначенных на выполнение при выходе. Команды не сохраняются в конфигурационный файл."
+,,MANPAGES_CCMD_ATEXIT_EXMP,,"atexit ""echo Hello world!""\tВывести при выходе надпись ""Hello world!""."
 ,,MANPAGES_CCMD_BIND_NAME,bind [key] [command],bind [клавиша] [действие]
 ,,MANPAGES_CCMD_BIND_DESC,"If no parameters are specified, the entire list of bound keys will be printed to the console. If only {{key}} is specified, the binding for that specific key will be printed. If both {{key}} and {{command}} are specified, {{command}} will be bound to {{key}}.","Без параметров выводит список всех клавиш, к которым привязаны действия. Если указан один параметр ({{клавиша}}), отображает действие, связанное с ним. Если указаны оба аргумента, привязывает {{действие}} к {{клавише}}."
-,,MANPAGES_CCMD_BIND_EXMP,,
+,,MANPAGES_CCMD_BIND_EXMP,,"bind mouse3 linetarget\tПривязать к средней кнопке мыши (""{{mouse3}}"") команду {{linetarget}}.
+bind ; ""give infrared""\tПривязать к клавише точки с запятой команду {{give infrared}}."
 ,,MANPAGES_CCMD_BINDDEFAULTS_NAME,binddefaults,binddefaults
 ,,MANPAGES_CCMD_BINDDEFAULTS_DESC,"Binds all keys to their default commands. This will not unbind any keys that do not have any default bindings, so if you want to properly restore the default controls, you need to use unbindall first.","Привязывает все клавиши к их командам по умолчанию. Не отвязывает клавиши без стандартных привязок, поэтому для полного восстановления настроек сначала используйте unbindall."
 ,,MANPAGES_CCMD_BINDDEFAULTS_EXMP,,
@@ -214,14 +224,16 @@ alias ""kill monsters; Give all; wait 10; Summon doomimp""
 - *: переход на текущую карту.
 - +: переход на следующую карту из {{MAPINFO}}.
 - +$: переход на следующую секретную карту из MAPINFO."
-,,MANPAGES_CCMD_CHANGEMAP_EXMP,,
+,,MANPAGES_CCMD_CHANGEMAP_EXMP,,"changemap map04\tПерейти на карту MAP04 с сохранением прогресса.
+changemap +\tПерейти на карту далее. Как команда {{nextmap}}, но с сохранением прогресса."
 ,,MANPAGES_CCMD_CHANGEMUS_NAME,changemus [<music> [track]],changemus [<музыка> [<трек>]]
 ,,MANPAGES_CCMD_CHANGEMUS_DESC,"Changes the currently playing music. {{Music}} should be the name of a music lump, a file on disk (which need not have been specified with the -file {{command line parameter}}), or a website address for a specific music file. If a music lump contains several tracks ({{MIDI}} type 2, certain {{XMI}} song, and miscellaneous other {{music formats}} support this), then optionally a second parameter can be used to specify the track number.
 
 If no parameters are given, the command will instead log the name of the currently-played lump or file to the {{console}}.","Меняет текущую музыку. {{Музыка}} — это имя lump, файл на диске (не обязательно указанный через ""-file"") или веб-адрес. Если lump содержит несколько треков (MIDI типа 2, некоторые XMI и др.), можно указать номер трека через второй параметр.
 
 Без параметров команда выводит в {{консоль}} имя текущего lump или файла."
-,,MANPAGES_CCMD_CHANGEMUS_EXMP,,
+,,MANPAGES_CCMD_CHANGEMUS_EXMP,,"changemus\tПоказать текущую воспроизводимую композицию.
+changemus d_romero\tУстановить трек {{D_ROMERO}}."
 ,,MANPAGES_CCMD_CHANGESKY_NAME,changesky <texture>,changesky <новая_текстура>
 ,,MANPAGES_CCMD_CHANGESKY_DESC,Replaces the default sky texture. This corresponds to the texture defined as sky1 in a {{MAPINFO}} {{map definition}}.,"Заменяет текстуру неба на указанную. В {{MAPINFO}}, в разделе ""Map definition"", исходная текстура объявляется через ""{{sky1}}""."
 ,,MANPAGES_CCMD_CHANGESKY_EXMP,"changesky rsky1\tIn Doom 2 or Doom 2-based WADs, changes the sky texture to 'RSKY1' defined in the TEXTURE1 lump.
@@ -231,7 +243,7 @@ changesky flat5_7\tИзменяет скайбокс на текстуру 'FLAT
 ,,MANPAGES_CCMD_CHASE_DESC,Toggles the {{chasecam}} on and off. This is considered a {{cheat}}.,Включает/выключает {{режим камеры от третьего лица}}. Считается читом.
 ,,MANPAGES_CCMD_CHASE_EXMP,,
 ,,MANPAGES_CCMD_CLEAN_NAME,clean,clean
-,,MANPAGES_CCMD_CLEAN_DESC,Prints the clean factors for {{menu}} scaling allowed by the current resolution.,"Выводит коэффициенты чистоты для масштабирования {{меню}}, доступные при текущем разрешении."
+,,MANPAGES_CCMD_CLEAN_DESC,Prints the clean factors for {{menu}} scaling allowed by the current resolution.,"Выводит подстраивающие коэффициенты отображения (clean factors) для масштабирования {{меню}}, доступные при текущем разрешении."
 ,,MANPAGES_CCMD_CLEAN_EXMP,,
 ,,MANPAGES_CCMD_CLEARALIASES_NAME,clearaliases,clearaliases
 ,,MANPAGES_CCMD_CLEARALIASES_DESC,Erases all existing console aliases.,Удаляет все существующие псевдонимы консоли.
@@ -247,16 +259,19 @@ changesky flat5_7\tИзменяет скайбокс на текстуру 'FLAT
 ,,MANPAGES_CCMD_CLOSEMENU_EXMP,,
 ,,MANPAGES_CCMD_CMDLIST_NAME,cmdlist [pattern],cmdlist [шаблон]
 ,,MANPAGES_CCMD_CMDLIST_DESC,"Lists all console commands supported by the current version of ZDoom. If you specify a {{pattern}}, then only those {{CCMDs}} that match the pattern will be listed. Patterns can contain the wildcards * (which substitutes for zero or more characters) and ? (which substitutes for exactly one character).",Выводит список всех консольных команд ZDoom. При указании {{шаблона}} покажет только подходящие команды. В шаблоне можно использовать * (ноль или больше символов) и ? (ровно один символ).
-,,MANPAGES_CCMD_CMDLIST_EXMP,,
+,,MANPAGES_CCMD_CMDLIST_EXMP,,"cmdlist\tВывести все доступные команды. Именно так генерировался первоначальный список команд для проекта manpages.
+cmdlist *cvar*\tВывести все команды, в которых встречается слово ""{{cvar}}""."
 ,,MANPAGES_CCMD_COUNTDECALS_NAME,countdecals,countdecals
 ,,MANPAGES_CCMD_COUNTDECALS_DESC,Returns the internal count of automatically generated decals.,Возвращает внутренний счётчик автоматически созданных деккалов.
 ,,MANPAGES_CCMD_COUNTDECALS_EXMP,,
 ,,MANPAGES_CCMD_COUNTITEMS_NAME,countitems [class or TID],countitems [класс или TID]
 ,,MANPAGES_CCMD_COUNTITEMS_DESC,"Prints a list of all countable {{items}} present in the map, each on a line of the form ClassName at (X, Y, Z). Passing a countable item's class name to the command, filters the list, listing only those with the matching class name. At the end of the list, the total count of found countable items is printed. Passing a TID instead of a class name, filters the list by TID.","Выводит список всех счётных {{предметов}} на карте в формате ClassName at (X, Y, Z). При указании класса фильтрует список. В конце выводится общее количество. Если вместо класса указан {{TID}}, фильтрация идёт по нему."
-,,MANPAGES_CCMD_COUNTITEMS_EXMP,,
+,,MANPAGES_CCMD_COUNTITEMS_EXMP,,"countitems\tВывести список всех оставшихся на уровне предметов, которые учитываются при подсчёте процента.
+countitems healthbonus\tВывести список только предметов {{HealthBouns}}. Обычно в этом случае удобнее использовать команду {{items}}."
 ,,MANPAGES_CCMD_COUNTITEMSNUM_NAME,countitemsnum [class or TID],countitemsnum [класс или TID]
 ,,MANPAGES_CCMD_COUNTITEMSNUM_DESC,"Prints the total count of all countable items present in the map. Passing a countable item's class name to the command, prints the total count of that class only. Passing a TID instead of a class name, prints the total count of countable items with the matching TID.",Выводит общее количество счётных предметов на карте. При указании класса — только для него. При указании {{TID}} — только с этим идентификатором.
-,,MANPAGES_CCMD_COUNTITEMSNUM_EXMP,,
+,,MANPAGES_CCMD_COUNTITEMSNUM_EXMP,,"countitemsnum\tВывести общее число всех оставшихся на уровне предметов, которые учитываются при подсчёте процента.
+countitemsnum healthbonus\tВывести общее число только предметов {{HealthBouns}}. Обычно в этом случае удобнее использовать команду {{itemsтгь}}."
 ,,MANPAGES_CCMD_CRASHOUT_NAME,crashout,crashout
 ,,MANPAGES_CCMD_CRASHOUT_DESC,Debugging routine for testing the crash logger. This deliberately triggers a crash by {{attempting to write}} at {{address 0}}.,Тестовый отладочный инструмент. Намеренно вызывает сбой через {{попытку записи}} по {{адресу 0}}.
 ,,MANPAGES_CCMD_CRASHOUT_EXMP,,
@@ -269,17 +284,11 @@ changesky flat5_7\tИзменяет скайбокс на текстуру 'FLAT
 ,,MANPAGES_CCMD_CVARLIST_NAME,cvarlist [pattern],cvarlist [шаблон]
 ,,MANPAGES_CCMD_CVARLIST_DESC,"Lists the values of all currently defined console variables. Each CVAR can also be prefaced by multiple flags. These are:
 A: Archive — gets saved in the config file.
-
 U: User — contains user info.
-
 S: Server — contains server info.
-
 -: Not settable — can only be changed from the command line.
-
 L: Latched — changes do not take effect until the next game.
-
 C: Callback — allocated and has an internal callback.
-
 *: Custom — was created by the user and is meaningless to the game.
 
 If you specify a {{pattern}}, then only those CVARs that match the pattern will be listed. Patterns can contain the wildcards * (which substitutes for zero or more characters) and ? (which substitutes for exactly one character).","Выводит значения всех CVAR. Каждый может помечаться флагами:
@@ -301,13 +310,17 @@ C: Callback — имеет внутренний обработчик.
 ,,MANPAGES_CCMD_DEFAULTBIND_EXMP,,
 ,,MANPAGES_CCMD_DIR_NAME,dir [path/][pattern],dir [<путь>/][шаблон]
 ,,MANPAGES_CCMD_DIR_DESC,"This command lists the contents of a directory. It supports wildcards (but will not recurse into multiple directories). If {{path}} is not specified, it will display the contents of the directory the game was run from.",Выводит содержимое каталога с поддержкой масок. Без {{пути}} показывает каталог запуска игры.
-,,MANPAGES_CCMD_DIR_EXMP,,
+,,MANPAGES_CCMD_DIR_EXMP,,"dir\tПоказать все файлы в текущем каталоге.
+dir ./*.wad\tВывести все WAD-файлы в текущем каталоге. В случае регистрозависимой файловой системы может потребоваться написать ""{{dir ./*.WAD}}"".
+dir /usr/bin/ls*\tПоказать все файлы, начинающиеся на ""ls"", в каталоге ""/usr/bin"" (на ОС Linux и других POSIX-совместимых ОС).
+dir C:/Temp\tПоказать содержимое директории временных файлов ""C:\\Temp"" (на ОС Windows)."
 ,,MANPAGES_CCMD_DOUBLEBIND_NAME,doublebind [key] [command],doublebind [<клавиша>] [<команда>]
 ,,MANPAGES_CCMD_DOUBLEBIND_DESC,"This command works just like bind, except it controls the action that occurs when a key is double-clicked. If a key does not have a doublebinding, then double-clicking it has the same result as pressing it twice. Otherwise, the first press will execute the normal command set with bind, and the second press of the double-click will execute the command set with doublebind.","Аналог {{bind}}, но для двойного нажатия. Если привязки нет, двойное нажатие работает как два обычных. Иначе первое нажатие выполняет bind, второе — doublebind."
-,,MANPAGES_CCMD_DOUBLEBIND_EXMP,,
+,,MANPAGES_CCMD_DOUBLEBIND_EXMP,,"doublebind 0 ""stat statistics""\tПривязать к двойному нажатию на клавишу цифры ""{{0}}"" переключение команды {{stat statistics}} (статистика по пройденным уровням, отображается в левом нижнем углу)."
 ,,MANPAGES_CCMD_DROP_NAME,drop <item> [amount],drop <предмет> [<количество>]
 ,,MANPAGES_CCMD_DROP_DESC,"Drops the given item, if there is at least that much in the player's inventory. Items with the {{INVENTORY.UNDROPPABLE}} or {{INVENTORY.UNTOSSABLE}} flags cannot be dropped. {{amount}} specifies the number of samples the dropped item contains. The command cannot drop more than what is available in the inventory.","Выбрасывает указанный предмет, если он есть в инвентаре. Предметы с флагами {{INVENTORY.UNDROPPABLE}} или {{INVENTORY.UNTOSSABLE}} выбросить нельзя. {{Количество}} задаёт число экземпляров. Нельзя выбросить больше, чем есть."
-,,MANPAGES_CCMD_DROP_EXMP,,
+,,MANPAGES_CCMD_DROP_EXMP,,"drop shotgun\tВыбросить дробовик.
+drop clip 16\tВыбросить 16 патронов для пистолета и пулемёта."
 ,,MANPAGES_CCMD_DUMPACTORS_NAME,dumpactors,dumpactors
 ,,MANPAGES_CCMD_DUMPACTORS_DESC,"Outputs a list of all object classes, along with their {{editor number}}, {{SpawnID}}, {{game filter}} and the file and lump in which they were declared. This command is useful to help resolve conflicts in large scale collaborative projects. Because of the mass of information ({{ZDoom}} alone contains more than 1300 actors), this should be used along with the logfile command to capture the output and then copy and paste it into a program such as a spreadsheet. The command may take a few seconds to process all the data.","Выводит список всех классов объектов с их {{номером редактора}}, {{SpawnID}}, {{фильтром игры}}, модом и файлом (lump) в этом моде. Полезно для разрешения конфликтов в больших проектах. Из-за объёма данных (в ZDoom >1300 акторов) используйте с logfile. Обработка может занять несколько секунд."
 ,,MANPAGES_CCMD_DUMPACTORS_EXMP,,
@@ -333,8 +346,10 @@ C: Callback — имеет внутренний обработчик.
 ,,MANPAGES_CCMD_DUMPSTATES_DESC,Lists debugging information about all of the currently-defined actor's states. Probably not useful to the average user.,Выводит отладочную информацию о стейтах всех акторов. Вряд ли полезно обычным пользователям.
 ,,MANPAGES_CCMD_DUMPSTATES_EXMP,,
 ,,MANPAGES_CCMD_ECHO_NAME,echo <string>,echo <строка>
-,,MANPAGES_CCMD_ECHO_DESC,Prints {{string}} to the console.,Выводит {{строку}} в консоль.
-,,MANPAGES_CCMD_ECHO_EXMP,,
+,,MANPAGES_CCMD_ECHO_DESC,Prints {{string}} to the console. Supports escape sequences.,Выводит {{строку}} в консоль. Поддерживает escape-последовательности.
+,,MANPAGES_CCMD_ECHO_EXMP,,"echo Hello!\tВывести строку ""Hello!"".
+\c[fire]Header: \c[darkgray]Some message\tВывести ""Header"" огненно-жёлтым цветом, а ""Some message"" серым.
+echo \\n=======================\\n\\n\tВывести хорошо видимый разделитель."
 ,,MANPAGES_CCMD_ENDGAME_NAME,endgame,endgame
 ,,MANPAGES_CCMD_ENDGAME_DESC,Quits the current game and go back to the title screen.,Завершает текущую игру и возвращает на титульный экран.
 ,,MANPAGES_CCMD_ENDGAME_EXMP,,
@@ -404,7 +419,7 @@ It also understands the names of individual inventory items. Use the command dum
 ,,MANPAGES_CCMD_HISTORY_DESC,Prints the most recently executed {{console commands}} that you can cycle through by pressing the up and down arrow keys. Up to fifty commands might be stored in the console history.,"Выводит недавно выполненные {{консольные команды}}, которые можно пролистывать клавишами стрелок вверх и вниз. В истории консоли может храниться до пятидесяти команд."
 ,,MANPAGES_CCMD_HISTORY_EXMP,,
 ,,MANPAGES_CCMD_HXVISIT_NAME,hxvisit <warptrans>,hxvisit <номер_карты>
-,,MANPAGES_CCMD_HXVISIT_DESC,"Changes to the level specified by {{warptrans}}. Unlike {{idclev}}, hxvisit determines the map to go to by finding a map defined in {{MAPINFO}} with a matching {{warptrans}}. Hence, it emulates the {{{{Hexen}}}} visit {{cheat}}.","Переход на уровень, указанный в {{warptrans}}. В отличие от {{idclev}}, hxvisit определяет целевую карту, находя в {{MAPINFO}} запись с соответствующим значением {{warptrans}}. Таким образом, команда эмулирует {{чит-код}} visit из игры {{{{Hexen}}}}."
+,,MANPAGES_CCMD_HXVISIT_DESC,"Changes to the level specified by {{warptrans}}. Unlike {{idclev}}, hxvisit determines the map to go to by finding a map defined in {{MAPINFO}} with a matching {{warptrans}}. Hence, it emulates the {{Hexen}} visit {{cheat}}.","Переход на уровень, указанный в {{warptrans}}. В отличие от {{idclev}}, hxvisit определяет целевую карту, находя в {{MAPINFO}} запись с соответствующим значением {{warptrans}}. Таким образом, команда эмулирует {{чит-код}} visit из игры {{Hexen}}."
 ,,MANPAGES_CCMD_HXVISIT_EXMP,,
 ,,MANPAGES_CCMD_IDCLEV_NAME,idclev <slotnumber>,idclev <номер_слота>
 ,,MANPAGES_CCMD_IDCLEV_DESC,Changes to the level specified by {{slotnumber}}. This emulates the idclev {{cheat}}.,"Переход на уровень, указанный в {{номер_слота}}. Эмулирует чит-код {{idclev}}."
@@ -599,7 +614,7 @@ Passing a monster's class name to the command, filters the list, listing only th
 ,,MANPAGES_CCMD_MORPHME_DESC,"Transforms you into a chicken in Heretic and a pig in Hexen and Doom (The latter only happens if you have the relevant graphics present). Additionally, if ""class"" is specified, it will attempt to morph you into the supplied class. This will only work if the target class is inherited from PlayerPawn, and you are not in a state that cannot otherwise morph (i.e. death).","Превращает вас в курицу в Heretic или в свинью в Hexen и Doom (для последнего нужны соответствующие ресурсы графики). Если указан {{класс}}, команда попытается превратить вас в него. Это сработает только если целевой класс наследуется от PlayerPawn и вы не находитесь в состоянии, запрещающем морфинг (например, мертвы)."
 ,,MANPAGES_CCMD_MORPHME_EXMP,,
 ,,MANPAGES_CCMD_MYINFO_NAME,myinfo,myinfo
-,,MANPAGES_CCMD_MYINFO_DESC,"Prints a lot of information about the playerpawn you are controlling in a similar manner to ""info"".","Выводит подробную информацию об объекте игрока (playerpawn), которым вы управляете, аналогично команде ""info""."
+,,MANPAGES_CCMD_MYINFO_DESC,"Prints a lot of information about the playerpawn you are controlling in a similar manner to ""info"".","Выводит подробную информацию об объекте игрока (PlayerPawn), которым вы управляете, аналогично команде ""info""."
 ,,MANPAGES_CCMD_MYINFO_EXMP,,
 ,,MANPAGES_CCMD_NET_ADDCONTROLLER_NAME,net_addcontroller <player>,net_addcontroller <игрок>
 ,,MANPAGES_CCMD_NET_ADDCONTROLLER_DESC,Adds a player to the list of controllers who are able to change game settings.,"Добавляет игрока в список арбитров сетевой игры, которые могут изменять настройки игры."
@@ -685,7 +700,7 @@ Passing a monster's class name to the command, filters the list, listing only th
 ,,MANPAGES_CCMD_PUKE_NAME,puke <script> [arg1 [arg2 [arg3]]],puke <скрипт> [арг1 [арг2 [арг3]]]
 ,,MANPAGES_CCMD_PUKE_DESC,"Executes an {{ACS}} script on the current map, optionally passing it up to three numerical arguments. If you try this on {{multiplayer}}, {{sv_cheats}} must normally be enabled. However, if the script has the ""net"" keyword, it can be activated by anyone in a multiplayer game.
 
-If the ""script"" argument is a negative value, the script will be executed as if it had been called by {{ACS_ExecuteAlways}}; otherwise it will be executed as if called by {{ACS_Execute}}. Script 0 is reserved for {{{{Strife}}}} support and cannot be puked.","Выполняет {{ACS}}-скрипт на текущей карте, опционально передавая ему до трех числовых аргументов. В {{многопользовательской игре}} для этого обычно должны быть включены {{sv_cheats}}. Однако, если скрипт имеет ключевое слово ""net"", его может активировать любой игрок. Если аргумент {{скрипт}} отрицательный, он будет выполнен через {{ACS_ExecuteAlways}}; в противном случае — через {{ACS_Execute}}. Скрипт 0 зарезервирован для поддержки {{{{Strife}}}} и не может быть вызван через puke."
+If the ""script"" argument is a negative value, the script will be executed as if it had been called by {{ACS_ExecuteAlways}}; otherwise it will be executed as if called by {{ACS_Execute}}. Script 0 is reserved for {{Strife}} support and cannot be puked.","Выполняет {{ACS}}-скрипт на текущей карте, опционально передавая ему до трех числовых аргументов. В {{многопользовательской игре}} для этого обычно должны быть включены {{sv_cheats}}. Однако, если скрипт имеет ключевое слово ""net"", его может активировать любой игрок. Если аргумент {{скрипт}} отрицательный, он будет выполнен через {{ACS_ExecuteAlways}}; в противном случае — через {{ACS_Execute}}. Скрипт 0 зарезервирован для поддержки {{Strife}} и не может быть вызван через puke."
 ,,MANPAGES_CCMD_PUKE_EXMP,,
 ,,MANPAGES_CCMD_PUKENAME_NAME,pukename <script> [always] [arg1 [arg2 [arg3]]],pukename <скрипт> [always] [арг1 [арг2 [арг3]]]
 ,,MANPAGES_CCMD_PUKENAME_DESC,"Executes a {{named script}} on the current map, optionally passing it up to three numerical arguments. If you try this on {{multiplayer}}, {{sv_cheats}} must normally be enabled. However, if the script has the ""net"" keyword, it can be activated by anyone in a multiplayer game.
@@ -709,7 +724,11 @@ bind b ""echo setting 1; rebind \""echo setting 2\""""","Изменяет при
 
 {{WARNING:}} Removing voodoo dolls may break maps which rely upon triggering line specials, and should be avoided.
 
-{{NOTE:}} This command does not have any categories, and only corresponds with actor names. I.e. 'remove monsters' will not remove all monsters, though expansion of this command is planned to include some categories.","Удаляет все объекты указанного типа с текущей карты, за исключением живых игроков. {{ВНИМАНИЕ:}} Удаление кукол вуду (voodoo dolls) может сломать карты, полагающиеся на активацию ими специальных линий; этого следует избегать. {{ПРИМЕЧАНИЕ:}} У этой команды нет категорий, она работает только с именами акторов. То есть ""remove monsters"" не удалит всех монстров, хотя расширение этой команды для поддержки категорий планируется."
+{{NOTE:}} This command does not have any categories, and only corresponds with actor names. I.e. 'remove monsters' will not remove all monsters, though expansion of this command is planned to include some categories.","Удаляет все объекты указанного типа с текущей карты, за исключением живых игроков.
+
+{{ВНИМАНИЕ:}} Удаление кукол вуду (voodoo dolls) может сломать карты, полагающиеся на активацию ими специальных линий; этого следует избегать.
+
+{{ПРИМЕЧАНИЕ:}} У этой команды нет категорий, она работает только с именами акторов. То есть ""remove monsters"" не удалит всех монстров, хотя расширение этой команды для поддержки категорий планируется."
 ,,MANPAGES_CCMD_REMOVE_EXMP,,
 ,,MANPAGES_CCMD_REMOVEBOTS_NAME,removebots,removebots
 ,,MANPAGES_CCMD_REMOVEBOTS_DESC,Removes any bots from the game. Bots will also be automatically removed from network games when the arbitrator quits.,"Удаляет всех ботов из игры. Боты также будут автоматически удалены из сетевых игр, когда выйдет сетевой арбитр (обычно это игрок-хост)."
@@ -751,10 +770,10 @@ bind b ""echo setting 1; rebind \""echo setting 2\""""","Изменяет при
 ,,MANPAGES_CCMD_SETSLOT_DESC,"Clears the given weapon slot entirely, then fill it with the given weapons. If no slot is specified and no slots are given, the command prints to the console how the slots are currently filled. As of ZDoom 2.3.0, this has been deprecated and new ways of adding weapon slots are available, such as the {{Player.WeaponSlot}} or {{Weapon.SlotNumber}} property.","Полностью очищает указанный оружейный слот, затем заполняет его указанным оружием. Если аргументы не указаны, команда выводит текущее заполнение слотов. Начиная с ZDoom 2.3.0 эта команда считается устаревшей; появились новые способы настройки слотов, такие как свойства {{Player.WeaponSlot}} или {{Weapon.SlotNumber}}."
 ,,MANPAGES_CCMD_SETSLOT_EXMP,,
 ,,MANPAGES_CCMD_SHOWPOP_NAME,showpop <number>,showpop <номер>
-,,MANPAGES_CCMD_SHOWPOP_DESC,"Display a {{{{Strife}}}}-style pop-up. The {{number}} can be:
+,,MANPAGES_CCMD_SHOWPOP_DESC,"Display a {{Strife}}-style pop-up. The {{number}} can be:
 - Log / mission objectives
 - Key list
-- Status / weapons, ammo, and statistics","Отображает всплывающее окно в стиле {{{{Strife}}}}. {{номер}} может быть:
+- Status / weapons, ammo, and statistics","Отображает всплывающее окно в стиле {{Strife}}. {{номер}} может быть:
 - 1: Журнал / цели миссии
 - 2: Список ключей
 - 3: Статус / оружие, боеприпасы и статистика"
@@ -787,11 +806,14 @@ bind b ""echo setting 1; rebind \""echo setting 2\""""","Изменяет при
 ,,MANPAGES_CCMD_SOUNDLINKS_DESC,"Lists the links between different sounds that use the same sound data. Links are generated dynamically while you play, so it is possible for this command to give different results in different games and even at different times during the same game.","Выводит список связей между различными звуками, использующими одни и те же данные. Связи создаются динамически во время игры, поэтому результаты команды могут отличаться в разных сессиях или в разное время одной игры."
 ,,MANPAGES_CCMD_SOUNDLINKS_EXMP,,
 ,,MANPAGES_CCMD_SOUNDLIST_NAME,soundlist,soundlist
-,,MANPAGES_CCMD_SOUNDLIST_DESC,"Lists all the sounds defined and the lumps that they alias to. Unlike regular {{{{Doom}}}}, ZDoom refers to sounds using a long name and uses a {{SNDINFO}} lump to map those to the lumps in a WAD file that contain the actual sounds. Logical sounds that refer to the same sound data will have links generated as necessary to avoid actually loading multiple copies of the same sound into memory.","Выводит список всех определенных звуков и лампов, на которые они ссылаются. В отличие от обычного {{{{Doom}}}}, ZDoom обращается к звукам по длинным именам и использует ламп {{SNDINFO}} для их сопоставления с лампами в WAD-файле. Логические звуки, ссылающиеся на одни и те же данные, будут связаны для предотвращения загрузки нескольких копий одного звука в память."
+,,MANPAGES_CCMD_SOUNDLIST_DESC,"Lists all the sounds defined and the lumps that they alias to. Unlike regular {{Doom}}, ZDoom refers to sounds using a long name and uses a {{SNDINFO}} lump to map those to the lumps in a WAD file that contain the actual sounds. Logical sounds that refer to the same sound data will have links generated as necessary to avoid actually loading multiple copies of the same sound into memory.","Выводит список всех определенных звуков и лампов, на которые они ссылаются. В отличие от обычного {{Doom}}, ZDoom обращается к звукам по длинным именам и использует ламп {{SNDINFO}} для их сопоставления с лампами в WAD-файле. Логические звуки, ссылающиеся на одни и те же данные, будут связаны для предотвращения загрузки нескольких копий одного звука в память."
 ,,MANPAGES_CCMD_SOUNDLIST_EXMP,,
 ,,MANPAGES_CCMD_SPECIAL_NAME,special <special> [arg1 [arg2 [arg3 [arg4 [arg5]]]]],special <спец_действие> [арг1 [арг2 [арг3 [арг4 [арг5]]]]]
 ,,MANPAGES_CCMD_SPECIAL_DESC,"Executes an {{action special}} on the current map, optionally passing it up to five numerical arguments.","Выполняет {{специальное действие}} (action special) на текущей карте, опционально передавая ему до пяти числовых аргументов."
-,,MANPAGES_CCMD_SPECIAL_EXMP,,
+,,MANPAGES_CCMD_SPECIAL_EXMP,,"special thrustthingz 0 30 0 1\tАналог высокого прыжка посредством вызова {{ThrustThingZ( 0, 30, 0, 1 )}}.
+special 128 0 30 0 1\t{{128}} — это индекс для {{ThrustThingZ()}}, поэтому здесь вызывается то же, что и в выше.
+special Sector_SetFriction 0 150\tСделать пол всех секторов уровня с нулевым тегом (на практике почти всех) более скользким.
+special Sector_SetColor 0 255 127 127\tПерекрасить все секторы с нулевым тегом с помощью {{Sector_SetColor()}} в красноватый цвет."
 ,,MANPAGES_CCMD_SPRAY_NAME,spray <decal>,spray <декаль>
 ,,MANPAGES_CCMD_SPRAY_DESC,Sprays a {{decal}} on a nearby wall so you can see what it looks like.,"Рисует указанный {{декаль}} на ближайшей стене, чтобы можно было увидеть, как он выглядит."
 ,,MANPAGES_CCMD_SPRAY_EXMP,,
@@ -818,7 +840,11 @@ By default, the actor spawns facing East. If the optional angle parameter is pro
 Additional optional parameters can be used to set the summoned actor's {{TID}}, {{special}}, and arguments.","Создает нового актора перед игроком. Полный список акторов можно получить с помощью команды {{dumpclasses actor}}; для списка акторов, доступных в редакторе, используйте {{dumpmapthings}}. При призыве акторов из других игр они могут оказаться невидимыми, так как у игрового движка не найдётся спрайтов для их отрисовки.
 
 По умолчанию актор появляется лицом на восток, но, если указан параметр {{угол}}, актор появится под углом относительно направления взгляда игрока (0 — спиной к игроку, 180 — лицом к нему). Дополнительные параметры позволяют задать призываемому актору {{TID}}, {{action special}} (специальное действие) и аргументы этого действия."
-,,MANPAGES_CCMD_SUMMON_EXMP,,
+,,MANPAGES_CCMD_SUMMON_EXMP,,"summon shotgun\tСоздать актор {{Shotgun}}.
+summon hellknight\tСоздать актора {{HellKnight}}.
+summon hellknight 0\tСоздать актора {{HellKnight}}, отвёрнутого от игрока.
+
+summon pistol 0 0 120 7 35 0 8 0\tСоздать предмет {{Pistol}}, после поднятия которого начинается небольшое землетрясение. Action special {{120}} означает вызов {{Radius_Quake}}, с последующими аргументами получается {{Radius_Quake( 7, 35, 0, 8, 0 );}}. Параметры {{угол}} и {{TID}} здесь не особо важны, поэтому поставлены в ""0""."
 ,,MANPAGES_CCMD_SUMMONFOE_NAME,summonfoe <class> [angle [TID [special [args... ]]]],summonfoe <класс> [угол [TID [спец_действие [аргументы... ]]]]
 ,,MANPAGES_CCMD_SUMMONFOE_DESC,"Same as summon, but forces monsters created using this command to be hostile to the player, regardless of the actor's {{FRIENDLY}}.","То же, что и {{summon}}, но заставляет созданных монстров быть враждебными к игроку, независимо от наличия у актора флага {{FRIENDLY}}."
 ,,MANPAGES_CCMD_SUMMONFOE_EXMP,,

@@ -73,7 +73,7 @@ class ManpageRecord {
 	String nm;
 	Array<String> aliases;
 
-	const const_MaxHeaderFieldWidth = 25;
+	const const_MaxExampleHeaderFieldWidth = 25;
 
 	static ManpageRecord Create( String initname, String initid ) {
 		ManpageRecord newrec = new( 'ManpageRecord' );
@@ -150,14 +150,14 @@ class ManpageRecord {
 					edesc = ManpageUtil.StrHighlightCurlyBraces( edesc );
 
 		            eheader.Replace( mancmdname, TEXTCOLOR_BRICK .. mancmdname .. TEXTCOLOR_RED );
-					eheader = ManpageUtil.StrHighlightCurlyBraces( eheader, TEXTCOLOR_LIGHTBLUE, TEXTCOLOR_RED );
+					eheader = TEXTCOLOR_BRICK .. ManpageUtil.StrHighlightCurlyBraces( eheader, TEXTCOLOR_LIGHTBLUE, TEXTCOLOR_RED );
 
 					int eheaderlength = eheader.Length();
 
 					eheaders.Push( eheader );
 					edescs.Push( edesc );
 
-					if ( eheaderlength > maxheaderlength && eheaderlength <= const_MaxHeaderFieldWidth )
+					if ( eheaderlength > maxheaderlength && eheaderlength <= const_MaxExampleHeaderFieldWidth )
 						maxheaderlength = eheaderlength;
 
 					//examples[ i ] = "";
@@ -173,7 +173,7 @@ class ManpageRecord {
 			outstr.AppendFormat( "\n%s\n", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ) );
 
 			// Indirect evaluation of the field width (actually this is the same as "%*s" format specifier in C's `printf()`):
-			String headerformat = String.Format( "%%-%is", ( maxheaderlength > const_MaxHeaderFieldWidth ? const_MaxHeaderFieldWidth : maxheaderlength ) );
+			String headerformat = String.Format( "%%-%is", ( maxheaderlength > const_MaxExampleHeaderFieldWidth ? const_MaxExampleHeaderFieldWidth : maxheaderlength ) );
 
 			// Print all examples in proper format:
 			for ( int i = 0; i < examples.Size(); i++ ) {
@@ -333,7 +333,7 @@ class ManpagesEventHandler: StaticEventHandler {
 
 			// Commands processing.
 
-			// Add new file to the parsing stack:
+			// Add new file to the parsing queue:
 			if ( lncommand == "include" && lnargc == 2 ) {
 				if ( -1 == SearchConfigFile( lnargv[ 1 ], -1 ) )
 					console.printf( "Wrong include path '%s' %s.", lnargv[ 1 ], MessageFilePos( filehandle, i ) );

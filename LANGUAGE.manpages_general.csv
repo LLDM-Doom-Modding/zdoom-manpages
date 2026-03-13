@@ -19,16 +19,35 @@ Please note that if you are using an old engine version, some commands that are 
 
 Если используется старая версия игрового движка, некоторые команды, которые уже есть в базе данных {{man}}, могут отсутствовать."
 ,,MANPAGES_CCMD_MAN_EXMP,"man summon\tPrints help for command {{summon}}.
-man menu_quit\tPrints help for the command {{menu_quit}}.
 man +zoom\tPrints help for hold/unhold commands {{+zoom}}/{{-zoom}}.
+man console\tPrints help for the {{console usage}}.
 man list\tLists (dumps) all available manpages.
 man help\tPrints this help.
 man --help\tSame as above for the convenience of main OS terminal and console users (also recognizes {{man -h}} and {{man /?}}).","man summon\tВыводит справку для команды {{summon}}.
-man menu_quit\tВыводит справку для команды {{menu_quit}}.
 man +zoom\tВыводит справку для команд {{+zoom}}/{{-zoom}}, реагирующих на удержание/отжатие клавиши.
+man console\tВыводит справку {{по использованию консоли}}.
 man list\tПечатает список всех известных man-страниц.
 man help\tВыводит эту справку.
 man --help\tТо же самое для удобства пользователей терминалов и консолей основных ОС (также поддерживаются {{man -h}} и {{man /?}})."
 ,,MANPAGES_CCMD_MANSEARCH_NAME,man-search <PATTERN>,man-search <ШАБЛОН ПОИСКА>
-,,MANPAGES_CCMD_MANSEARCH_DESC,"[Work-in-progress] Search for PATTERN across all the manpages. The PATTERN can consist of several words.","[В разработке] Ищет ШАБЛОН по всем командам manpages. ШАБЛОН может состоять из нескольких слов."
+,,MANPAGES_CCMD_MANSEARCH_DESC,"Search for PATTERN across all the manpages. The PATTERN can consist of several words.","Ищет ШАБЛОН по всем командам manpages. ШАБЛОН может состоять из нескольких слов. {{Из-за ограничений консоли ZDoom поиск может осуществляться только на английском языке (без Unicode)}}!"
 ,,MANPAGES_CCMD_MANSEARCH_EXMP,,
+,,MANPAGES_USAGE_CONSOLE_NAME,"Help: console usage","Справка: работа с консолью"
+,,MANPAGES_USAGE_CONSOLE_DESC,"By default the console toggles when pressing ""{{~}}"", and closes when pressing {{Escape}}.
+
+You can scroll the ZDoom console output (buffer) using {{the mouse wheel}} and the {{PgUp}}/{{PgDn}} keys. In the same way you can page through the output at once by holding the {{Ctrl}} key. The {{Ctrl + Home}}/{{Ctrl + End}} combinations jump directly to the start/end of the console buffer.
+
+You can clear the console buffer with the {{clear}} command, and you can save the ZDoom console output to a file with the {{logfile}} command. Also, if you run from an OS terminal / command line, you can redirect the stdout stream to a file.","По умолчанию консоль переключается по нажатию на ""{{~}}"" или ""{{ё}}"", и закрывается по нажатию на {{Escape}}.
+
+Прокручивать вывод (буфер) консоли ZDoom можно с помощью {{колеса мыши}} и кнопок {{PgUp}}/{{PgDn}}. Тем же образом можно листать сразу постранично, если зажать клавишу {{Ctrl}}. Сочетания {{Ctrl + Home}}/{{Ctrl + End}} переведут сразу в начало/конец буфера консоли.
+
+Очистить буфер консоли можно с помощью команды {{clear}}. Вывод консоли ZDoom сохранятся в файл через команду {{logfile}}. Также, если запуск производится из-под терминала / командной строки ОС, можно перенаправить в файл стандарный поток вывода."
+,,MANPAGES_USAGE_CONSOLE_EXMP,"{{(More precisely, related commands.)}}
+clear\tClear the console.
+man ccmd\tShow help for the specified {{console command}} (CCMD).
+language en\tSwitch to English.
+language es\tSwitch to Spanish, etc for other languages.","{{(Точнее, связанные команды.)}}
+clear\tОчистить консоль.
+man ccmd\tПоказать справку по указанной {{команде консоли}} (CCMD).
+language ru\tПереключиться на русский язык.
+language en\tПереключиться на английский, и так далее для других языков."

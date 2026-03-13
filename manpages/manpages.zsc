@@ -170,7 +170,7 @@ class ManpageRecord {
 			}
 
 			// Post-init:
-			outstr.AppendFormat( "\n%s\n", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ) );
+			outstr.AppendFormat( "|\n| %s\n", ManpageUtil.Locz( "MANPAGES_GENERAL_EXAMPLES" ) );
 
 			// Indirect evaluation of the field width (actually this is the same as "%*s" format specifier in C's `printf()`):
 			String headerformat = String.Format( "%%-%is", ( maxheaderlength > const_MaxExampleHeaderFieldWidth ? const_MaxExampleHeaderFieldWidth : maxheaderlength ) );
@@ -183,6 +183,9 @@ class ManpageRecord {
 					outstr.AppendFormat( "%s\n", examples[ i ] );
 			}
 		} // of if ( manexamples != "" ) {}
+
+		// Just a simple separator.
+		outstr.AppendFormat( "\n" );
 
 		return outstr;
 	} // of virtual String Get( void ) {}

@@ -28,13 +28,51 @@ extend class ManpagesEventHandler {
 		String pagename = rawarg;
 		ManpageRecord foundpage = NULL;
 
-		for ( int i = 0; i < pages.Size(); i++ ) {
+		// Binary searching; `pages` array is sorted.
+		int bintries = 0;
+		int lowlimit = 0;
+		int highlimit = pages.Size() - 1;
+		int curidx = highlimit / 2 + highlimit % 2;
+
+		while ( true ) {
 			// FIXME: rewrite working with aliases, because I rushed with their implementation.
-			if ( pages[ i ].CheckName( pagename ) ) {
-				foundpage = pages[ i ];
+
+			int curidx = ( highlimit - lowlimit + 1 ) / 2 + lowlimit;
+			String curpagename = pages[ curidx ].nm;
+
+			//console.printf( "high=%i, low=%i, str[%i]=\"%s\"", highlimit, lowlimit, curidx, curpagename );
+
+			if ( curpagename == pagename ) {
+				foundpage = pages[ curidx ];
+				break;
+
+			} else if ( lowlimit == highlimit ) {
+				break;
+
+			} else if ( curpagename > pagename ) {
+				highlimit = curidx - 1;
+
+			} else if ( curpagename < pagename ) {
+				lowlimit = curidx;
+
+			}
+
+			if ( ++bintries > 50 ) {
+				console.printf( "Binsearch BREAK on high=%i, low=%i, cur=%i, max=%i", highlimit, lowlimit, curidx, pages.Size() - 1 );
 				break;
 			}
-		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
+		}
+
+		if ( !foundpage ) {
+			// FIXME: Temporary solution because binsearch cannot match aliases now.
+
+			for ( int i = 0; i < pages.Size(); i++ ) {
+				if ( pages[ i ].CheckName( pagename ) ) {
+					foundpage = pages[ i ];
+					break;
+				}
+			} // of for ( int i = 0; i < pages.Size(); i++ ) {}
+		}
 
 		if ( foundpage )
 			console.printf( "%s", foundpage.Get() );
@@ -140,19 +178,16 @@ extend class ManpagesEventHandler {
 		String ccmdname = e.name;
 		ccmdname.ToLower(); // Make case-insensitive.
 
-		if ( ManpageUtil.StrStartsWith( ccmdname, "manpages`" ) )
-		{
+		if ( ManpageUtil.StrStartsWith( ccmdname, "manpages`" ) ) {
 			// Command "man ...".
 			ManpageProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages`" ) );
 
 		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-search`" ) ) {
 			// Command "man-search ...".
-			//console.printf( "\cuccmdname == '%s'", ccmdname );
 			ManpageSearchProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-search`" ) );
 
 		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-unicode-warning`" ) ) {
 			// Unicode warning message on the current locale.
-
 			bool enlang = ManpageUtil.StrStartsWith( language, "en" );
 
 			if ( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-unicode-warning`" ) == "" && !enlang )

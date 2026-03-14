@@ -1,0 +1,143 @@
+
+class ManpageUtil abstract {
+	/// Localization of the string described by 1st argument.
+	/// Returns localized string or second arg if string cannot be found.
+	static String Locz( String loczid, String empty = "" ) {
+		String cellname;
+		String localized;
+
+		if ( loczid.CharAt( 0 ) == "$" ) {
+			cellname = loczid.Mid( 1 );
+			localized = StringTable.Localize( loczid );
+		} else {
+			cellname = loczid;
+			localized = StringTable.Localize( "$" .. loczid );
+		}
+
+		if ( localized == cellname || localized == "" )
+			return empty; // Compatible comparison for all GZDoom versions.
+
+		return localized;
+	}
+
+	/// Compares the first characters of `str` with `startswith`.
+	/// Returns `true` if `str` begins with `startswith`, otherwise `false`.
+	static bool StrStartsWith( String str, String startswith ) {
+		int startswithlen = startswith.Length();
+
+		return !!( str.Left( startswithlen ) == startswith );
+	}
+
+	/// Returns new string equal to `str` without the leading `prefix`.
+	static String StrWithoutPrefix( String str, String prefix ) {
+		int prefixlen = prefix.Length();
+
+		return str.Mid( prefixlen );
+	}
+
+	/// . Note: this is not a compatible version, old versions will not run with them.
+	/// Returns new string with separator `joinsep` between every neighbour cells.
+	static String StrJoin( in Array<String> strarr, String joinsep = "," ) {
+		int strarrsize = strarr.Size();
+
+		if ( strarrsize < 2 )
+			return ( strarrsize == 0 ? "" : strarr[ 0 ] ); // Too small array to join.
+
+		// Main joining cycle.
+		String outstr = strarr[ 0 ];
+
+		for ( int i = 1; i < strarrsize; i++ )
+			outstr.AppendFormat( "%s%s", joinsep, strarr[ i ] );
+
+		return outstr;
+	}
+
+	/// Replaces "{{a highlighting syntax}}" with proper colors. For now no colors stack etc.
+	/// Returns a new string, original string isn't affected by highlighting.
+	static String StrHighlightCurlyBraces( in String input, String highlightcolor = TEXTCOLOR_LIGHTBLUE, String normalcolor = TEXTCOLOR_NORMAL ) {
+		input.Replace( "{{", highlightcolor );
+		input.Replace( "}}", normalcolor );
+
+		return input;
+	}
+} // of class ManpageUtil abstract {}
+
+
+
+
+// Thanks to Sir Robin for his ZScript Quicksort library.
+// Primarily used, modified and updated for compatibility in ZChecker project.
+//
+// Original topic and code: https://forum.zdoom.org/viewtopic.php?f=105&t=75757.
+// ZChecker definition: https://github.com/LLDM-Doom-Modding/ZChecker/blob/c401cefeed011816ae18ca8bd33b2e133ab98866/ZScript/ZCUtils.zsc#L616.
+
+class ManpagesQuicksort {
+	/// Main array to operate. Copy your array here, call `Sort()` or `Reverse()` and take the result back.
+	Array<ManpageRecord> arr;
+
+	static ManpagesQuicksort Create( class<ManpagesQuicksort> qsortmethod = NULL ) {
+		class<ManpagesQuicksort> newqsort = (qsortmethod != NULL? qsortmethod : (class<ManpagesQuicksort>)('ManpagesQuicksort'));
+
+		return ManpagesQuicksort( new( newqsort ) );
+	}
+
+	/// Sorts `arr` in-place.
+	void Sort( void ) {
+		if ( arr.Size() < 2 )
+			return;
+
+		Quicksort( 0, arr.Size() - 1 );
+	}
+
+	/// Reverses `arr` in-place.
+	void Reverse( void ) {
+		int iMax = arr.Size() - 1;
+		int iHalf = arr.Size() / 2;
+
+		for ( int i = 0; i < iHalf; i++ )
+			SwapElements( i, iMax - i );
+	}
+
+
+	/// Virtual function for sorting method.
+	/// Main line is the "if" expression.
+	protected virtual void QuicksortPartition( in out int i, int low, int high ) {
+		String pivot = arr[ high ].nm;
+
+		for ( int j = low; j <= high - 1; j++ ) {
+			if ( arr[ j ].nm < pivot ) {
+				i++;
+				SwapElements( i, j );
+			}
+		}
+	} // of protected virtual void QuicksortPartition( in out int i, int low, int high ) {}
+
+
+	/* Internal section */
+
+	protected void SwapElements( int index1, int index2 ) {
+		ManpageRecord temp = arr[ index1 ];
+
+		arr[ index1 ] = arr[ index2 ];
+		arr[ index2 ] = temp;
+	}
+
+	protected void Quicksort( int low, int high ) {
+		if ( low < high ) {
+			int pi = QuicksortPartitionWrapper( low, high );
+
+			Quicksort( low, pi - 1 );
+			Quicksort( pi + 1, high );
+		}
+	}
+
+	protected int QuicksortPartitionWrapper( int low, int high ) {
+		int i = ( low - 1 );
+
+		QuicksortPartition( i, low, high );
+
+		SwapElements( i + 1, high );
+
+		return ( i + 1 );
+	}
+} // of class ManpagesQuicksort {}

@@ -1,0 +1,165 @@
+extend class ManpagesEventHandler {
+
+	/// Process the "man ..." command. `rawarg` is a command passed to "man" (manpage or keyword like "--help").
+	ui void ManpageProcess( String rawarg ) {
+		// Dummy processing for now.
+		if ( rawarg ~== "list" ) {
+			int pagessize = pages.Size();
+
+			String liststr = "";
+
+			for ( int i = 0; i < pagessize; i++ ) {
+				if ( pages[ i ].aliases.Size() > 0 )
+					liststr.AppendFormat( "%s %s+ %i alias(es)%s, ", pages[ i ].nm, TEXTCOLOR_DARKGRAY, pages[ i ].aliases.Size(), TEXTCOLOR_NORMAL );
+				else
+					liststr.AppendFormat( "%s, ", pages[ i ].nm );
+			}
+
+			liststr = "[" .. liststr.Left( liststr.Length() - 2 ) .. "]";
+
+			console.printf( liststr );
+			return;
+		}
+
+		// Empty string and some other "keywords" results in help about `man` itself.
+		if ( rawarg == "" || rawarg == "help" || rawarg == "-h" || rawarg == "--help" || rawarg == "/?" || rawarg == "?" )
+			rawarg = "man";
+
+		String pagename = rawarg;
+		ManpageRecord foundpage = NULL;
+
+		for ( int i = 0; i < pages.Size(); i++ ) {
+			// FIXME: rewrite working with aliases, because I rushed with their implementation.
+			if ( pages[ i ].CheckName( pagename ) ) {
+				foundpage = pages[ i ];
+				break;
+			}
+		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
+
+		if ( foundpage )
+			console.printf( "%s", foundpage.Get() );
+		else
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), pagename );
+	} // of void ManpageProcess( String rawarg ) {}
+
+
+
+	/// Process the "man-search ..." command.
+	/// `rawarg` is a pattern passed to "man-search".
+	ui void ManpageSearchProcess( String rawarg ) {
+		//Array<String> includes, excludes; // Pattern parts to search / to exclude from search.
+		Array<String> includes;
+		rawarg.Split( includes, "`", TOK_SKIPEMPTY );
+		int includessize = includes.Size();
+
+		if ( includessize == 0 ) {
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_SEARCH_PATTERN" ) );
+
+			/*CVar prevlangcvar = CVar.FindCVar( "__manpages_language_previous" );
+			CVar unicodewarningcvar = CVar.FindCVar( "__manpages_unicode_warning" );
+			console.printf( "prevlangcvar 0x" .. prevlangcvar .. ", unicodewarningcvar 0x" .. unicodewarningcvar );
+
+			if ( prevlangcvar && !ManpageUtil.StrStartsWith( prevlangcvar.GetString(), "en" ) )
+				unicodewarningcvar.SetInt( 1 );
+				//console.printf( TEXTCOLOR_YELLOW .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_PROBABLY_UNICODE" ) );
+			*/
+
+			return; // No search pattern provided, nothing to search for.
+		}
+
+		if ( includessize > const_MaxSearchArgsLimit ) {
+			// ZDoom's console commands number of arguments is limited to the number of substitutions defined in KEYCONF.
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_ARGS_LIMIT" ), const_MaxSearchArgsLimit );
+		}
+
+
+		// Search for included words:
+		Array<ManpageRecord> foundpages;
+		String incl0 = includes[ 0 ];
+
+		for ( int i = 0; i < pages.Size(); i++ ) {
+			ManpageRecord page = pages[ i ];
+
+			// Check for at least the first include word:
+			if ( !page.CheckSearch( incl0 ) )
+				continue; // Not match the first include word. Next pages[] iteration.
+
+			if ( includessize == 1 ) {
+				foundpages.Push( page );
+				continue; // Match the only include word. Next pages[] iteration.
+			}
+
+			// Check for all other includes[] (all other words to search):
+			bool allmatches = true;
+
+			for ( int j = 1; j < includessize; j++ ) {
+				if ( !page.CheckSearch( includes[ j ] ) ) {
+					allmatches = false;
+					break; // No match, page must be skipped. Break the includes[] cycle.
+				}
+			}
+
+			if ( allmatches )
+				foundpages.Push( page );
+		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
+
+
+		int foundpagessize = foundpages.Size();
+
+		if ( foundpagessize == 0 ) {
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_NOT_MATCH" ), ManpageUtil.StrJoin( includes, " " ) );
+			return; // Search found nothing with this pattern.
+		}
+
+		// Print the results:
+		for ( int i = 0; i < foundpagessize; i++ ) {
+			ManpageRecord page = foundpages[ i ];
+
+			String header = page.GetHeaderLocalized();
+			int headerargsstartpos = header.IndexOf( " " );
+			String headerccmd = ( headerargsstartpos == -1 ? header : header.Left( headerargsstartpos ) );
+
+			String desc = ManpageUtil.StrHighlightCurlyBraces( page.GetDescLocalized() );
+			int desccharindex;
+			int desctrunclen = const_MaxSearchOutputDescriptionLength - headerccmd.Length();
+
+			if ( -1 != ( desccharindex = desc.IndexOf( "\n" ) ) && desccharindex < desctrunclen )
+				desctrunclen = desccharindex;
+
+			if ( desc.Length() > desctrunclen )
+				desc = desc.Left( desctrunclen ) .. TEXTCOLOR_DARKGRAY .. "...";
+
+			console.printf( TEXTCOLOR_BRICK .. " %s" .. TEXTCOLOR_DARKGRAY .. " - " .. TEXTCOLOR_NORMAL .. "%s", headerccmd, desc );
+		}
+	} // of ui void ManpageSearchProcess( String rawarg ) {}
+
+
+
+	/// An `event` CCMD interceptor. See the KEYCONF file for project's aliases declaration.
+	override void ConsoleProcess( ConsoleEvent e ) {
+		String ccmdname = e.name;
+		ccmdname.ToLower(); // Make case-insensitive.
+
+		if ( ManpageUtil.StrStartsWith( ccmdname, "manpages`" ) )
+		{
+			// Command "man ...".
+			ManpageProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages`" ) );
+
+		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-search`" ) ) {
+			// Command "man-search ...".
+			//console.printf( "\cuccmdname == '%s'", ccmdname );
+			ManpageSearchProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-search`" ) );
+
+		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-unicode-warning`" ) ) {
+			// Unicode warning message on the current locale.
+
+			bool enlang = ManpageUtil.StrStartsWith( language, "en" );
+
+			if ( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-unicode-warning`" ) == "" && !enlang )
+				console.printf( TEXTCOLOR_YELLOW .. ManpageUtil.Locz( "$MANPAGES_GENERAL_SEARCH_PROBABLY_UNICODE" ) );
+		}
+
+		Super.ConsoleProcess( e );
+	} // of override void NetworkProcess( ConsoleEvent e ) {}
+
+} // of extend class ManpagesEventHandler {}

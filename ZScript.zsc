@@ -1,3 +1,5 @@
 version "3.3.0"
 
-#include "manpages/manpages.zsc"
+#include "manpages/Manpages.zsc"
+#include "manpages/ManpagesCommands.zsc"
+#include "manpages/ManpagesUtil.zsc"

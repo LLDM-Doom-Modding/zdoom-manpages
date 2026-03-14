@@ -7,21 +7,21 @@ A quick help pages ("manual pages", or "manpages") based on the [ZDoom Wiki cons
 
 - Just type `man COMMAND` (e.g., `man summon` or `man dumpclasses`) to read all the information about it without needing of a web browser. Usage examples are included!
 
-<img src="https://imgur.com/Oy1aj2W.png"/>
+<img src="https://i.imgur.com/Oy1aj2W.png"/>
 
 
 ### Searching
 
 - You also can type `man-search PATTERN` or just `mas PATTERN` to search for this PATTERN across all known commands.
 
-<img src="https://imgur.com/W3kyx11.png">
+<img src="https://i.imgur.com/W3kyx11.png">
 
 
 ### Localization
 
 - Supported internationalization, currently available in English and Russian. Feel free to include other languages!
 
-<img src="https://imgur.com/YKgpXnL.png">
+<img src="https://i.imgur.com/YKgpXnL.png">
 
 <br>
 

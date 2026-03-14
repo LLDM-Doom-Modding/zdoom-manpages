@@ -1,5 +1,9 @@
 //
 
+
+const ASCII_UPPERCASE_A_ORD = 65;
+const ASCII_UPPERCASE_Z_ORD = 90;
+
 class ManpageUtil abstract {
 	/// Localization of the string described by 1st argument.
 	/// Returns localized string or second arg if string cannot be found.
@@ -230,16 +234,38 @@ class ManpagesEventHandler: StaticEventHandler {
 	/// Guardian counter to prevent recursions and infinite loops.
 	private int configParsedFilesAmount;
 	const const_MaxConfigFilesAmount = 32;
-	const const_MaxSearchArgsLimit = 10; // ZDoom's console commands number of arguments is limited to the number of substitutions defined in KEYCONF.
-	const const_MaxSearchOutputDescriptionLength = 128;
 
 	/// Main storage.
 	Array<ManpageRecord> pages;
+
+	/// A cache to determining the position from which we must start searching for the command more quickly.
+	/// Caching is possible because the `pages` array is sorted. TODO: Actually it's better to implement a binsearch!
+	/// Value `const_PagesFirstCharCacheEmptyCell` means no manpage names starting with this char.
+	Array<int> pagesfirstchar;
+	const const_PagesFirstCharCacheSize = ASCII_UPPERCASE_Z_ORD - ASCII_UPPERCASE_A_ORD + 1;
+	const const_PagesFirstCharCacheEmptyCell = -1;
+
+	const const_MaxSearchArgsLimit = 10; // ZDoom's console commands number of arguments is limited to the number of substitutions defined in KEYCONF.
+	const const_MaxSearchOutputDescriptionLength = 128;
 
 
 	/// Internal method just to beautify the output.
 	private String MessageFilePos( int filehandle, int filelinenum ) {
 		return String.Format( "in file '%s' line %i", WADs.GetLumpFullName( filehandle ), filelinenum + 1 );
+	}
+
+	/// Returns index in the positions of the first character's appear cache in the `pages` main array.
+	/// Mapping (may be changed in the future, I think into a binary searching, so don't rely on it):
+	///   Case-insensitive: 0 == 'A'; 1 == 'B'; <...>; 25 == 'Z';
+	///   `const_PagesFirstCharCacheSize` == Anything other from 'A'..'Z'.
+	clearscope protected int GetPagesFirstCharCacheIndex( String str ) const {
+		str.ToUpper();
+		int firstchar = str.CharCodeAt( 0 );
+
+		if ( firstchar < ASCII_UPPERCASE_A_ORD || firstchar > ASCII_UPPERCASE_Z_ORD )
+			return const_PagesFirstCharCacheSize - 1; // Anything except 'A'..'Z', including empty input string.
+
+		return firstchar - ASCII_UPPERCASE_A_ORD;
 	}
 
 	/// Searches for a manpage by page name.
@@ -363,6 +389,7 @@ class ManpagesEventHandler: StaticEventHandler {
 	} // of void ParseConfigFile( int filehandle ) {}
 
 
+	/// Initialization of the project.
 	override void OnRegister() {
 
 		// Config files parsing.
@@ -385,6 +412,49 @@ class ManpagesEventHandler: StaticEventHandler {
 		if ( configParsedFilesAmount == 0 )
 			console.printf( "No manpage config files found." );
 
+
+		// Manpages sorting and generating positions cache by first letter.
+		// FIXME: rewrite working with aliases, because I rushed with their implementation.
+
+		// Sorting:
+		ManpagesQuicksort qsort = ManpagesQuicksort.Create();
+		qsort.arr.Copy( pages );
+		qsort.Sort();
+		pages.Copy( qsort.arr );
+
+		// Filling up the `pagesfirstchar` cache with a guardian value:
+		for ( int i = 0; i < const_PagesFirstCharCacheSize; i++ )
+			pagesfirstchar.Push( const_PagesFirstCharCacheEmptyCell );
+
+		pagesfirstchar.Push( pages.Size() ); // For consistency, to clamp page searching in range "cache[ idx ]..cache[ idx + 1 ]".
+
+		// Generating the `pagesfirstchar` indexing cache:
+		String prevnm = "";
+		for ( int i = 0; i < pages.Size(); i++ ) {
+			String nm = pages[ i ].nm;
+
+			// Just in case check for sorting correctness (maybe I will change a sorting method in future):
+			if ( prevnm >= nm )
+				console.printf( "Warning: sorting failure, pages[ %i ] is \"%s\", previous is \"%s\".", i, nm, prevnm );
+
+			int idx = GetPagesFirstCharCacheIndex( nm );
+
+			if ( pagesfirstchar[ idx ] == const_PagesFirstCharCacheEmptyCell )
+				pagesfirstchar[ idx ] = i;
+
+			prevnm = nm;
+		}
+
+		// Finalization.
+
+		/*for ( int i = 0; i < pagesfirstchar.Size() - 1; i++ ) {
+			if ( pagesfirstchar[ i ] == -1 )
+				console.printf( "chars[%-2i] pos: -1", i );
+			else
+				console.printf( "chars[%-2i] pos: pages[%i] == \"%s\"", i, pagesfirstchar[ i ], pages[ pagesfirstchar[ i ] ].nm );
+		}*/
+
+		console.printf( "[Manpages] %s.", ManpageUtil.Locz( "$MANPAGES_GENERAL_ABOUT" ) );
 		Super.OnRegister();
 	} // of override void OnRegister() {}
 
@@ -406,7 +476,6 @@ class ManpagesEventHandler: StaticEventHandler {
 
 			liststr = "[" .. liststr.Left( liststr.Length() - 2 ) .. "]";
 
-
 			console.printf( liststr );
 			return;
 		}
@@ -415,19 +484,28 @@ class ManpagesEventHandler: StaticEventHandler {
 		if ( rawarg == "" || rawarg == "help" || rawarg == "-h" || rawarg == "--help" || rawarg == "/?" || rawarg == "?" )
 			rawarg = "man";
 
+		String pagename = rawarg;
 		ManpageRecord foundpage = NULL;
 
-		for ( int i = 0; i < pages.Size(); i++ ) {
-			if ( pages[ i ].CheckName( rawarg ) ) {
+		int firstcharcacheindex = GetPagesFirstCharCacheIndex( pagename );
+		int rangefrom = pagesfirstchar[ firstcharcacheindex ];
+		int rangeto = pagesfirstchar[ firstcharcacheindex + 1 ];
+
+		for ( int i = rangefrom; i < rangeto; i++ ) {
+			if ( pages[ i ].CheckName( pagename ) ) {
 				foundpage = pages[ i ];
 				break;
 			}
+
+			// FIXME: rewrite working with aliases, because I rushed with their implementation.
+			if ( pages[ i ].nm > pagename )
+				break;
 		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
 
 		if ( foundpage )
 			console.printf( "%s", foundpage.Get() );
 		else
-			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), rawarg );
+			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), pagename );
 	} // of void ManpageProcess( String rawarg ) {}
 
 	/// Process the "man-search ..." command.
@@ -545,3 +623,83 @@ class ManpagesEventHandler: StaticEventHandler {
 	} // of override void NetworkProcess( ConsoleEvent e ) {}
 
 } // of class ManpagesEventHandler: StaticEventHandler {}
+
+
+
+
+// Thanks to Sir Robin for his ZScript Quicksort library.
+// Primarily used, modified and updated for compatibility in ZChecker project.
+//
+// Original topic and code: https://forum.zdoom.org/viewtopic.php?f=105&t=75757.
+// ZChecker definition: https://github.com/LLDM-Doom-Modding/ZChecker/blob/c401cefeed011816ae18ca8bd33b2e133ab98866/ZScript/ZCUtils.zsc#L616.
+
+class ManpagesQuicksort {
+	/// Main array to operate. Copy your array here, call `Sort()` or `Reverse()` and take the result back.
+	Array<ManpageRecord> arr;
+
+	static ManpagesQuicksort Create( class<ManpagesQuicksort> qsortmethod = NULL ) {
+		class<ManpagesQuicksort> newqsort = (qsortmethod != NULL? qsortmethod : (class<ManpagesQuicksort>)('ManpagesQuicksort'));
+
+		return ManpagesQuicksort( new( newqsort ) );
+	}
+
+	/// Sorts `arr` in-place.
+	void Sort( void ) {
+		if ( arr.Size() < 2 )
+			return;
+
+		Quicksort( 0, arr.Size() - 1 );
+	}
+
+	/// Reverses `arr` in-place.
+	void Reverse( void ) {
+		int iMax = arr.Size() - 1;
+		int iHalf = arr.Size() / 2;
+
+		for ( int i = 0; i < iHalf; i++ )
+			SwapElements( i, iMax - i );
+	}
+
+
+	/// Virtual function for sorting method.
+	/// Main line is the "if" expression.
+	protected virtual void QuicksortPartition( in out int i, int low, int high ) {
+		String pivot = arr[ high ].nm;
+
+		for ( int j = low; j <= high - 1; j++ ) {
+			if ( arr[ j ].nm < pivot ) {
+				i++;
+				SwapElements( i, j );
+			}
+		}
+	} // of protected virtual void QuicksortPartition( in out int i, int low, int high ) {}
+
+
+	/* Internal section */
+
+	protected void SwapElements( int index1, int index2 ) {
+		ManpageRecord temp = arr[ index1 ];
+
+		arr[ index1 ] = arr[ index2 ];
+		arr[ index2 ] = temp;
+	}
+
+	protected void Quicksort( int low, int high ) {
+		if ( low < high ) {
+			int pi = QuicksortPartitionWrapper( low, high );
+
+			Quicksort( low, pi - 1 );
+			Quicksort( pi + 1, high );
+		}
+	}
+
+	protected int QuicksortPartitionWrapper( int low, int high ) {
+		int i = ( low - 1 );
+
+		QuicksortPartition( i, low, high );
+
+		SwapElements( i + 1, high );
+
+		return ( i + 1 );
+	}
+} // of class ZCInventoryQuicksort {}

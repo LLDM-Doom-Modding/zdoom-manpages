@@ -12,26 +12,27 @@ Identifier,Remark,Identifier,default,ru
 ,,MANPAGES_GENERAL_SEARCH_NOT_MATCH,"Search pattern '%s' matches no manpages.","Шаблон поиска '%s' ни с чем не совпал."
 ,,MANPAGES_GENERAL_ALIAS_PREFIX,"Alias:","Или:"
 ,,,,
-,,MANPAGES_CCMD_MAN_NAME,man <COMMAND|list|help>,man <КОМАНДА|list|help>
-,,MANPAGES_CCMD_MAN_DESC,"Main manpages utility command. Prints a help for the specified COMMAND and its usage examples, if available. ""{{man COMMAND}}"" prints help for specified COMMAND, ""{{man list}}"" lists all known commands, ""{{man help}}"" prints this help.
+,,MANPAGES_CCMD_MAN_NAME,man <COMMAND|help>,man <КОМАНДА|help>
+,,MANPAGES_CCMD_MAN_DESC,"Main manpages utility command. Prints a help for the specified {{COMMAND}} and its usage examples, if available. ""{{man help}}"" displays this help. Also, see commands {{man-search}} to search through all manpages and {{man-list}} for a list of all known pages.
 
-Please note that if you are using an old engine version, some commands that are already in {{man}} database may not exist.","Основная команда manpages. Выводит справку по указанной КОМАНДЕ, а также, если есть, примеры использования. ""{{man КОМАНДА}}"" покажет справку по указанной КОМАНДЕ, ""{{man list}}"" выведет список всех известных команд, а ""{{man help}}"" покажет эту инструкцию.
+Please note that if you are using an old engine version, some commands that are already in {{man}} database may not exist.","Основная команда manpages. Выводит справку по указанной {{КОМАНДЕ}}, а также, если есть, примеры использования. ""{{man help}}"" выведет эту инструкцию. Также см. команды {{man-search}} для поиска по всем man-страницам и {{man-list}} для списка известных команд.
 
 Если используется старая версия игрового движка, некоторые команды, которые уже есть в базе данных {{man}}, могут отсутствовать."
 ,,MANPAGES_CCMD_MAN_EXMP,"man summon\tPrints help for command {{summon}}.
 man +zoom\tPrints help for hold/unhold commands {{+zoom}}/{{-zoom}}.
 man console\tPrints help for the {{console usage}}.
-man list\tLists (dumps) all available manpages.
 man help\tPrints this help.
 man --help\tSame as above for the convenience of main OS terminal and console users (also recognizes {{man -h}} and {{man /?}}).","man summon\tВыводит справку для команды {{summon}}.
 man +zoom\tВыводит справку для команд {{+zoom}}/{{-zoom}}, реагирующих на удержание/отжатие клавиши.
 man console\tВыводит справку {{по использованию консоли}}.
-man list\tПечатает список всех известных man-страниц.
 man help\tВыводит эту справку.
 man --help\tТо же самое для удобства пользователей терминалов и консолей основных ОС (также поддерживаются {{man -h}} и {{man /?}})."
 ,,MANPAGES_CCMD_MANSEARCH_NAME,man-search <PATTERN>,man-search <ШАБЛОН ПОИСКА>
 ,,MANPAGES_CCMD_MANSEARCH_DESC,"Search for PATTERN across all the manpages. The PATTERN can consist of several words.","Ищет ШАБЛОН по всем командам manpages. ШАБЛОН может состоять из нескольких слов. {{Из-за ограничений консоли ZDoom поиск может осуществляться только на английском языке (без Unicode)}}!"
 ,,MANPAGES_CCMD_MANSEARCH_EXMP,,
+,,MANPAGES_CCMD_MANLIST_NAME,man-list,man-list
+,,MANPAGES_CCMD_MANLIST_DESC,"Lists all known manpages.","Выводит список всех известных man-страниц."
+,,MANPAGES_CCMD_MANLIST_EXMP,,
 ,,MANPAGES_USAGE_CONSOLE_NAME,"Help: console usage","Справка: работа с консолью"
 ,,MANPAGES_USAGE_CONSOLE_DESC,"By default the console toggles when pressing ""{{~}}"", and closes when pressing {{Escape}}.
 

@@ -2,24 +2,6 @@ extend class ManpagesEventHandler {
 
 	/// Process the "man ..." command. `rawarg` is a command passed to "man" (manpage or keyword like "--help").
 	ui void ManpageProcess( String rawarg ) {
-		// Dummy processing for now.
-		if ( rawarg ~== "list" ) {
-			int pagessize = pages.Size();
-
-			String liststr = "";
-
-			for ( int i = 0; i < pagessize; i++ ) {
-				if ( pages[ i ].aliases.Size() > 0 )
-					liststr.AppendFormat( "%s %s+ %i alias(es)%s, ", pages[ i ].nm, TEXTCOLOR_DARKGRAY, pages[ i ].aliases.Size(), TEXTCOLOR_NORMAL );
-				else
-					liststr.AppendFormat( "%s, ", pages[ i ].nm );
-			}
-
-			liststr = "[" .. liststr.Left( liststr.Length() - 2 ) .. "]";
-
-			console.printf( liststr );
-			return;
-		}
 
 		// Empty string and some other "keywords" results in help about `man` itself.
 		if ( rawarg == "" || rawarg == "help" || rawarg == "-h" || rawarg == "--help" || rawarg == "/?" || rawarg == "?" )
@@ -172,6 +154,27 @@ extend class ManpagesEventHandler {
 	} // of ui void ManpageSearchProcess( String rawarg ) {}
 
 
+	/// Process the "man-list" command.
+	/// TODO: Currently `rawarg` is ignored, but planned to be a pattern like in command `cmdlist`.
+	ui void ManpageListProcess( String rawarg ) {
+		int pagessize = pages.Size();
+		String liststr = "";
+
+		// Almost plain dump for now.
+		for ( int i = 0; i < pagessize; i++ ) {
+			if ( pages[ i ].aliases.Size() > 0 )
+				liststr.AppendFormat( "%s %s+ %i alias(es)%s, ", pages[ i ].nm, TEXTCOLOR_DARKGRAY, pages[ i ].aliases.Size(), TEXTCOLOR_NORMAL );
+			else
+				liststr.AppendFormat( "%s, ", pages[ i ].nm );
+		}
+
+		liststr = "[" .. liststr.Left( liststr.Length() - 2 ) .. "] " .. TEXTCOLOR_DARKGRAY .. "(total " .. pagessize .. " without aliases)";
+
+		console.printf( liststr );
+		return;
+	} // of ui void ManpageListProcess( String rawarg ) {}
+
+
 
 	/// An `event` CCMD interceptor. See the KEYCONF file for project's aliases declaration.
 	override void ConsoleProcess( ConsoleEvent e ) {
@@ -185,6 +188,10 @@ extend class ManpagesEventHandler {
 		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-search`" ) ) {
 			// Command "man-search ...".
 			ManpageSearchProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-search`" ) );
+
+		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-list`" ) ) {
+			// Command "man-list".
+			ManpageListProcess( ManpageUtil.StrWithoutPrefix( ccmdname, "manpages-list`" ) );
 
 		} else if ( ManpageUtil.StrStartsWith( ccmdname, "manpages-unicode-warning`" ) ) {
 			// Unicode warning message on the current locale.

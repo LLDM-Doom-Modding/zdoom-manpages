@@ -7,6 +7,12 @@ alias man-search "event manpages-unicode-warning`%1; set __manpages_language_pre
 alias mans "man-search %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21"
 alias mas  "man-search %1 %2 %3 %4 %5 %6 %7 %8 %9 %10 %11 %12 %13 %14 %15 %16 %17 %18 %19 %20 %21"
 
+// Type "man-list" or "manl" to print list of all known manpages.
+alias man-list "event manpages-list`%1"
+
+alias manl "man-list %1"
+
+
 // Explanation: ZDoom console don't work with Unicode.
 // Explanation 2: CVars found with "CVar.Find()" cannot be set under ZScript outside the menu code, so there's no easy way to signal back to the alias from ZScript.
 // Explanation 3: console command `alias` has controversal rules for quotes escaping, so, if arg `%1` is empty, `fn_call %1` breaks the `test` command, and `fn_call "%1"` results in passing just characters '%', '1'.

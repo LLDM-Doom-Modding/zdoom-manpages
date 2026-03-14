@@ -1,9 +1,5 @@
 //
 
-
-const ASCII_UPPERCASE_A_ORD = 65;
-const ASCII_UPPERCASE_Z_ORD = 90;
-
 class ManpageUtil abstract {
 	/// Localization of the string described by 1st argument.
 	/// Returns localized string or second arg if string cannot be found.
@@ -238,13 +234,6 @@ class ManpagesEventHandler: StaticEventHandler {
 	/// Main storage.
 	Array<ManpageRecord> pages;
 
-	/// A cache to determining the position from which we must start searching for the command more quickly.
-	/// Caching is possible because the `pages` array is sorted. TODO: Actually it's better to implement a binsearch!
-	/// Value `const_PagesFirstCharCacheEmptyCell` means no manpage names starting with this char.
-	Array<int> pagesfirstchar;
-	const const_PagesFirstCharCacheSize = ASCII_UPPERCASE_Z_ORD - ASCII_UPPERCASE_A_ORD + 1;
-	const const_PagesFirstCharCacheEmptyCell = -1;
-
 	const const_MaxSearchArgsLimit = 10; // ZDoom's console commands number of arguments is limited to the number of substitutions defined in KEYCONF.
 	const const_MaxSearchOutputDescriptionLength = 128;
 
@@ -252,20 +241,6 @@ class ManpagesEventHandler: StaticEventHandler {
 	/// Internal method just to beautify the output.
 	private String MessageFilePos( int filehandle, int filelinenum ) {
 		return String.Format( "in file '%s' line %i", WADs.GetLumpFullName( filehandle ), filelinenum + 1 );
-	}
-
-	/// Returns index in the positions of the first character's appear cache in the `pages` main array.
-	/// Mapping (may be changed in the future, I think into a binary searching, so don't rely on it):
-	///   Case-insensitive: 0 == 'A'; 1 == 'B'; <...>; 25 == 'Z';
-	///   `const_PagesFirstCharCacheSize` == Anything other from 'A'..'Z'.
-	clearscope protected int GetPagesFirstCharCacheIndex( String str ) const {
-		str.ToUpper();
-		int firstchar = str.CharCodeAt( 0 );
-
-		if ( firstchar < ASCII_UPPERCASE_A_ORD || firstchar > ASCII_UPPERCASE_Z_ORD )
-			return const_PagesFirstCharCacheSize - 1; // Anything except 'A'..'Z', including empty input string.
-
-		return firstchar - ASCII_UPPERCASE_A_ORD;
 	}
 
 	/// Searches for a manpage by page name.
@@ -422,38 +397,6 @@ class ManpagesEventHandler: StaticEventHandler {
 		qsort.Sort();
 		pages.Copy( qsort.arr );
 
-		// Filling up the `pagesfirstchar` cache with a guardian value:
-		for ( int i = 0; i < const_PagesFirstCharCacheSize; i++ )
-			pagesfirstchar.Push( const_PagesFirstCharCacheEmptyCell );
-
-		pagesfirstchar.Push( pages.Size() ); // For consistency, to clamp page searching in range "cache[ idx ]..cache[ idx + 1 ]".
-
-		// Generating the `pagesfirstchar` indexing cache:
-		String prevnm = "";
-		for ( int i = 0; i < pages.Size(); i++ ) {
-			String nm = pages[ i ].nm;
-
-			// Just in case check for sorting correctness (maybe I will change a sorting method in future):
-			if ( prevnm >= nm )
-				console.printf( "Warning: sorting failure, pages[ %i ] is \"%s\", previous is \"%s\".", i, nm, prevnm );
-
-			int idx = GetPagesFirstCharCacheIndex( nm );
-
-			if ( pagesfirstchar[ idx ] == const_PagesFirstCharCacheEmptyCell )
-				pagesfirstchar[ idx ] = i;
-
-			prevnm = nm;
-		}
-
-		// Finalization.
-
-		/*for ( int i = 0; i < pagesfirstchar.Size() - 1; i++ ) {
-			if ( pagesfirstchar[ i ] == -1 )
-				console.printf( "chars[%-2i] pos: -1", i );
-			else
-				console.printf( "chars[%-2i] pos: pages[%i] == \"%s\"", i, pagesfirstchar[ i ], pages[ pagesfirstchar[ i ] ].nm );
-		}*/
-
 		console.printf( "[Manpages] %s.", ManpageUtil.Locz( "$MANPAGES_GENERAL_ABOUT" ) );
 		Super.OnRegister();
 	} // of override void OnRegister() {}
@@ -487,19 +430,12 @@ class ManpagesEventHandler: StaticEventHandler {
 		String pagename = rawarg;
 		ManpageRecord foundpage = NULL;
 
-		int firstcharcacheindex = GetPagesFirstCharCacheIndex( pagename );
-		int rangefrom = pagesfirstchar[ firstcharcacheindex ];
-		int rangeto = pagesfirstchar[ firstcharcacheindex + 1 ];
-
-		for ( int i = rangefrom; i < rangeto; i++ ) {
+		for ( int i = 0; i < pages.Size(); i++ ) {
+			// FIXME: rewrite working with aliases, because I rushed with their implementation.
 			if ( pages[ i ].CheckName( pagename ) ) {
 				foundpage = pages[ i ];
 				break;
 			}
-
-			// FIXME: rewrite working with aliases, because I rushed with their implementation.
-			if ( pages[ i ].nm > pagename )
-				break;
 		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
 
 		if ( foundpage )

@@ -8,24 +8,22 @@ extend class ManpagesEventHandler {
 			rawarg = "man";
 
 		String pagename = rawarg;
-		ManpageRecord foundpage = NULL;
+		ManpageNameRecord foundpage = NULL;
 
-		// Binary searching; `pages` array is sorted.
+		// Binary searching; `pagenames` array must be sorted.
 		int bintries = 0;
 		int lowlimit = 0;
-		int highlimit = pages.Size() - 1;
+		int highlimit = pagenames.Size() - 1;
 		int curidx = highlimit / 2 + highlimit % 2;
 
 		while ( true ) {
-			// FIXME: rewrite working with aliases, because I rushed with their implementation.
-
 			int curidx = ( highlimit - lowlimit + 1 ) / 2 + lowlimit;
-			String curpagename = pages[ curidx ].nm;
+			String curpagename = pagenames[ curidx ].nm;
 
 			//console.printf( "high=%i, low=%i, str[%i]=\"%s\"", highlimit, lowlimit, curidx, curpagename );
 
 			if ( curpagename == pagename ) {
-				foundpage = pages[ curidx ];
+				foundpage = pagenames[ curidx ];
 				break;
 
 			} else if ( lowlimit == highlimit ) {
@@ -40,24 +38,13 @@ extend class ManpagesEventHandler {
 			}
 
 			if ( ++bintries > 50 ) {
-				console.printf( "Binsearch BREAK on high=%i, low=%i, cur=%i, max=%i", highlimit, lowlimit, curidx, pages.Size() - 1 );
+				console.printf( "Binsearch BREAK on high=%i, low=%i, cur=%i, max=%i", highlimit, lowlimit, curidx, pagenames.Size() - 1 );
 				break;
 			}
 		}
 
-		if ( !foundpage ) {
-			// FIXME: Temporary solution because binsearch cannot match aliases now.
-
-			for ( int i = 0; i < pages.Size(); i++ ) {
-				if ( pages[ i ].CheckName( pagename ) ) {
-					foundpage = pages[ i ];
-					break;
-				}
-			} // of for ( int i = 0; i < pages.Size(); i++ ) {}
-		}
-
 		if ( foundpage )
-			console.printf( "%s", foundpage.Get() );
+			console.printf( "%s", foundpage.page.Get( pagename ) );
 		else
 			console.printf( TEXTCOLOR_DARKGRAY .. ManpageUtil.Locz( "$MANPAGES_GENERAL_NO_PAGE" ), pagename );
 	} // of void ManpageProcess( String rawarg ) {}
@@ -94,19 +81,19 @@ extend class ManpagesEventHandler {
 
 
 		// Search for included words:
-		Array<ManpageRecord> foundpages;
+		Array<ManpageNameRecord> foundpages;
 		String incl0 = includes[ 0 ];
 
-		for ( int i = 0; i < pages.Size(); i++ ) {
-			ManpageRecord page = pages[ i ];
+		for ( int i = 0; i < pagenames.Size(); i++ ) {
+			ManpageNameRecord page = pagenames[ i ];
 
 			// Check for at least the first include word:
 			if ( !page.CheckSearch( incl0 ) )
-				continue; // Not match the first include word. Next pages[] iteration.
+				continue; // Not match the first include word. Next pagenames[] iteration.
 
 			if ( includessize == 1 ) {
 				foundpages.Push( page );
-				continue; // Match the only include word. Next pages[] iteration.
+				continue; // Match the only include word. Next pagenames[] iteration.
 			}
 
 			// Check for all other includes[] (all other words to search):
@@ -121,7 +108,7 @@ extend class ManpagesEventHandler {
 
 			if ( allmatches )
 				foundpages.Push( page );
-		} // of for ( int i = 0; i < pages.Size(); i++ ) {}
+		} // of for ( int i = 0; i < pagenames.Size(); i++ ) {}
 
 
 		int foundpagessize = foundpages.Size();
@@ -133,7 +120,7 @@ extend class ManpagesEventHandler {
 
 		// Print the results:
 		for ( int i = 0; i < foundpagessize; i++ ) {
-			ManpageRecord page = foundpages[ i ];
+			ManpageRecord page = foundpages[ i ].page;
 
 			String header = page.GetHeaderLocalized();
 			int headerargsstartpos = header.IndexOf( " " );
@@ -154,19 +141,25 @@ extend class ManpagesEventHandler {
 	} // of ui void ManpageSearchProcess( String rawarg ) {}
 
 
+
 	/// Process the "man-list" command.
 	/// TODO: Currently `rawarg` is ignored, but planned to be a pattern like in command `cmdlist`.
 	ui void ManpageListProcess( String rawarg ) {
-		int pagessize = pages.Size();
+		int pagessize = pagenames.Size();
 		String liststr = "";
 
 		// Almost plain dump for now.
 		for ( int i = 0; i < pagessize; i++ ) {
-			if ( pages[ i ].aliases.Size() > 0 )
-				liststr.AppendFormat( "%s %s+ %i alias(es)%s, ", pages[ i ].nm, TEXTCOLOR_DARKGRAY, pages[ i ].aliases.Size(), TEXTCOLOR_NORMAL );
-			else
-				liststr.AppendFormat( "%s, ", pages[ i ].nm );
-		}
+			ManpageNameRecord pagerec = pagenames[ i ];
+			String pagename = pagerec.nm;
+
+			if ( pagerec.page.nmaliases[ 0 ] == pagename ) {
+				if ( pagerec.page.nmaliases.Size() > 1 )
+					liststr.AppendFormat( "%s %s+ %i alias(es)%s, ", pagename, TEXTCOLOR_DARKGRAY, pagerec.page.nmaliases.Size() - 1, TEXTCOLOR_NORMAL );
+				else
+					liststr.AppendFormat( "%s, ", pagename );
+			}
+		} // of for ( int i = 0; i < pagessize; i++ ) {}
 
 		liststr = "[" .. liststr.Left( liststr.Length() - 2 ) .. "] " .. TEXTCOLOR_DARKGRAY .. "(total " .. pagessize .. " without aliases)";
 

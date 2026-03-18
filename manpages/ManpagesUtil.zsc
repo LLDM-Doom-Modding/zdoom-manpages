@@ -20,6 +20,12 @@ class ManpageUtil abstract {
 		return localized;
 	}
 
+	/// Returns true only if a string can be localized (at least to the "default" translation).
+	/// Does not check for the translation cell of current language.
+	static bool IsLoczExist( String loczid ) {
+		return ( Locz( loczid, "\a\b" ) != "\a\b" );
+	}
+
 	/// Compares the first characters of `str` with `startswith`.
 	/// Returns `true` if `str` begins with `startswith`, otherwise `false`.
 	static bool StrStartsWith( String str, String startswith ) {
@@ -73,7 +79,7 @@ class ManpageUtil abstract {
 
 class ManpagesQuicksort {
 	/// Main array to operate. Copy your array here, call `Sort()` or `Reverse()` and take the result back.
-	Array<ManpageRecord> arr;
+	Array<ManpageNameRecord> arr;
 
 	static ManpagesQuicksort Create( class<ManpagesQuicksort> qsortmethod = NULL ) {
 		class<ManpagesQuicksort> newqsort = (qsortmethod != NULL? qsortmethod : (class<ManpagesQuicksort>)('ManpagesQuicksort'));
@@ -116,7 +122,7 @@ class ManpagesQuicksort {
 	/* Internal section */
 
 	protected void SwapElements( int index1, int index2 ) {
-		ManpageRecord temp = arr[ index1 ];
+		ManpageNameRecord temp = arr[ index1 ];
 
 		arr[ index1 ] = arr[ index2 ];
 		arr[ index2 ] = temp;
@@ -132,7 +138,7 @@ class ManpagesQuicksort {
 	}
 
 	protected int QuicksortPartitionWrapper( int low, int high ) {
-		int i = ( low - 1 );
+		int i = low - 1;
 
 		QuicksortPartition( i, low, high );
 

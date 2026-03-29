@@ -211,10 +211,10 @@ profilethinkers avg\tProfiling sorted by average time per object.","profilethink
 profilethinkers -# 15\tПосле профилирования оставить только 15 строк наиболее часто встречающихся объектов.
 profilethinkers avg\tПрофилирование с сортировкой по среднему времени на один объект."
 ,,MANPAGES_CCMD_QUICKLOAD_NAME,quickload,quickload
-,,MANPAGES_CCMD_QUICKLOAD_DESC,Invoke the quickload dialog, similar to pressing {{F9}} with default keyboard settings.,"Вызвать диалог быстрой загрузки, аналогично нажатию {{F9}} при стандарных настройках клавиатуры."
+,,MANPAGES_CCMD_QUICKLOAD_DESC,"Invoke the quickload dialog, similar to pressing {{F9}} with default keyboard settings.","Вызвать диалог быстрой загрузки, аналогично нажатию {{F9}} при стандарных настройках клавиатуры."
 ,,MANPAGES_CCMD_QUICKLOAD_EXMP,,
 ,,MANPAGES_CCMD_QUICKSAVE_NAME,quicksave,quicksave
-,,MANPAGES_CCMD_QUICKSAVE_DESC,Invoke the quicksave dialog, similar to pressing {{F6}} with default keyboard settings.,"Вызвать диалог быстрого сохранения, аналогично нажатию {{F6}} при стандарных настройках клавиатуры."
+,,MANPAGES_CCMD_QUICKSAVE_DESC,"Invoke the quicksave dialog, similar to pressing {{F6}} with default keyboard settings.","Вызвать диалог быстрого сохранения, аналогично нажатию {{F6}} при стандарных настройках клавиатуры."
 ,,MANPAGES_CCMD_QUICKSAVE_EXMP,,
 ,,MANPAGES_CCMD_QUIT_NAME,quit,quit
 ,,MANPAGES_CCMD_QUIT_DESC,"Exit the game. Same as the {{exit}} command.","Выход из игры. То же, что и команда {{exit}}."

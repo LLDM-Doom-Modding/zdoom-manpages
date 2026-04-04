@@ -75,7 +75,7 @@ def main():
 		html_file = 'United_CCMDs_for_parse.html'
 
 	config_file = 'manpages/manpages-wiki-autosync.cfg'
-	csv_file = 'LANGUAGE.autosync.csv'
+	csv_file = 'LANGUAGE.gzdoom400-autosync.csv'
 
 	# 1. Load Configuration
 	# html_id -> base_id (e.g., 'error_fatal' -> 'ERRORFATAL')
